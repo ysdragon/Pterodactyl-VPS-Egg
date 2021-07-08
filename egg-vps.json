@@ -1,0 +1,27 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v1"
+    },
+    "exported_at": "2019-12-28T10:26:14+01:00",
+    "name": "VPS - Egg",
+    "author": "samcothepug@gmail.com",
+    "description": "Run an Ubuntu VPS in pterodactyl!",
+    "image": "quay.io\/samcothepug0\/vps-egg",
+    "startup": ".\/start.sh",
+    "config": {
+    "files": "{\r\n    \"vps.config\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"internalip\": \"0.0.0.0\",\r\n            \"port\": \"{{server.build.default.port}}\"\r\n        }\r\n    }\r\n}",
+    "startup": "{\r\n    \"done\": \")! Welcome \",\r\n    \"userInteraction\": [\r\n        \"Go to eula.txt for more info.\"\r\n    ]\r\n}",
+    "logs": "{}",
+    "stop": "stop"
+  },
+
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n\r\napt-get update -y && apt-get install -y git wget zip unzip lolcat figlet toilet\r\n\r\ncd \/mnt\/server\/",
+            "container": "debian:10.1-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": []
+}
