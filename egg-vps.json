@@ -18,8 +18,7 @@
 
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/bash\r\n\r\napt-get update -y && apt-get install -y git wget zip unzip lolcat figlet toilet && apt-get install curl software-properties-common -y && curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - && apt-get install nodejs && apt-get update && apt-get install build-essential libreadline-gplv2-dev libncursesw5-dev \
-     libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev && apt-get install python python3 python-pip python3-pip -y\r\n\r\ncd \/mnt\/server\/",
+            "script": "#!\/bin\/bash\r\n\r\napt-get update -y && apt-get install -y git wget zip unzip lolcat figlet toilet && apt-get install curl software-properties-common -y && curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - && apt-get install nodejs && apt-get update && apt-get install build-essential libreadline-gplv2-dev libncursesw5-dev \nlibssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev && apt-get install python python3 python-pip python3-pip -y\r\n\r\ncd \/mnt\/server\/",
             "container": "debian:10.1-slim",
             "entrypoint": "bash"
         }
