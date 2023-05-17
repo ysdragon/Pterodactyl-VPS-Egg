@@ -7,7 +7,7 @@
     "name": "VPS - Egg",
     "author": "samcothepug@gmail.com",
     "description": "Run an Ubuntu VPS in pterodactyl!",
-    "image": "quay.io\/samcothepug0\/vps-egg",
+    "image": "quay.io\/ydrag0n\/pterodactyl-vps-egg",
     "startup": ".\/start.sh",
     "config": {
     "files": "{\r\n    \"vps.config\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"internalip\": \"0.0.0.0\",\r\n            \"port\": \"{{server.build.default.port}}\"\r\n        }\r\n    }\r\n}",
