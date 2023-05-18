@@ -10,7 +10,7 @@ RUN apt-get update \
     && apt-get install -y gnupg2 \
     && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && curl -fsSL https://packages.longsleep.net/key.txt | apt-key add - \
-    && echo "deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu focal main" > /etc/apt/sources.list.d/longsleep-ubuntu-golang-backports-focal.list \
+    && echo "deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu jammy main" > /etc/apt/sources.list.d/longsleep-ubuntu-golang-backports-jammy.list \
     && apt-get update \
     && apt-get install -y golang \
     && rm -rf /var/lib/apt/lists/*
