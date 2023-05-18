@@ -1,25 +1,29 @@
 {
     "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
     "meta": {
-        "version": "PTDL_v1"
+        "version": "PTDL_v2",
+        "update_url": null
     },
-    "exported_at": "2019-12-28T10:26:14+01:00",
+    "exported_at": "2023-05-18T19:39:50+03:00",
     "name": "VPS - Egg",
-    "author": "samcothepug@gmail.com",
+    "author": "yydrag0n@zohomail.com",
     "description": "Run an Ubuntu VPS in pterodactyl!",
-    "image": "quay.io\/ydrag0n\/pterodactyl-vps-egg",
+    "features": null,
+    "docker_images": {
+        "quay.io\/ydrag0n\/pterodactyl-vps-egg": "quay.io\/ydrag0n\/pterodactyl-vps-egg"
+    },
+    "file_denylist": [],
     "startup": ".\/start.sh",
     "config": {
-    "files": "{\r\n    \"vps.config\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"internalip\": \"0.0.0.0\",\r\n            \"port\": \"{{server.build.default.port}}\"\r\n        }\r\n    }\r\n}",
-    "startup": "{\r\n    \"done\": \")! Welcome \",\r\n    \"userInteraction\": [\r\n        \"Go to eula.txt for more info.\"\r\n    ]\r\n}",
-    "logs": "{}",
-    "stop": "stop"
-  },
-
+        "files": "{\r\n    \"vps.config\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"internalip\": \"0.0.0.0\",\r\n            \"port\": \"{{server.build.default.port}}\"\r\n        }\r\n    }\r\n}",
+        "startup": "{\r\n    \"done\": \")! Welcome \",\r\n    \"userInteraction\": [\r\n        \"Go to eula.txt for more info.\"\r\n    ]\r\n}",
+        "logs": "{}",
+        "stop": "stop"
+    },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/bash\r\n\r\napt-get update -y && apt-get install -y git wget zip unzip lolcat figlet toilet && apt-get install curl software-properties-common -y && curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - && apt-get install nodejs && apt-get update && apt-get install build-essential libreadline-gplv2-dev libncursesw5-dev \nlibssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev && apt-get install python python3 python-pip python3-pip -y\r\n\r\ncd \/mnt\/server\/",
-            "container": "debian:10.1-slim",
+            "script": "#!\/bin\/bash\r\n\r\ncd \/mnt\/server\/",
+            "container": "quay.io\/ydrag0n\/pterodactyl-vps-egg",
             "entrypoint": "bash"
         }
     },
