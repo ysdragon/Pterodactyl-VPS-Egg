@@ -10,6 +10,7 @@ RUN apt-get update \
     && apt-get install -y gnupg2 \
     && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && echo "deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu jammy main" > /etc/apt/sources.list.d/longsleep-ubuntu-golang-backports-jammy.list \
+    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F6BC817356A3D45E \
     && apt-get update \
     && apt-get install -y golang \
     && rm -rf /var/lib/apt/lists/*
