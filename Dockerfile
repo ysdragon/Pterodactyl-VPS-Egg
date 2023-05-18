@@ -1,4 +1,4 @@
-FROM debian:11
+FROM ubuntu:22.04
 
 # Set noninteractive mode
 ENV DEBIAN_FRONTEND=noninteractive
