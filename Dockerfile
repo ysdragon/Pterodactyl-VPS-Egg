@@ -5,12 +5,12 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
     && apt-get install -y wget bash curl ca-certificates nginx iproute2 zip unzip sudo \
-    && apt-get install -y --no-install-recommends python3 python3-pip nodejs php \
+    && apt-get install -y --no-install-recommends python3 python3-pip gnupg2 \
     && apt-get install -y libjansson4 \
-    && apt-get install -y gnupg2 \
     && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-    && echo "deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu jammy main" > /etc/apt/sources.list.d/longsleep-ubuntu-golang-backports-jammy.list \
-    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F6BC817356A3D45E \
+    && apt-get install -y nodejs \
+    && apt-get install -y software-properties-common \
+    && add-apt-repository -y ppa:longsleep/golang-backports \
     && apt-get update \
     && apt-get install -y golang \
     && rm -rf /var/lib/apt/lists/*
