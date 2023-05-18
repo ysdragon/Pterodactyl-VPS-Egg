@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
     && apt-get install -y wget bash curl ca-certificates nginx iproute2 zip unzip sudo \
-    && apt-get install -y --no-install-recommends python3 python3-pip python python-pip php gnupg2 \
+    && apt-get install -y --no-install-recommends python3 python3-pip php gnupg2 \
     && apt-get install -y libjansson4 \
     && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt-get install -y nodejs \
