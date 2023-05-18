@@ -7,6 +7,12 @@ RUN apt-get update \
     && apt-get install -y wget bash curl ca-certificates nginx iproute2 zip unzip sudo \
     && apt-get install -y --no-install-recommends python3 python3-pip nodejs php \
     && apt-get install -y libjansson4 \
+    && apt-get install -y gnupg2 \
+    && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+    && curl -fsSL https://packages.longsleep.net/key.txt | apt-key add - \
+    && echo "deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu focal main" > /etc/apt/sources.list.d/longsleep-ubuntu-golang-backports-focal.list \
+    && apt-get update \
+    && apt-get install -y golang-1.17 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN adduser --disabled-password --home / container
