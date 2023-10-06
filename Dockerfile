@@ -16,16 +16,14 @@ RUN apt-get update \
     && apt-get install -y make git lolcat figlet toilet \
     && rm -rf /var/lib/apt/lists/*
 
-
-# Build and install Vlang from source
-WORKDIR /opt/vlang
-RUN git clone https://github.com/vlang/v /opt/vlang && make && ./v symlink
-
 RUN adduser --disabled-password --home / container
 
 # Add the container user to the sudo group and configure sudo
 RUN usermod -aG sudo container && \
     echo "container ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+    
+# Disable the "no new privileges" flag
+RUN echo "Set disable_coredump false" >> /etc/sudo.conf
 
 USER container
 ENV USER container
