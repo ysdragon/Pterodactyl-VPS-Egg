@@ -13,10 +13,19 @@ RUN apt-get update \
     && add-apt-repository -y ppa:longsleep/golang-backports \
     && apt-get update \
     && apt-get install -y golang \
-    && apt-get install -y git lolcat figlet toilet \
+    && apt-get install -y make git lolcat figlet toilet \
     && rm -rf /var/lib/apt/lists/*
 
+
+# Build and install Vlang from source
+WORKDIR /opt/vlang
+RUN git clone https://github.com/vlang/v /opt/vlang && make && ./v symlink
+
 RUN adduser --disabled-password --home / container
+
+# Add the container user to the sudo group and configure sudo
+RUN usermod -aG sudo container && \
+    echo "container ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER container
 ENV USER container
