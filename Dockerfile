@@ -18,13 +18,6 @@ RUN apt-get update \
 
 RUN adduser --disabled-password --home / container
 
-# Add the container user to the sudo group and configure sudo
-RUN usermod -aG sudo container && \
-    echo "container ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-    
-# Disable the "no new privileges" flag
-RUN echo "Set disable_coredump false" >> /etc/sudo.conf
-
 USER container
 ENV USER container
 ENV HOME /
