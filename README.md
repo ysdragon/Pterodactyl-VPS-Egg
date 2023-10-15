@@ -13,7 +13,7 @@ To enable `sudo su` support for Pterodactyl containers, follow these steps:
    git clone https://github.com/pterodactyl/wings
    ```
 
-2. Remove the following [line](https://github.com/pterodactyl/wings/blob/48c55af373684847c7f61035c0038c5e470e286c/environment/docker/container.go#L250) from the Wings source code:
+2. Comment or remove the following [line](https://github.com/pterodactyl/wings/blob/48c55af373684847c7f61035c0038c5e470e286c/environment/docker/container.go#L250) from the Wings source code:
    ```go
    SecurityOpt:    []string{"no-new-privileges"},
    ```
