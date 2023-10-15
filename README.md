@@ -13,16 +13,11 @@ To enable `sudo su` support for Pterodactyl containers, follow these steps:
    git clone https://github.com/pterodactyl/wings
    ```
 
-2. Edit the following [line](https://github.com/pterodactyl/wings/blob/48c55af373684847c7f61035c0038c5e470e286c/environment/docker/container.go#L250) in the Wings source code to remove `no-new-privileges`:
+2. Remove the following [line](https://github.com/pterodactyl/wings/blob/48c55af373684847c7f61035c0038c5e470e286c/environment/docker/container.go#L250) from the Wings source code:
    ```go
    SecurityOpt:    []string{"no-new-privileges"},
    ```
-   Change it to:
-   ```go
-   SecurityOpt:    []string{""},
-   ```
-
-3. Build Pterodactyl Wings.
+3. Build Pterodactyl Wings. ( go build )
 
 4. Replace your current Wings executable, typically located at `/usr/local/bin/wings`, with the one you just built.
 
