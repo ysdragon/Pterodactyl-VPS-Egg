@@ -21,7 +21,7 @@ RUN usermod -aG sudo container
 
 USER container
 ENV USER container
-ENV HOME /
+ENV HOME /home/container
 WORKDIR /
 
 COPY ./entrypoint.sh /entrypoint.sh
