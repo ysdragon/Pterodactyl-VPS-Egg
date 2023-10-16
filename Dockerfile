@@ -14,13 +14,10 @@ RUN apt-get update \
     && apt-get install -y make git lolcat figlet toilet \
     && rm -rf /var/lib/apt/lists/*
 
-RUN adduser --disabled-password --home / container
+RUN useradd -m -p 123456 -d / container
 
 # Add 'container' user to the sudo group
 RUN usermod -aG sudo container
-
-# Set a password for the container user
-RUN echo 'container:123456' | chpasswd
 
 USER container
 ENV USER container
