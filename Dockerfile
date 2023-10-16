@@ -19,6 +19,9 @@ RUN adduser --disabled-password --home / container
 # Add 'container' user to the sudo group
 RUN usermod -aG sudo container
 
+# Set a password for the container user
+RUN echo 'container:123456' | chpasswd
+
 USER container
 ENV USER container
 ENV HOME /
