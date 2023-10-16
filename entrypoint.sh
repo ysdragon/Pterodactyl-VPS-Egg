@@ -6,7 +6,7 @@ MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g'
 
 # Make internal Docker IP address available to processes.
 export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
-#curl -Lo ./start.sh https://raw.githubusercontent.com/ysdragon/Pterodactyl-VPS-Egg/main/start.sh
-#chmod +x ./start.sh
+curl -Lo ./start.sh https://raw.githubusercontent.com/ysdragon/Pterodactyl-VPS-Egg/main/start.sh
+chmod +x ./start.sh
 # Run the Server
-#bash ./start.sh
+bash ./start.sh
