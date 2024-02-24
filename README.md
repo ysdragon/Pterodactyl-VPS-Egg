@@ -1,31 +1,27 @@
 # Pterodactyl VPS Egg
 
-This is a Pterodactyl Egg for running a Virtual Private Server (VPS). The Egg includes several programming languages: `Python, PHP, Node.js, and Golang`. 
+This is a Pterodactyl Egg for running a Virtual Private Server (VPS).
 
-To use this Egg, simply add it to your Pterodactyl panel and configure it according to your needs. The included languages can be used to run a variety of applications and scripts on your VPS.
+## Overview
 
-```diff
-- Currently sudo su not working
-```
+This Pterodactyl Egg allows you to set up and manage a Virtual Private Server within your Pterodactyl panel. It provides a convenient way to deploy and manage VPS instances with ease.
 
-## How to Add `sudo su` Support
+## Supported Operating Systems
 
-To enable `sudo su` support for Pterodactyl containers, follow these steps:
+- Ubuntu
+- Void Linux
 
-1. Clone Pterodactyl's Wings from the source repository:
-   ```bash
-   git clone https://github.com/pterodactyl/wings
-   ```
+## Getting Started
 
-2. Comment or remove the following [line](https://github.com/pterodactyl/wings/blob/48c55af373684847c7f61035c0038c5e470e286c/environment/docker/container.go#L250) from the Wings source code:
-   ```go
-   SecurityOpt:    []string{"no-new-privileges"},
-   ```
-3. Build Pterodactyl Wings. ( go build )
+To use this Egg, follow these steps:
 
-4. Replace your current Wings executable, typically located at `/usr/local/bin/wings`, with the one you just built.
+1. Add the Egg to your Pterodactyl panel.
+2. Configure the Egg settings according to your needs.
+3. Choose the desired operating system (Ubuntu or Void Linux).
+4. Deploy your VPS instance and start managing it.
 
-5. Finally, restart the Wings service:
-   ```bash
-   systemctl restart wings
-   ```
+Feel free to customize the Egg settings and configurations to suit your requirements.
+
+## Contributing
+
+Contributions are welcome. If you have any suggestions, improvements, or bug fixes, feel free to submit a pull request.
