@@ -43,7 +43,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
   echo "* [2] Ubuntu                                                                      "
   echo "* [3] Void Linux                                                                  "
 
-  read -p "Enter OS (1-2): " input
+  read -p "Enter OS (1-3): " input
 
   case $input in
 
