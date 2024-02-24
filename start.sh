@@ -37,10 +37,11 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
   echo "│                                                                                │"
   echo "╰────────────────────────────────────────────────────────────────────────────────╯"
   echo "                                                                                  "
-  echo "Please Choose your favorite distro                                                "
+  echo "Please choose your favorite distro                                                "
   echo "                                                                                  "  
-  echo "* [1] Ubuntu                                                                      "
-  echo "* [2] Void Linux                                                                  "
+  echo "* [1] Debian                                                                      "
+  echo "* [2] Ubuntu                                                                      "
+  echo "* [3] Void Linux                                                                  "
 
   read -p "Enter OS (1-2): " input
 
@@ -48,12 +49,19 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
 
     1)
       wget --no-hsts -O /tmp/rootfs.tar.gz \
-      "https://cdimage.ubuntu.com/ubuntu-base/releases/22.04/release/ubuntu-base-22.04-base-${ARCH_ALT}.tar.gz"
+      "https://github.com/JuliaCI/rootfs-images/releases/download/v7.0/debian_minimal.${ARCH}.tar.gz"
       tar -xf /tmp/rootfs.tar.gz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
       ;;
 
     2)
+      wget --no-hsts -O /tmp/rootfs.tar.gz \
+      "https://cdimage.ubuntu.com/ubuntu-base/releases/22.04/release/ubuntu-base-22.04-base-${ARCH_ALT}.tar.gz"
+      tar -xf /tmp/rootfs.tar.gz -C "$ROOTFS_DIR"
+      mkdir $ROOTFS_DIR/home/container/ -p
+      ;;
+
+    3)
       wget --no-hsts -O /tmp/rootfs.tar.xz \
       "https://repo-fastly.voidlinux.org/live/current/void-${ARCH}-ROOTFS-20230628.tar.xz"
       tar -xf /tmp/rootfs.tar.xz -C "$ROOTFS_DIR"
@@ -71,7 +79,7 @@ fi
 # Package Installation & Setup #
 #################################
 
-# Download static APK-Tools temporarily because minirootfs does not come with APK pre-installed.
+# Download static proot.
 if [ ! -e "$ROOTFS_DIR/.installed" ]; then
     # Download the packages from their sources
     mkdir -p "$ROOTFS_DIR/usr/local/bin"
@@ -86,7 +94,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
     printf "nameserver 1.1.1.1\nnameserver 1.0.0.1" > "${ROOTFS_DIR}/etc/resolv.conf"
     # Wipe the files we downloaded into /tmp previously.
     rm -rf /tmp/rootfs.tar.xz /tmp/sbin
-    # Create .installed to later check whether Alpine is installed.
+    # Create .installed to later check whether OS is installed.
     touch "$ROOTFS_DIR/.installed"
 fi
 

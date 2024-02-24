@@ -8,6 +8,7 @@ This Pterodactyl Egg allows you to set up and manage a Virtual Private Server wi
 
 ## Supported Operating Systems
 
+- Debian
 - Ubuntu
 - Void Linux
 
