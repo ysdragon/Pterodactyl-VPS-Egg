@@ -48,25 +48,22 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
   case $input in
 
     1)
-      wget --no-hsts -O /tmp/rootfs.tar.gz \
-      "https://github.com/JuliaCI/rootfs-images/releases/download/v7.0/debian_minimal.${ARCH}.tar.gz"
+      curl -L "https://github.com/JuliaCI/rootfs-images/releases/download/v7.0/debian_minimal.${ARCH}.tar.gz" -o /tmp/rootfs.tar.gz
       tar -xf /tmp/rootfs.tar.gz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
-      ;;
+    ;;
 
     2)
-      wget --no-hsts -O /tmp/rootfs.tar.gz \
-      "https://cdimage.ubuntu.com/ubuntu-base/releases/22.04/release/ubuntu-base-22.04-base-${ARCH_ALT}.tar.gz"
+      curl -L "https://cdimage.ubuntu.com/ubuntu-base/releases/22.04/release/ubuntu-base-22.04-base-${ARCH_ALT}.tar.gz" -o /tmp/rootfs.tar.gz
       tar -xf /tmp/rootfs.tar.gz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
-      ;;
+    ;;
 
     3)
-      wget --no-hsts -O /tmp/rootfs.tar.xz \
-      "https://repo-fastly.voidlinux.org/live/current/void-${ARCH}-ROOTFS-20230628.tar.xz"
+      curl -L "https://repo-fastly.voidlinux.org/live/current/void-${ARCH}-ROOTFS-20230628.tar.xz" -o /tmp/rootfs.tar.xz
       tar -xf /tmp/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
-      ;;
+    ;;
 
     *)
       echo "Invalid selection. Exiting."
@@ -83,7 +80,7 @@ fi
 if [ ! -e "$ROOTFS_DIR/.installed" ]; then
     # Download the packages from their sources
     mkdir -p "$ROOTFS_DIR/usr/local/bin"
-    wget --no-hsts -O "$ROOTFS_DIR/usr/local/bin/proot" "https://github.com/proot-me/proot/releases/download/v${PROOT_VERSION}/proot-v${PROOT_VERSION}-${ARCH}-static"
+    curl -L "https://github.com/proot-me/proot/releases/download/v${PROOT_VERSION}/proot-v${PROOT_VERSION}-${ARCH}-static" -o "$ROOTFS_DIR/usr/local/bin/proot"
     # Make PRoot executable.
     chmod 755 "$ROOTFS_DIR/usr/local/bin/proot"
 fi
