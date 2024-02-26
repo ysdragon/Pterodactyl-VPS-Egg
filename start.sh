@@ -105,3 +105,5 @@ fi
 --rootfs="${ROOTFS_DIR}" \
 -0 -w "/root" -b /dev -b /sys -b /proc -b /etc/resolv.conf --kill-on-exit \
 /bin/bash
+sleep 2
+/bin/clear

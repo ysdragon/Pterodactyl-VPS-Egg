@@ -1,10 +1,10 @@
-FROM debian:bookworm
+FROM arm64v8/debian
 
 # Set noninteractive mode
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
-    && apt-get install -y wget bash curl ca-certificates iproute2 zip unzip sudo xz-utils bzip2 gnupg2 \
+    && apt-get install -y --no-install-recommends bash curl ca-certificates iproute2 xz-utils bzip2 \
     && rm -rf /var/lib/apt/lists/*
 
 USER container
