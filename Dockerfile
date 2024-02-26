@@ -1,4 +1,4 @@
-FROM arm64v8/debian
+FROM debian:bookworm
 
 # Set noninteractive mode
 ENV DEBIAN_FRONTEND=noninteractive
