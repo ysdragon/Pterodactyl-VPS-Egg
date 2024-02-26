@@ -4,10 +4,10 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2023-05-18T19:39:50+03:00",
+    "exported_at": "2024-02-26T15:37:51+02:00",
     "name": "VPS - Egg",
-    "author": "yydrag0n@zohomail.com",
-    "description": "Run an Ubuntu VPS in pterodactyl!",
+    "author": "mrnitro2017@gmail.com",
+    "description": "Run a VPS in pterodactyl!",
     "features": null,
     "docker_images": {
         "quay.io\/ydrag0n\/pterodactyl-vps-egg": "quay.io\/ydrag0n\/pterodactyl-vps-egg"
