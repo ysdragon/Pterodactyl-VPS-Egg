@@ -14,12 +14,13 @@ This Pterodactyl Egg allows you to set up and manage a Virtual Private Server wi
 
 ## Getting Started
 
-To use this Egg, follow these steps:
+1. Choose the appropriate configuration file based on your system architecture:
+   - For x64 bit system, use `egg-vps.json`
+   - For arm64 system, use `egg-vps-arm64.json`
 
-1. Add the Egg to your Pterodactyl panel.
-2. Configure the Egg settings according to your needs.
-3. Choose the desired operating system (Ubuntu or Void Linux).
-4. Deploy your VPS instance and start managing it.
+2. Download the chosen configuration file to your local machine.
+
+3. Import to pterodactyl panel.
 
 Feel free to customize the Egg settings and configurations to suit your requirements.
 
