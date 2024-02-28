@@ -11,6 +11,15 @@ This Pterodactyl Egg allows you to set up and manage a Virtual Private Server wi
 - Debian
 - Ubuntu
 - Void Linux
+- Arch Linux                                                                  
+- CentOS                                                                  
+- Rocky Linux                                                                  
+- Fedora                                                                  
+- AlmaLinux                                                                  
+- Slackware Linux                                                                  
+- Kali Linux                                                                  
+- openSUSE Tumbleweed                                                                  
+- Gentoo Linux                                                                  
 
 ## Getting Started
 
