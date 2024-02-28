@@ -54,7 +54,7 @@ clear
   echo "* [12] Gentoo Linux                                                                  "
 
 
-  read -p "Enter OS (1-7): " input
+  read -p "Enter OS (1-12): " input
 
   case $input in
 
