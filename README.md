@@ -18,7 +18,7 @@ This Pterodactyl Egg allows you to set up and manage a Virtual Private Server wi
 - AlmaLinux                                                                  
 - Slackware Linux                                                                  
 - Kali Linux                                                                  
-- openSUSE Tumbleweed                                                                  
+- openSUSE                                                                  
 - Gentoo Linux                                                                  
 
 ## Getting Started

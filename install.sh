@@ -50,7 +50,7 @@ clear
   echo "* [8] AlmaLinux                                                                  "
   echo "* [9] Slackware Linux                                                                  "
   echo "* [10] Kali Linux                                                                  "
-  echo "* [11] openSUSE Tumbleweed                                                                  "
+  echo "* [11] openSUSE                                                                  "
   echo "* [12] Gentoo Linux                                                                  "
 
 
@@ -63,7 +63,7 @@ clear
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/bookworm/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
-      curl -Ls "https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/bookworm/${ARCH_ALT}/default/${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
+      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
       tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
     ;;
@@ -73,7 +73,7 @@ clear
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/jammy/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
-      curl -Ls "https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/jammy/${ARCH_ALT}/default/${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
+      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
       tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
     ;;
@@ -83,7 +83,7 @@ clear
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/voidlinux/current/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
-      curl -Ls "https://fra1lxdmirror01.do.letsbuildthe.cloud/images/voidlinux/current/${ARCH_ALT}/default/${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
+      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
       tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
     ;;
@@ -93,7 +93,7 @@ clear
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/archlinux/current/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
-      curl -Ls "https://fra1lxdmirror01.do.letsbuildthe.cloud/images/archlinux/current/${ARCH_ALT}/default/${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
+      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
       tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
     ;;
@@ -103,7 +103,7 @@ clear
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/centos/9-Stream/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
-      curl -Ls "https://fra1lxdmirror01.do.letsbuildthe.cloud/images/centos/9-Stream/${ARCH_ALT}/default/${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
+      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
       tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
     ;;
@@ -113,7 +113,7 @@ clear
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/rockylinux/9/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
-      curl -Ls "https://fra1lxdmirror01.do.letsbuildthe.cloud/images/rockylinux/9/${ARCH_ALT}/default/${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
+      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
       tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
     ;;
@@ -123,7 +123,7 @@ clear
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/fedora/39/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
-      curl -Ls "https://fra1lxdmirror01.do.letsbuildthe.cloud/images/fedora/39/${ARCH_ALT}/default/${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
+      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
       tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
     ;;
@@ -133,7 +133,7 @@ clear
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/almalinux/9/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
-      curl -Ls "https://fra1lxdmirror01.do.letsbuildthe.cloud/images/almalinux/9/${ARCH_ALT}/default/${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
+      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
       tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
     ;;
@@ -143,7 +143,7 @@ clear
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/slackware/current/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
-      curl -Ls "https://fra1lxdmirror01.do.letsbuildthe.cloud/images/slackware/current/${ARCH_ALT}/default/${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
+      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
       tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
     ;;
@@ -154,17 +154,17 @@ clear
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/kali/current/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
-      curl -Ls "https://fra1lxdmirror01.do.letsbuildthe.cloud/images/kali/current/${ARCH_ALT}/default/${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
+      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
       tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
     ;;
 
     11)
       echo -e "\e[32mInstalling...\e[0m"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/opensuse/tumbleweed/${ARCH_ALT}/default/"
+      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/opensuse/15.5/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
-      curl -Ls "https://fra1lxdmirror01.do.letsbuildthe.cloud/images/opensuse/tumbleweed/${ARCH_ALT}/default/${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
+      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
       tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
     ;;
@@ -174,7 +174,7 @@ clear
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/gentoo/current/${ARCH_ALT}/systemd/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
-      curl -Ls "https://fra1lxdmirror01.do.letsbuildthe.cloud/images/gentoo/current/${ARCH_ALT}/systemd/${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
+      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
       tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
     ;;
