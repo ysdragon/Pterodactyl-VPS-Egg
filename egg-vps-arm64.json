@@ -13,7 +13,7 @@
         "quay.io\/ydrag0n\/pterodactyl-vps-egg-arm64": "quay.io\/ydrag0n\/pterodactyl-vps-egg-arm64"
     },
     "file_denylist": [],
-    "startup": ".\/start.sh",
+    "startup": ".\/install.sh",
     "config": {
         "files": "{\r\n    \"vps.config\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"internalip\": \"0.0.0.0\",\r\n            \"port\": \"{{server.build.default.port}}\"\r\n        }\r\n    }\r\n}",
         "startup": "{\r\n    \"done\": \")! Welcome \",\r\n    \"userInteraction\": [\r\n        \"Go to eula.txt for more info.\"\r\n    ]\r\n}",
