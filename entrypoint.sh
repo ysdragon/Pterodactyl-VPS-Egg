@@ -9,4 +9,4 @@ export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 curl -Ls https://raw.githubusercontent.com/ysdragon/Pterodactyl-VPS-Egg/main/install.sh -o install.sh
 chmod +x ./install.sh
 # Run the VPS Installer
-bash ./install.sh
+sh ./install.sh
