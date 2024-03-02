@@ -5,7 +5,7 @@ NC='\033[0m'
 
 DIR=$PWD # get current dir
 # if current dir is /root print ~
-if [[ "$PWD" == "/root"* ]]; then
+if [ "$PWD" = "/root"* ]; then
     DIR="~${PWD#/root}"
 fi
 
@@ -20,13 +20,13 @@ printf "${GREEN}╰────────────────────�
 printf "                                                                                               \n"
 printf "root@MyVPS:${DIR}#                                                                             \n"
 
-run_cmd() {   
+run_cmd() {
     read -p "root@MyVPS:$DIR# " CMD
     eval "$CMD"
-    
+
     # Update DIR after executing command
     DIR=$PWD
-    if [[ "$PWD" == "/root"* ]]; then
+    if [ "$PWD" = "/root"* ]; then
         DIR="~${PWD#/root}"
     fi
     
@@ -35,13 +35,12 @@ run_cmd() {
 }
 
 run_user_cmd() {
-
     read -p "user@MyVPS:$DIR# " CMD2
     eval "$CMD2"
-    
+
     # Update DIR after executing command
     DIR=$PWD
-    if [[ "$PWD" == "/root"* ]]; then
+    if [ "$PWD" = "/root"* ]; then
         DIR="~${PWD#/root}"
     fi
     
