@@ -1,4 +1,9 @@
 #!/bin/sh
+PURPLE='\033[0;35m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NC='\033[0m'
 
 #############################
 # Linux Installation #
@@ -29,37 +34,38 @@ fi
 # Download & decompress the Linux root file system if not already installed.
 if [ ! -e "$ROOTFS_DIR/.installed" ]; then
 
-clear
-  echo "\e[32m╭────────────────────────────────────────────────────────────────────────────────╮\e[0m"
-  echo "\e[32m│                                                                                │\e[0m"
-  echo "\e[32m│                             Pterodactyl VPS EGG                                │\e[0m"
-  echo "\e[32m│                                                                                │\e[0m"
-  echo "\e[32m│                           \e[31m© 2021 - 2024 ysdragon\e[32m                               │\e[0m"
-  echo "\e[32m│                                                                                │\e[0m"
-  echo "\e[32m╰────────────────────────────────────────────────────────────────────────────────╯\e[0m"
-  echo "                                                                                                "
-  echo "Please choose your favorite distro                                                "
-  echo "                                                                                  "  
-  echo "* [1] Debian                                                                      "
-  echo "* [2] Ubuntu                                                                      "
-  echo "* [3] Void Linux                                                                  "
-  echo "* [4] Alpine Linux  (Edge)                                                                "
-  echo "* [5] CentOS                                                                  "
-  echo "* [6] Rocky Linux                                                                  "
-  echo "* [7] Fedora                                                                  "
-  echo "* [8] AlmaLinux                                                                  "
-  echo "* [9] Slackware Linux                                                                  "
-  echo "* [10] Kali Linux                                                                  "
-  echo "* [11] openSUSE                                                                  "
-  echo "* [12] Gentoo Linux                                                                  "
+  printf "\033c"
+  echo "${GREEN}╭────────────────────────────────────────────────────────────────────────────────╮${NC}"
+  echo "${GREEN}│                                                                                │${NC}"
+  echo "${GREEN}│                             Pterodactyl VPS EGG                                │${NC}"
+  echo "${GREEN}│                                                                                │${NC}"
+  echo "${GREEN}│                           ${RED}© 2021 - 2024 ${PURPLE}ysdragon${GREEN}                               │${NC}"
+  echo "${GREEN}│                                                                                │${NC}"
+  echo "${GREEN}╰────────────────────────────────────────────────────────────────────────────────╯${NC}"
+  echo "                                                                                               "
+  echo "${YELLOW}Please choose your favorite distro                                               ${NC}"
+  echo "                                                                                               "  
+  echo "* [1] Debian                                                                                   "
+  echo "* [2] Ubuntu                                                                                   "
+  echo "* [3] Void Linux                                                                               "
+  echo "* [4] Alpine Linux  (Edge)                                                                     "
+  echo "* [5] CentOS                                                                                   "
+  echo "* [6] Rocky Linux                                                                              "
+  echo "* [7] Fedora                                                                                   "
+  echo "* [8] AlmaLinux                                                                                "
+  echo "* [9] Slackware Linux                                                                          "
+  echo "* [10] Kali Linux                                                                              "
+  echo "* [11] openSUSE                                                                                "
+  echo "* [12] Gentoo Linux                                                                            "
+  echo "                                                                                               "
+  echo "${YELLOW}Enter OS (1-12):                                                                 ${NC}"
 
-
-  read -p "Enter OS (1-12): " input
+  read -p "" input
 
   case $input in
 
     1)
-      echo "\e[32mInstalling Debian...\e[0m"
+      echo "${GREEN}Installing Debian...${NC}"
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/bookworm/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
@@ -69,7 +75,7 @@ clear
     ;;
 
     2)
-      echo "\e[32mInstalling Ubuntu...\e[0m"
+      echo "${GREEN}Installing Ubuntu...${NC}"
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/jammy/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
@@ -79,7 +85,7 @@ clear
     ;;
 
     3)
-      echo "\e[32mInstalling Void Linux...\e[0m"
+      echo "${GREEN}Installing Void Linux...${NC}"
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/voidlinux/current/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
@@ -89,7 +95,7 @@ clear
     ;;
 
     4)
-      echo "\e[32mInstalling Alpine Linux (Edge)...\e[0m"
+      echo "${GREEN}Installing Alpine Linux (Edge)...${NC}"
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/alpine/edge/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
@@ -99,7 +105,7 @@ clear
     ;;
 
     5)
-      echo "\e[32mInstalling CentOS...\e[0m"
+      echo "${GREEN}Installing CentOS...${NC}"
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/centos/9-Stream/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
@@ -109,7 +115,7 @@ clear
     ;;
 
     6)
-      echo "\e[32mInstalling Rocky Linux...\e[0m"
+      echo "${GREEN}Installing Rocky Linux...${NC}"
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/rockylinux/9/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
@@ -119,7 +125,7 @@ clear
     ;;
 
     7)
-      echo "\e[32mInstalling Fedora...\e[0m"
+      echo "${GREEN}Installing Fedora...${NC}"
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/fedora/39/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
@@ -129,7 +135,7 @@ clear
     ;;
 
     8)
-      echo "\e[32mInstalling AlmaLinux...\e[0m"
+      echo "${GREEN}Installing AlmaLinux...${NC}"
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/almalinux/9/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
@@ -139,7 +145,7 @@ clear
     ;;
 
     9)
-      echo "\e[32mInstalling Slackware...\e[0m"
+      echo "${GREEN}Installing Slackware...${NC}"
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/slackware/current/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
@@ -150,7 +156,7 @@ clear
 
 
     10)
-      echo "\e[32mInstalling Kali Linux...\e[0m"
+      echo "${GREEN}Installing Kali Linux...${NC}"
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/kali/current/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
@@ -160,7 +166,7 @@ clear
     ;;
 
     11)
-      echo "\e[32mInstalling OpenSUSE Leap...\e[0m"
+      echo "${GREEN}Installing OpenSUSE Leap...${NC}"
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/opensuse/15.5/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
@@ -170,7 +176,7 @@ clear
     ;;
 
     12)
-      echo "\e[32mInstalling Gentoo Linux...\e[0m"
+      echo "${GREEN}Installing Gentoo Linux...${NC}"
       url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/gentoo/current/${ARCH_ALT}/systemd/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
@@ -180,9 +186,9 @@ clear
     ;;
 
     *)
-      echo "Invalid selection. Exiting."
+      echo "${RED}Invalid selection. Exiting.${NC}"
       exit 1
-      ;;
+    ;;
   esac
 fi
 
