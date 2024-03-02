@@ -9,7 +9,7 @@ if [ "$PWD" = "/root"* ]; then
     DIR="~${PWD#/root}"
 fi
 
-clear
+printf "\033c"
 printf "${GREEN}╭────────────────────────────────────────────────────────────────────────────────╮${NC}\n"
 printf "${GREEN}│                                                                                │${NC}\n"
 printf "${GREEN}│                             Pterodactyl VPS EGG                                │${NC}\n"
