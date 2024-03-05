@@ -67,32 +67,32 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
   case $input in
 
     1)
-      echo "* [1] Debian 10 (buster)"
+      echo "* [1] Debian 12 (bookworm)"
       echo "* [2] Debian 11 (bullseye)"
-      echo "* [3] Debian 12 (bookworm)"
-      echo "* [4] Debian 13 (unstable) (trixie)"
-      echo "* [5] Debian unstable (sid)"
+      echo "* [3] Debian 10 (buster)"
+      echo "* [4] Debian 13 (trixie) (unstable)"
+      echo "* [5] Debian (sid) (unstable)"
       echo "${YELLOW}Enter the desired version (1-5): "
       read -p "" version
       case $version in
         1)
-          echo "${GREEN}Installing Debian 10 (buster)...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/buster/${ARCH_ALT}/default/"
+          echo "${GREEN}Installing Debian 12 (bookworm)...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/bookworm/${ARCH_ALT}/default/"
         ;;
         2)
           echo "${GREEN}Installing Debian 11 (bullseye)...${NC}"
           url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/bullseye/${ARCH_ALT}/default/"
         ;;
         3)
-          echo "${GREEN}Installing Debian 12 (bookworm)...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/bookworm/${ARCH_ALT}/default/"
+          echo "${GREEN}Installing Debian 10 (buster)...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/buster/${ARCH_ALT}/default/"
         ;;
         4)
-          echo "${GREEN}Installing Debian 13 (trixie)...${NC}"
+          echo "${GREEN}Installing Debian 13 (trixie) (unstable)...${NC}"
           url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/trixie/${ARCH_ALT}/default/"
         ;;
         5)
-          echo "${GREEN}Installing Debian unstable (sid)...${NC}"
+          echo "${GREEN}Installing (sid) (unstable)...${NC}"
           url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/sid/${ARCH_ALT}/default/"
         ;;
         *)
