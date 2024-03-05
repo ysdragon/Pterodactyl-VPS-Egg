@@ -19,7 +19,9 @@ This Pterodactyl Egg allows you to set up and manage a Virtual Private Server wi
 - Slackware Linux                                                                  
 - Kali Linux                                                                  
 - openSUSE                                                                  
-- Gentoo Linux                                                                  
+- Gentoo Linux
+- Arch Linux
+- Devuan Linux
 
 ## Getting Started
 
