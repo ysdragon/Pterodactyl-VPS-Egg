@@ -67,8 +67,40 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
   case $input in
 
     1)
-      echo "${GREEN}Installing Debian...${NC}"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/bookworm/${ARCH_ALT}/default/"
+      echo "* [1] Debian 10 (buster)"
+      echo "* [2] Debian 11 (bullseye)"
+      echo "* [3] Debian 12 (bookworm)"
+      echo "* [4] Debian 13 (unstable) (trixie)"
+      echo "* [5] Debian unstable (sid)"
+      echo "${YELLOW}Enter the desired version (1-5): "
+      read -p "" version
+      case $version in
+        1)
+          echo "${GREEN}Installing Debian 10 (buster)...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/buster/${ARCH_ALT}/default/"
+        ;;
+        2)
+          echo "${GREEN}Installing Debian 11 (bullseye)...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/bullseye/${ARCH_ALT}/default/"
+        ;;
+        3)
+          echo "${GREEN}Installing Debian 12 (bookworm)...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/bookworm/${ARCH_ALT}/default/"
+        ;;
+        4)
+          echo "${GREEN}Installing Debian 13 (trixie)...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/trixie/${ARCH_ALT}/default/"
+        ;;
+        5)
+          echo "${GREEN}Installing Debian unstable (sid)...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/sid/${ARCH_ALT}/default/"
+        ;;
+        *)
+          echo "${RED}Invalid selection. Exiting.${NC}"
+          exit 1
+        ;;
+      esac
+
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
       curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
@@ -77,8 +109,35 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
     ;;
 
     2)
-      echo "${GREEN}Installing Ubuntu...${NC}"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/jammy/${ARCH_ALT}/default/"
+      echo "* [1] Ubuntu 22.04 LTS (jammy)"
+      echo "* [2] Ubuntu 20.04 LTS (focal)"
+      echo "* [3] Ubuntu 18.04 LTS (bionic)"
+      echo "* [4] Ubuntu 16.04 LTS (xenial)"
+      echo "${YELLOW}Enter the desired version (1-4): "
+      read -p "" version
+      case $version in
+        1)
+          echo "${GREEN}Installing Ubuntu 22.04 LTS (jammy)...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/jammy/${ARCH_ALT}/default/"
+        ;;
+        2)
+          echo "${GREEN}Installing Ubuntu 20.04 LTS (focal)...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/focal/${ARCH_ALT}/default/"
+        ;;
+        3)
+          echo "${GREEN}Installing Ubuntu 18.04 LTS (bionic)...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/bionic/${ARCH_ALT}/default/"
+        ;;
+        4)
+          echo "${GREEN}Installing Ubuntu 16.04 LTS (xenial)...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/xenial/${ARCH_ALT}/default/"
+        ;;
+        *)
+          echo "${RED}Invalid selection. Exiting.${NC}"
+          exit 1
+        ;;
+      esac
+
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
       curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
@@ -107,8 +166,30 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
     ;;
 
     5)
-      echo "${GREEN}Installing CentOS...${NC}"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/centos/9-Stream/${ARCH_ALT}/default/"
+      echo "* [1] CentOS 9 Stream"
+      echo "* [2] CentOS 8 Stream"
+      echo "* [3] CentOS 7"
+      echo "${YELLOW}Enter the desired version (1-3): "
+      read -p "" version
+      case $version in
+        1)
+          echo "${GREEN}Installing CentOS 9 Stream...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/centos/9-Stream/${ARCH_ALT}/default/"
+        ;;
+        2)
+          echo "${GREEN}Installing CentOS 8 Stream...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/centos/8-Stream/${ARCH_ALT}/default/"
+        ;;
+        3)
+          echo "${GREEN}Installing CentOS 7...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/centos/7/${ARCH_ALT}/default/"
+        ;;
+        *)
+          echo "${RED}Invalid selection. Exiting.${NC}"
+          exit 1
+        ;;
+      esac
+
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
       curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
@@ -117,8 +198,25 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
     ;;
 
     6)
-      echo "${GREEN}Installing Rocky Linux...${NC}"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/rockylinux/9/${ARCH_ALT}/default/"
+      echo "* [1] Rocky Linux 9"
+      echo "* [2] Rocky Linux 8"
+      echo "${YELLOW}Enter the desired version (1-2): "
+      read -p "" version
+      case $version in
+        1)
+          echo "${GREEN}Installing Rocky Linux 9...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/rockylinux/9/${ARCH_ALT}/default/"
+        ;;
+        2)
+          echo "${GREEN}Installing Rocky Linux 8...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/rockylinux/8/${ARCH_ALT}/default/"
+        ;;
+        *)
+          echo "${RED}Invalid selection. Exiting.${NC}"
+          exit 1
+        ;;
+      esac
+
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
       curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
@@ -127,8 +225,30 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
     ;;
 
     7)
-      echo "${GREEN}Installing Fedora...${NC}"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/fedora/39/${ARCH_ALT}/default/"
+      echo "* [1] Fedora 39"
+      echo "* [2] Fedora 38"
+      echo "* [3] Fedora 37"
+      echo "${YELLOW}Enter the desired version (1-3): "
+      read -p "" version
+      case $version in
+        1)
+          echo "${GREEN}Installing Fedora 39...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/fedora/39/${ARCH_ALT}/default/"
+        ;;
+        2)
+          echo "${GREEN}Installing Fedora 38...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/fedora/38/${ARCH_ALT}/default/"
+        ;;
+        3)
+          echo "${GREEN}Installing Fedora 37...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/fedora/37/${ARCH_ALT}/default/"
+        ;;
+        *)
+          echo "${RED}Invalid selection. Exiting.${NC}"
+          exit 1
+        ;;
+      esac
+
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
       curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
@@ -137,8 +257,25 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
     ;;
 
     8)
-      echo "${GREEN}Installing AlmaLinux...${NC}"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/almalinux/9/${ARCH_ALT}/default/"
+      echo "* [1] AlmaLinux 9"
+      echo "* [2] AlmaLinux 8"
+      echo "${YELLOW}Enter the desired version (1-2): "
+      read -p "" version
+      case $version in
+        1)
+          echo "${GREEN}Installing AlmaLinux 9...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/almalinux/9/${ARCH_ALT}/default/"
+        ;;
+        2)
+          echo "${GREEN}Installing AlmaLinux 8...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/almalinux/8/${ARCH_ALT}/default/"
+        ;;
+        *)
+          echo "${RED}Invalid selection. Exiting.${NC}"
+          exit 1
+        ;;
+      esac
+
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
       curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
@@ -212,8 +349,6 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
       tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
     ;;
-
-
 
     *)
       echo "${RED}Invalid selection. Exiting.${NC}"
