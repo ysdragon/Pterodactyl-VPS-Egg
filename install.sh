@@ -57,8 +57,10 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
   echo "* [10] Kali Linux                                                                              "
   echo "* [11] openSUSE                                                                                "
   echo "* [12] Gentoo Linux                                                                            "
+  echo "* [13] Arch Linux                                                                              "
+  echo "* [14] Devuan Linux                                                                            "
   echo "                                                                                               "
-  echo "${YELLOW}Enter OS (1-12):                                                                 ${NC}"
+  echo "${YELLOW}Enter OS (1-14):                                                                 ${NC}"
 
   read -p "" input
 
@@ -184,6 +186,34 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
       tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
       mkdir $ROOTFS_DIR/home/container/ -p
     ;;
+
+    13)
+      echo "${GREEN}Installing Arch Linux...${NC}"
+      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/archlinux/current/${ARCH_ALT}/default/"
+      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
+
+      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
+      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
+
+      mkdir $ROOTFS_DIR/home/container/ -p
+
+      # Fixing pacman
+      sed -i '/^#RootDir/s/^#//' "$ROOTFS_DIR/etc/pacman.conf"
+      sed -i 's|/var/lib/pacman/|/var/lib/pacman|' "$ROOTFS_DIR/etc/pacman.conf"
+      sed -i '/^#DBPath/s/^#//' "$ROOTFS_DIR/etc/pacman.conf"
+    ;;
+
+    14)
+      echo "${GREEN}Installing Devuan Linux...${NC}"
+      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/devuan/daedalus/${ARCH_ALT}/default/"
+      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
+
+      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
+      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
+      mkdir $ROOTFS_DIR/home/container/ -p
+    ;;
+
+
 
     *)
       echo "${RED}Invalid selection. Exiting.${NC}"
