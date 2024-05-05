@@ -394,12 +394,19 @@ fi
 # Start PRoot environment #
 ###########################
 
-# Get primary port from vps.config
-port=$(grep -oP 'port=\K\d+' "$ROOTFS_DIR/vps.config")
+# Get all ports from vps.config
+port_args=""
+while read line; do
+    case "$line" in
+        internalip=*) ;;
+        port[0-9]*=*) port=${line#*=}; if [ -n "$port" ]; then port_args=" -p $port:$port$port_args"; fi;;
+        port=*) port=${line#*=}; if [ -n "$port" ]; then port_args=" -p $port:$port$port_args"; fi;;   
+    esac
+done < "$ROOTFS_DIR/vps.config"
 
 # This command starts PRoot and binds several important directories
 # from the host file system to our special root file system.
 "$ROOTFS_DIR/usr/local/bin/proot" \
 --rootfs="${ROOTFS_DIR}" \
--0 -w "/root" -b /dev -b /sys -b /proc -b /etc/resolv.conf -p $port:$port --kill-on-exit \
+-0 -w "/root" -b /dev -b /sys -b /proc -b /etc/resolv.conf $port_args --kill-on-exit \
 /bin/sh "$ROOTFS_DIR/run.sh"
