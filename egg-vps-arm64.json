@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-02-26T15:37:51+02:00",
+    "exported_at": "2024-05-05T15:37:51+02:00",
     "name": "VPS - Egg",
     "author": "mrnitro2017@gmail.com",
     "description": "Run a VPS in pterodactyl!",
@@ -16,7 +16,7 @@
     "startup": "bash install.sh",
     "config": {
         "files": "{\r\n    \"vps.config\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"internalip\": \"0.0.0.0\",\r\n            \"port\": \"{{server.build.default.port}}\"\r\n        }\r\n    }\r\n}",
-        "startup": "{\r\n    \"done\": \")! Welcome \",\r\n    \"userInteraction\": [\r\n        \"Go to eula.txt for more info.\"\r\n    ]\r\n}",
+        "startup": "{\r\n    \"done\": \"\",\r\n    \"userInteraction\": [\r\n        \"Go to eula.txt for more info.\"\r\n    ]\r\n}",
         "logs": "{}",
         "stop": "exit"
     },
