@@ -109,26 +109,31 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
     ;;
 
     2)
-      echo "* [1] Ubuntu 22.04 LTS (jammy)"
-      echo "* [2] Ubuntu 20.04 LTS (focal)"
-      echo "* [3] Ubuntu 18.04 LTS (bionic)"
-      echo "* [4] Ubuntu 16.04 LTS (xenial)"
+      echo "* [1] Ubuntu 24.04 LTS (noble)"
+      echo "* [2] Ubuntu 22.04 LTS (jammy)"
+      echo "* [3] Ubuntu 20.04 LTS (focal)"
+      echo "* [4] Ubuntu 18.04 LTS (bionic)"
+      echo "* [5] Ubuntu 16.04 LTS (xenial)"
       echo "${YELLOW}Enter the desired version (1-4): "
       read -p "" version
       case $version in
         1)
+          echo "${GREEN}Installing Ubuntu 24.04 LTS (noble)...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/noble/${ARCH_ALT}/default/"
+        ;;
+        2)
           echo "${GREEN}Installing Ubuntu 22.04 LTS (jammy)...${NC}"
           url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/jammy/${ARCH_ALT}/default/"
         ;;
-        2)
+        3)
           echo "${GREEN}Installing Ubuntu 20.04 LTS (focal)...${NC}"
           url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/focal/${ARCH_ALT}/default/"
         ;;
-        3)
+        4)
           echo "${GREEN}Installing Ubuntu 18.04 LTS (bionic)...${NC}"
           url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/bionic/${ARCH_ALT}/default/"
         ;;
-        4)
+        5)
           echo "${GREEN}Installing Ubuntu 16.04 LTS (xenial)...${NC}"
           url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/xenial/${ARCH_ALT}/default/"
         ;;
