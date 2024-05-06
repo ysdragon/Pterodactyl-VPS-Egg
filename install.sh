@@ -230,23 +230,23 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
     ;;
 
     7)
-      echo "* [1] Fedora 39"
-      echo "* [2] Fedora 38"
-      echo "* [3] Fedora 37"
+      echo "* [1] Fedora 40"
+      echo "* [2] Fedora 39"
+      echo "* [3] Fedora 38"
       echo "${YELLOW}Enter the desired version (1-3): "
       read -p "" version
       case $version in
         1)
+          echo "${GREEN}Installing Fedora 40...${NC}"
+          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/fedora/40/${ARCH_ALT}/default/"
+        ;;
+        2)
           echo "${GREEN}Installing Fedora 39...${NC}"
           url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/fedora/39/${ARCH_ALT}/default/"
         ;;
-        2)
+        3)
           echo "${GREEN}Installing Fedora 38...${NC}"
           url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/fedora/38/${ARCH_ALT}/default/"
-        ;;
-        3)
-          echo "${GREEN}Installing Fedora 37...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/fedora/37/${ARCH_ALT}/default/"
         ;;
         *)
           echo "${RED}Invalid selection. Exiting.${NC}"
