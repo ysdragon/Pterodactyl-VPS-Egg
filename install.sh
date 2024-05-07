@@ -114,7 +114,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
       echo "* [3] Ubuntu 20.04 LTS (focal)"
       echo "* [4] Ubuntu 18.04 LTS (bionic)"
       echo "* [5] Ubuntu 16.04 LTS (xenial)"
-      echo "${YELLOW}Enter the desired version (1-4): "
+      echo "${YELLOW}Enter the desired version (1-5): "
       read -p "" version
       case $version in
         1)
