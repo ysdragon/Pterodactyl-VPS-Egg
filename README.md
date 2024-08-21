@@ -6,6 +6,12 @@ This is a Pterodactyl Egg for running a Virtual Private Server (VPS).
 
 This Pterodactyl Egg allows you to set up and manage a Virtual Private Server within your Pterodactyl panel. It provides a convenient way to deploy and manage VPS instances with ease.
 
+## Supported Architectures
+
+- amd64
+- arm64
+- riscv64
+
 ## Supported Operating Systems
 
 - Debian 13 (unstable), 12, 11, 10, sid (unstable)
