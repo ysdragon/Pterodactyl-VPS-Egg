@@ -29,5 +29,5 @@ jobs:
           file: Dockerfile
           platforms: linux/amd64,linux/arm64,linux/riscv64
           push: true
-          tags: quay.io/ydrag0n/pterodactyl-vps-egg:latest,quay.io/ydrag0n/pterodactyl-vps-egg:${{ github.ref_name }},quay.io/ydrag0n/pterodactyl-vps-egg:pterodactyl-vps-egg-arm64
+          tags: quay.io/ydrag0n/pterodactyl-vps-egg:latest,quay.io/ydrag0n/pterodactyl-vps-egg:${{ github.ref_name }}
           outputs: type=image,name=target
