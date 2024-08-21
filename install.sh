@@ -77,23 +77,23 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
       case $version in
         1)
           echo "${GREEN}Installing Debian 12 (bookworm)...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/bookworm/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/debian/bookworm/${ARCH_ALT}/default/"
         ;;
         2)
           echo "${GREEN}Installing Debian 11 (bullseye)...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/bullseye/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/debian/bullseye/${ARCH_ALT}/default/"
         ;;
         3)
           echo "${GREEN}Installing Debian 10 (buster)...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/buster/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/debian/buster/${ARCH_ALT}/default/"
         ;;
         4)
           echo "${GREEN}Installing Debian 13 (trixie) (unstable)...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/trixie/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/debian/trixie/${ARCH_ALT}/default/"
         ;;
         5)
           echo "${GREEN}Installing (sid) (unstable)...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/debian/sid/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/debian/sid/${ARCH_ALT}/default/"
         ;;
         *)
           echo "${RED}Invalid selection. Exiting.${NC}"
@@ -119,23 +119,23 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
       case $version in
         1)
           echo "${GREEN}Installing Ubuntu 24.04 LTS (noble)...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/noble/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/ubuntu/noble/${ARCH_ALT}/default/"
         ;;
         2)
           echo "${GREEN}Installing Ubuntu 22.04 LTS (jammy)...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/jammy/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/ubuntu/jammy/${ARCH_ALT}/default/"
         ;;
         3)
           echo "${GREEN}Installing Ubuntu 20.04 LTS (focal)...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/focal/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/ubuntu/focal/${ARCH_ALT}/default/"
         ;;
         4)
           echo "${GREEN}Installing Ubuntu 18.04 LTS (bionic)...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/bionic/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/ubuntu/bionic/${ARCH_ALT}/default/"
         ;;
         5)
           echo "${GREEN}Installing Ubuntu 16.04 LTS (xenial)...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/ubuntu/xenial/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/ubuntu/xenial/${ARCH_ALT}/default/"
         ;;
         *)
           echo "${RED}Invalid selection. Exiting.${NC}"
@@ -152,7 +152,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
 
     3)
       echo "${GREEN}Installing Void Linux...${NC}"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/voidlinux/current/${ARCH_ALT}/default/"
+      url="https://images.linuxcontainers.org/images/voidlinux/current/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
       curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
@@ -162,7 +162,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
 
     4)
       echo "${GREEN}Installing Alpine Linux (Edge)...${NC}"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/alpine/edge/${ARCH_ALT}/default/"
+      url="https://images.linuxcontainers.org/images/alpine/edge/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
       curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
@@ -179,15 +179,15 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
       case $version in
         1)
           echo "${GREEN}Installing CentOS 9 Stream...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/centos/9-Stream/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/centos/9-Stream/${ARCH_ALT}/default/"
         ;;
         2)
           echo "${GREEN}Installing CentOS 8 Stream...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/centos/8-Stream/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/centos/8-Stream/${ARCH_ALT}/default/"
         ;;
         3)
           echo "${GREEN}Installing CentOS 7...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/centos/7/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/centos/7/${ARCH_ALT}/default/"
         ;;
         *)
           echo "${RED}Invalid selection. Exiting.${NC}"
@@ -210,11 +210,11 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
       case $version in
         1)
           echo "${GREEN}Installing Rocky Linux 9...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/rockylinux/9/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/rockylinux/9/${ARCH_ALT}/default/"
         ;;
         2)
           echo "${GREEN}Installing Rocky Linux 8...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/rockylinux/8/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/rockylinux/8/${ARCH_ALT}/default/"
         ;;
         *)
           echo "${RED}Invalid selection. Exiting.${NC}"
@@ -238,15 +238,15 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
       case $version in
         1)
           echo "${GREEN}Installing Fedora 40...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/fedora/40/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/fedora/40/${ARCH_ALT}/default/"
         ;;
         2)
           echo "${GREEN}Installing Fedora 39...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/fedora/39/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/fedora/39/${ARCH_ALT}/default/"
         ;;
         3)
           echo "${GREEN}Installing Fedora 38...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/fedora/38/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/fedora/38/${ARCH_ALT}/default/"
         ;;
         *)
           echo "${RED}Invalid selection. Exiting.${NC}"
@@ -269,11 +269,11 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
       case $version in
         1)
           echo "${GREEN}Installing AlmaLinux 9...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/almalinux/9/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/almalinux/9/${ARCH_ALT}/default/"
         ;;
         2)
           echo "${GREEN}Installing AlmaLinux 8...${NC}"
-          url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/almalinux/8/${ARCH_ALT}/default/"
+          url="https://images.linuxcontainers.org/images/almalinux/8/${ARCH_ALT}/default/"
         ;;
         *)
           echo "${RED}Invalid selection. Exiting.${NC}"
@@ -290,7 +290,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
 
     9)
       echo "${GREEN}Installing Slackware...${NC}"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/slackware/current/${ARCH_ALT}/default/"
+      url="https://images.linuxcontainers.org/images/slackware/current/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
       curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
@@ -301,7 +301,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
 
     10)
       echo "${GREEN}Installing Kali Linux...${NC}"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/kali/current/${ARCH_ALT}/default/"
+      url="https://images.linuxcontainers.org/images/kali/current/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
       curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
@@ -311,7 +311,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
 
     11)
       echo "${GREEN}Installing OpenSUSE Leap...${NC}"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/opensuse/15.5/${ARCH_ALT}/default/"
+      url="https://images.linuxcontainers.org/images/opensuse/15.5/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
       curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
@@ -321,7 +321,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
 
     12)
       echo "${GREEN}Installing Gentoo Linux...${NC}"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/gentoo/current/${ARCH_ALT}/systemd/"
+      url="https://images.linuxcontainers.org/images/gentoo/current/${ARCH_ALT}/systemd/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
       curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
@@ -331,7 +331,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
 
     13)
       echo "${GREEN}Installing Arch Linux...${NC}"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/archlinux/current/${ARCH_ALT}/default/"
+      url="https://images.linuxcontainers.org/images/archlinux/current/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
       curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
@@ -347,7 +347,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
 
     14)
       echo "${GREEN}Installing Devuan Linux...${NC}"
-      url="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/devuan/daedalus/${ARCH_ALT}/default/"
+      url="https://images.linuxcontainers.org/images/devuan/daedalus/${ARCH_ALT}/default/"
       LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
 
       curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
