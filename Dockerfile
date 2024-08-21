@@ -15,5 +15,7 @@ ENV HOME /
 WORKDIR /
 
 COPY ./entrypoint.sh /entrypoint.sh
+COPY ./install.sh /install.sh
+COPY ./run.sh /run.sh
 
 CMD ["/bin/bash", "/entrypoint.sh"]
