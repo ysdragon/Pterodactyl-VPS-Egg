@@ -3,6 +3,10 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
+printf "\033c"
+printf "${GREEN}Starting..${NC}\n"
+printf "\033c"
+
 DIR=$PWD # get current dir
 # if current dir is /root print ~
 if [ "$PWD" = "/root"* ]; then

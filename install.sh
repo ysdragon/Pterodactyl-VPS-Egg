@@ -366,10 +366,11 @@ fi
 # Package Installation & Setup #
 #################################
 
-# Download run.sh
-curl -Ls "https://raw.githubusercontent.com/ysdragon/Pterodactyl-VPS-Egg/main/run.sh" -o "$ROOTFS_DIR/home/container/run.sh"
+# Copy run.sh
+cp /run.sh "$ROOTFS_DIR/run.sh"
+
 # Make run.sh executable.
-chmod +x "$ROOTFS_DIR/home/container/run.sh"
+chmod +x "$ROOTFS_DIR/run.sh"
 
 # Download static proot.
 if [ ! -e "$ROOTFS_DIR/.installed" ]; then
@@ -409,4 +410,4 @@ done < "$ROOTFS_DIR/vps.config"
 "$ROOTFS_DIR/usr/local/bin/proot" \
 --rootfs="${ROOTFS_DIR}" \
 -0 -w "/root" -b /dev -b /sys -b /proc -b /etc/resolv.conf $port_args --kill-on-exit \
-/bin/sh "$ROOTFS_DIR/run.sh"
+/bin/sh "/run.sh"
