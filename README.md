@@ -14,14 +14,14 @@ This Pterodactyl Egg allows you to set up and manage a Virtual Private Server wi
 
 ## Supported Operating Systems
 
-- Debian 13 (unstable), 12, 11, 10, sid (unstable)
-- Ubuntu 24.04 LTS, 22.04 LTS, 20.04 LTS, 18.04 LTS, 16.04 LTS
+- Debian
+- Ubuntu
 - Void Linux
 - Alpine Linux
-- CentOS 9 (Stream), 8 (Stream), 7
-- Rocky Linux 9, 8
-- Fedora 40, 39, 38
-- AlmaLinux 9, 8
+- CentOS
+- Rocky Linux
+- Fedora
+- AlmaLinux
 - Slackware Linux
 - Kali Linux
 - openSUSE
