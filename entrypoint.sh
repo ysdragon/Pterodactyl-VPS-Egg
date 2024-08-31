@@ -8,4 +8,4 @@ MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g'
 export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 
 # Run the VPS Installer
-sh /install.sh
+bash /install.sh
