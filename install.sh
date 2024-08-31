@@ -24,354 +24,209 @@ ARCH=$(uname -m)
 # Check machine architecture to make sure it is supported.
 # If not, we exit with a non-zero status code.
 if [ "$ARCH" = "x86_64" ]; then
-  ARCH_ALT=amd64
-elif [ "$ARCH" = "aarch64" ]; then
-  ARCH_ALT=arm64
+    ARCH_ALT=amd64
+    elif [ "$ARCH" = "aarch64" ]; then
+    ARCH_ALT=arm64
 else
-  printf "Unsupported CPU architecture: ${ARCH}"
-  exit 1
+    printf "Unsupported CPU architecture: ${ARCH}"
+    exit 1
 fi
+
+# Base mirror url
+BASE_URL="https://images.linuxcontainers.org/images"
+
+# Function to install a specific distro
+install() {
+    local distro_name="$1"
+    local pretty_name="$2"
+    # Fetch the directory listing and extract the image names
+    image_names=$(curl -s "$BASE_URL/$distro_name/" | grep -oP '(?<=href=")[^/]+(?=/")' | grep -v '^\.\.$')
+    
+    # Convert the space-separated string into an array
+    set -- $image_names
+    image_names=("$@")
+    
+    # Display the available versions
+    for i in "${!image_names[@]}"; do
+        echo "* [$((i + 1))] ${pretty_name} (${image_names[i]})"
+    done
+    
+    echo -e "${YELLOW}Enter the desired version (1-${#image_names[@]}): ${NC}"
+    read -p "" version
+    
+    # Validate the input
+    if [[ $version -lt 1 || $version -gt ${#image_names[@]} ]]; then
+        echo -e "${RED}Invalid selection. Exiting.${NC}"
+        exit 1
+    fi
+    
+    # Get the selected version
+    selected_version=${image_names[$((version - 1))]}
+    echo -e "${GREEN}Installing $pretty_name (${selected_version})...${NC}"
+    
+    url="${BASE_URL}/${distro_name}/${selected_version}/${ARCH_ALT}/default/"
+    
+    # Fetch the latest version of the root filesystem
+    LATEST_VERSION=$(curl -s "$url" | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
+    
+    # Download and extract the root filesystem
+    mkdir -p "$ROOTFS_DIR"
+    curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o "$ROOTFS_DIR/rootfs.tar.xz"
+    tar -xf "$ROOTFS_DIR/rootfs.tar.xz" -C "$ROOTFS_DIR"
+    mkdir -p "$ROOTFS_DIR/home/container/"
+}
+
+# Function to install a specific distro (custom)
+install_custom() {
+    local distro_name="$1"
+    local pretty_name="$2"
+    # Fetch the directory listing and extract the image names
+    image_names=$(curl -s "$BASE_URL/$distro_name/current/$ARCH_ALT/" | grep -oP '(?<=href=")[^/]+(?=/")' | grep -v '^\.\.$')
+    
+    # Convert the space-separated string into an array
+    set -- $image_names
+    image_names=("$@")
+    
+    # Display the available versions
+    for i in "${!image_names[@]}"; do
+        echo "* [$((i + 1))] ${pretty_name} (${image_names[i]})"
+    done
+    
+    echo -e "${YELLOW}Enter the desired version (1-${#image_names[@]}): ${NC}"
+    read -p "" version
+    
+    # Validate the input
+    if [[ $version -lt 1 || $version -gt ${#image_names[@]} ]]; then
+        echo -e "${RED}Invalid selection. Exiting.${NC}"
+        exit 1
+    fi
+    
+    # Get the selected version
+    selected_version=${image_names[$((version - 1))]}
+    echo -e "${GREEN}Installing $pretty_name (${selected_version})...${NC}"
+    
+    url="$BASE_URL/${distro_name}/current/$ARCH_ALT/$selected_version/"
+    
+    # Fetch the latest version of the root filesystem
+    LATEST_VERSION=$(curl -s "$url" | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
+    
+    # Download and extract the root filesystem
+    mkdir -p "$ROOTFS_DIR"
+    curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o "$ROOTFS_DIR/rootfs.tar.xz"
+    tar -xf "$ROOTFS_DIR/rootfs.tar.xz" -C "$ROOTFS_DIR"
+    mkdir -p "$ROOTFS_DIR/home/container/"
+}
 
 # Download & decompress the Linux root file system if not already installed.
 if [ ! -e "$ROOTFS_DIR/.installed" ]; then
-
-  printf "\033c"
-  echo "${GREEN}╭────────────────────────────────────────────────────────────────────────────────╮${NC}"
-  echo "${GREEN}│                                                                                │${NC}"
-  echo "${GREEN}│                             Pterodactyl VPS EGG                                │${NC}"
-  echo "${GREEN}│                                                                                │${NC}"
-  echo "${GREEN}│                           ${RED}© 2021 - 2024 ${PURPLE}ysdragon${GREEN}                               │${NC}"
-  echo "${GREEN}│                                                                                │${NC}"
-  echo "${GREEN}╰────────────────────────────────────────────────────────────────────────────────╯${NC}"
-  echo "                                                                                               "
-  echo "${YELLOW}Please choose your favorite distro                                               ${NC}"
-  echo "                                                                                               "  
-  echo "* [1] Debian                                                                                   "
-  echo "* [2] Ubuntu                                                                                   "
-  echo "* [3] Void Linux                                                                               "
-  echo "* [4] Alpine Linux  (Edge)                                                                     "
-  echo "* [5] CentOS                                                                                   "
-  echo "* [6] Rocky Linux                                                                              "
-  echo "* [7] Fedora                                                                                   "
-  echo "* [8] AlmaLinux                                                                                "
-  echo "* [9] Slackware Linux                                                                          "
-  echo "* [10] Kali Linux                                                                              "
-  echo "* [11] openSUSE                                                                                "
-  echo "* [12] Gentoo Linux                                                                            "
-  echo "* [13] Arch Linux                                                                              "
-  echo "* [14] Devuan Linux                                                                            "
-  echo "                                                                                               "
-  echo "${YELLOW}Enter OS (1-14):                                                                 ${NC}"
-
-  read -p "" input
-
-  case $input in
-
-    1)
-      echo "* [1] Debian 12 (bookworm)"
-      echo "* [2] Debian 11 (bullseye)"
-      echo "* [3] Debian 10 (buster)"
-      echo "* [4] Debian 13 (trixie) (unstable)"
-      echo "* [5] Debian (sid) (unstable)"
-      echo "${YELLOW}Enter the desired version (1-5): "
-      read -p "" version
-      case $version in
+    
+    # Clear the terminal
+    printf "\033c"
+    
+    # Display the menu
+    echo -e "${GREEN}╭────────────────────────────────────────────────────────────────────────────────╮${NC}"
+    echo -e "${GREEN}│                                                                                │${NC}"
+    echo -e "${GREEN}│                             Pterodactyl VPS EGG                                │${NC}"
+    echo -e "${GREEN}│                                                                                │${NC}"
+    echo -e "${GREEN}│                           ${RED}© 2021 - 2024 ${PURPLE}ysdragon${GREEN}                               │${NC}"
+    echo -e "${GREEN}│                                                                                │${NC}"
+    echo -e "${GREEN}╰────────────────────────────────────────────────────────────────────────────────╯${NC}"
+    echo "                                                                                               "
+    echo -e "${YELLOW}Please choose your favorite distro                                               ${NC}"
+    echo "                                                                                               "
+    echo "* [1] Debian                                                                                   "
+    echo "* [2] Ubuntu                                                                                   "
+    echo "* [3] Void Linux                                                                               "
+    echo "* [4] Alpine Linux                                                                             "
+    echo "* [5] CentOS                                                                                   "
+    echo "* [6] Rocky Linux                                                                              "
+    echo "* [7] Fedora                                                                                   "
+    echo "* [8] AlmaLinux                                                                                "
+    echo "* [9] Slackware Linux                                                                          "
+    echo "* [10] Kali Linux                                                                              "
+    echo "* [11] openSUSE                                                                                "
+    echo "* [12] Gentoo Linux                                                                            "
+    echo "* [13] Arch Linux                                                                              "
+    echo "* [14] Devuan Linux                                                                            "
+    echo "                                                                                               "
+    echo -e "${YELLOW}Enter OS (1-14):                                                                 ${NC}"
+    
+    read -p "" input
+    
+    case $input in
+        
         1)
-          echo "${GREEN}Installing Debian 12 (bookworm)...${NC}"
-          url="https://images.linuxcontainers.org/images/debian/bookworm/${ARCH_ALT}/default/"
+            install             "debian"        "Debian"
         ;;
+        
         2)
-          echo "${GREEN}Installing Debian 11 (bullseye)...${NC}"
-          url="https://images.linuxcontainers.org/images/debian/bullseye/${ARCH_ALT}/default/"
+            install             "ubuntu"        "Ubuntu"
         ;;
+        
         3)
-          echo "${GREEN}Installing Debian 10 (buster)...${NC}"
-          url="https://images.linuxcontainers.org/images/debian/buster/${ARCH_ALT}/default/"
+            install_custom      "voidlinux"     "Void Linux"
         ;;
+        
         4)
-          echo "${GREEN}Installing Debian 13 (trixie) (unstable)...${NC}"
-          url="https://images.linuxcontainers.org/images/debian/trixie/${ARCH_ALT}/default/"
+            install             "alpine"        "Alpine Linux"
         ;;
+        
         5)
-          echo "${GREEN}Installing (sid) (unstable)...${NC}"
-          url="https://images.linuxcontainers.org/images/debian/sid/${ARCH_ALT}/default/"
+            install             "centos"        "CentOS"
         ;;
+        
+        6)
+            install             "rockylinux"    "Rocky Linux"
+        ;;
+        
+        7)
+            install             "fedora"        "Fedora"
+        ;;
+        
+        8)
+            install             "almalinux"     "Alma Linux"
+        ;;
+        
+        9)
+            install             "slackware"     "Slackware"
+        ;;
+        
+        
+        10)
+            install             "kali"          "Kali Linux"
+        ;;
+        
+        11)
+            install             "opensuse"      "openSUSE"
+        ;;
+        
+        12)
+            install             "gentoo"        "Gentoo"
+        ;;
+        
+        13)
+            install             "archlinux"     "Arch Linux"
+            
+            # Fix pacman
+            sed -i '/^#RootDir/s/^#//' "$ROOTFS_DIR/etc/pacman.conf"
+            sed -i 's|/var/lib/pacman/|/var/lib/pacman|' "$ROOTFS_DIR/etc/pacman.conf"
+            sed -i '/^#DBPath/s/^#//' "$ROOTFS_DIR/etc/pacman.conf"
+        ;;
+        
+        14)
+            install             "devuan"        "Devuan Linux"
+        ;;
+        
         *)
-          echo "${RED}Invalid selection. Exiting.${NC}"
-          exit 1
+            echo "${RED}Invalid selection. Exiting.${NC}"
+            exit 1
         ;;
-      esac
-
-      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-
-      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
-      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
-      mkdir $ROOTFS_DIR/home/container/ -p
-    ;;
-
-    2)
-      echo "* [1] Ubuntu 24.04 LTS (noble)"
-      echo "* [2] Ubuntu 22.04 LTS (jammy)"
-      echo "* [3] Ubuntu 20.04 LTS (focal)"
-      echo "* [4] Ubuntu 18.04 LTS (bionic)"
-      echo "* [5] Ubuntu 16.04 LTS (xenial)"
-      echo "${YELLOW}Enter the desired version (1-5): "
-      read -p "" version
-      case $version in
-        1)
-          echo "${GREEN}Installing Ubuntu 24.04 LTS (noble)...${NC}"
-          url="https://images.linuxcontainers.org/images/ubuntu/noble/${ARCH_ALT}/default/"
-        ;;
-        2)
-          echo "${GREEN}Installing Ubuntu 22.04 LTS (jammy)...${NC}"
-          url="https://images.linuxcontainers.org/images/ubuntu/jammy/${ARCH_ALT}/default/"
-        ;;
-        3)
-          echo "${GREEN}Installing Ubuntu 20.04 LTS (focal)...${NC}"
-          url="https://images.linuxcontainers.org/images/ubuntu/focal/${ARCH_ALT}/default/"
-        ;;
-        4)
-          echo "${GREEN}Installing Ubuntu 18.04 LTS (bionic)...${NC}"
-          url="https://images.linuxcontainers.org/images/ubuntu/bionic/${ARCH_ALT}/default/"
-        ;;
-        5)
-          echo "${GREEN}Installing Ubuntu 16.04 LTS (xenial)...${NC}"
-          url="https://images.linuxcontainers.org/images/ubuntu/xenial/${ARCH_ALT}/default/"
-        ;;
-        *)
-          echo "${RED}Invalid selection. Exiting.${NC}"
-          exit 1
-        ;;
-      esac
-
-      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-
-      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
-      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
-      mkdir $ROOTFS_DIR/home/container/ -p
-    ;;
-
-    3)
-      echo "${GREEN}Installing Void Linux...${NC}"
-      url="https://images.linuxcontainers.org/images/voidlinux/current/${ARCH_ALT}/default/"
-      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-
-      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
-      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
-      mkdir $ROOTFS_DIR/home/container/ -p
-    ;;
-
-    4)
-      echo "${GREEN}Installing Alpine Linux (Edge)...${NC}"
-      url="https://images.linuxcontainers.org/images/alpine/edge/${ARCH_ALT}/default/"
-      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-
-      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
-      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
-      mkdir $ROOTFS_DIR/home/container/ -p
-    ;;
-
-    5)
-      echo "* [1] CentOS 9 Stream"
-      echo "* [2] CentOS 8 Stream"
-      echo "* [3] CentOS 7"
-      echo "${YELLOW}Enter the desired version (1-3): "
-      read -p "" version
-      case $version in
-        1)
-          echo "${GREEN}Installing CentOS 9 Stream...${NC}"
-          url="https://images.linuxcontainers.org/images/centos/9-Stream/${ARCH_ALT}/default/"
-        ;;
-        2)
-          echo "${GREEN}Installing CentOS 8 Stream...${NC}"
-          url="https://images.linuxcontainers.org/images/centos/8-Stream/${ARCH_ALT}/default/"
-        ;;
-        3)
-          echo "${GREEN}Installing CentOS 7...${NC}"
-          url="https://images.linuxcontainers.org/images/centos/7/${ARCH_ALT}/default/"
-        ;;
-        *)
-          echo "${RED}Invalid selection. Exiting.${NC}"
-          exit 1
-        ;;
-      esac
-
-      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-
-      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
-      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
-      mkdir $ROOTFS_DIR/home/container/ -p
-    ;;
-
-    6)
-      echo "* [1] Rocky Linux 9"
-      echo "* [2] Rocky Linux 8"
-      echo "${YELLOW}Enter the desired version (1-2): "
-      read -p "" version
-      case $version in
-        1)
-          echo "${GREEN}Installing Rocky Linux 9...${NC}"
-          url="https://images.linuxcontainers.org/images/rockylinux/9/${ARCH_ALT}/default/"
-        ;;
-        2)
-          echo "${GREEN}Installing Rocky Linux 8...${NC}"
-          url="https://images.linuxcontainers.org/images/rockylinux/8/${ARCH_ALT}/default/"
-        ;;
-        *)
-          echo "${RED}Invalid selection. Exiting.${NC}"
-          exit 1
-        ;;
-      esac
-
-      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-
-      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
-      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
-      mkdir $ROOTFS_DIR/home/container/ -p
-    ;;
-
-    7)
-      echo "* [1] Fedora 40"
-      echo "* [2] Fedora 39"
-      echo "* [3] Fedora 38"
-      echo "${YELLOW}Enter the desired version (1-3): "
-      read -p "" version
-      case $version in
-        1)
-          echo "${GREEN}Installing Fedora 40...${NC}"
-          url="https://images.linuxcontainers.org/images/fedora/40/${ARCH_ALT}/default/"
-        ;;
-        2)
-          echo "${GREEN}Installing Fedora 39...${NC}"
-          url="https://images.linuxcontainers.org/images/fedora/39/${ARCH_ALT}/default/"
-        ;;
-        3)
-          echo "${GREEN}Installing Fedora 38...${NC}"
-          url="https://images.linuxcontainers.org/images/fedora/38/${ARCH_ALT}/default/"
-        ;;
-        *)
-          echo "${RED}Invalid selection. Exiting.${NC}"
-          exit 1
-        ;;
-      esac
-
-      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-
-      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
-      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
-      mkdir $ROOTFS_DIR/home/container/ -p
-    ;;
-
-    8)
-      echo "* [1] AlmaLinux 9"
-      echo "* [2] AlmaLinux 8"
-      echo "${YELLOW}Enter the desired version (1-2): "
-      read -p "" version
-      case $version in
-        1)
-          echo "${GREEN}Installing AlmaLinux 9...${NC}"
-          url="https://images.linuxcontainers.org/images/almalinux/9/${ARCH_ALT}/default/"
-        ;;
-        2)
-          echo "${GREEN}Installing AlmaLinux 8...${NC}"
-          url="https://images.linuxcontainers.org/images/almalinux/8/${ARCH_ALT}/default/"
-        ;;
-        *)
-          echo "${RED}Invalid selection. Exiting.${NC}"
-          exit 1
-        ;;
-      esac
-
-      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-
-      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
-      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
-      mkdir $ROOTFS_DIR/home/container/ -p
-    ;;
-
-    9)
-      echo "${GREEN}Installing Slackware...${NC}"
-      url="https://images.linuxcontainers.org/images/slackware/current/${ARCH_ALT}/default/"
-      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-
-      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
-      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
-      mkdir $ROOTFS_DIR/home/container/ -p
-    ;;
-
-
-    10)
-      echo "${GREEN}Installing Kali Linux...${NC}"
-      url="https://images.linuxcontainers.org/images/kali/current/${ARCH_ALT}/default/"
-      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-
-      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
-      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
-      mkdir $ROOTFS_DIR/home/container/ -p
-    ;;
-
-    11)
-      echo "${GREEN}Installing OpenSUSE Leap...${NC}"
-      url="https://images.linuxcontainers.org/images/opensuse/15.5/${ARCH_ALT}/default/"
-      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-
-      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
-      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
-      mkdir $ROOTFS_DIR/home/container/ -p
-    ;;
-
-    12)
-      echo "${GREEN}Installing Gentoo Linux...${NC}"
-      url="https://images.linuxcontainers.org/images/gentoo/current/${ARCH_ALT}/systemd/"
-      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-
-      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
-      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
-      mkdir $ROOTFS_DIR/home/container/ -p
-    ;;
-
-    13)
-      echo "${GREEN}Installing Arch Linux...${NC}"
-      url="https://images.linuxcontainers.org/images/archlinux/current/${ARCH_ALT}/default/"
-      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-
-      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
-      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
-
-      mkdir $ROOTFS_DIR/home/container/ -p
-
-      # Fixing pacman
-      sed -i '/^#RootDir/s/^#//' "$ROOTFS_DIR/etc/pacman.conf"
-      sed -i 's|/var/lib/pacman/|/var/lib/pacman|' "$ROOTFS_DIR/etc/pacman.conf"
-      sed -i '/^#DBPath/s/^#//' "$ROOTFS_DIR/etc/pacman.conf"
-    ;;
-
-    14)
-      echo "${GREEN}Installing Devuan Linux...${NC}"
-      url="https://images.linuxcontainers.org/images/devuan/daedalus/${ARCH_ALT}/default/"
-      LATEST_VERSION=$(curl -s $url | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-
-      curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o $ROOTFS_DIR/rootfs.tar.xz
-      tar -xf $ROOTFS_DIR/rootfs.tar.xz -C "$ROOTFS_DIR"
-      mkdir $ROOTFS_DIR/home/container/ -p
-    ;;
-
-    *)
-      echo "${RED}Invalid selection. Exiting.${NC}"
-      exit 1
-    ;;
-  esac
+    esac
 fi
 
 ################################
 # Package Installation & Setup #
 #################################
-
-# Copy run.sh
-cp /run.sh "$ROOTFS_DIR/run.sh"
-
-# Make run.sh executable.
-chmod +x "$ROOTFS_DIR/run.sh"
 
 # Download static proot.
 if [ ! -e "$ROOTFS_DIR/.installed" ]; then
@@ -402,7 +257,7 @@ while read line; do
     case "$line" in
         internalip=*) ;;
         port[0-9]*=*) port=${line#*=}; if [ -n "$port" ]; then port_args=" -p $port:$port$port_args"; fi;;
-        port=*) port=${line#*=}; if [ -n "$port" ]; then port_args=" -p $port:$port$port_args"; fi;;   
+        port=*) port=${line#*=}; if [ -n "$port" ]; then port_args=" -p $port:$port$port_args"; fi;;
     esac
 done < "$ROOTFS_DIR/vps.config"
 
