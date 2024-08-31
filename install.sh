@@ -27,6 +27,8 @@ if [ "$ARCH" = "x86_64" ]; then
     ARCH_ALT=amd64
     elif [ "$ARCH" = "aarch64" ]; then
     ARCH_ALT=arm64
+    elif [ "$ARCH" = "riscv64" ]; then
+    ARCH_ALT=riscv64
 else
     printf "Unsupported CPU architecture: ${ARCH}"
     exit 1
