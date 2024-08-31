@@ -10,7 +10,7 @@ This Pterodactyl Egg allows you to set up and manage a Virtual Private Server wi
 
 - amd64
 - arm64
-- riscv64
+- riscv64 (You have to provide/host your own rootfs images)
 
 ## Supported Operating Systems
 
