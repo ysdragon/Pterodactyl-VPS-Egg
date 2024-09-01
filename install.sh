@@ -16,7 +16,7 @@ ROOTFS_DIR=/home/container
 
 export PATH=$PATH:~/.local/usr/bin
 
-PROOT_VERSION="5.3.0" # Some releases do not have static builds attached.
+PROOT_VERSION="5.4.0" # Some releases do not have static builds attached.
 
 # Detect the machine architecture.
 ARCH=$(uname -m)
@@ -232,9 +232,10 @@ fi
 
 # Download static proot.
 if [ ! -e "$ROOTFS_DIR/.installed" ]; then
-    # Download the packages from their sources
+    # Create "$ROOTFS_DIR/usr/local/bin" dir
     mkdir -p "$ROOTFS_DIR/usr/local/bin"
-    curl -Ls "https://github.com/proot-me/proot/releases/download/v${PROOT_VERSION}/proot-v${PROOT_VERSION}-${ARCH}-static" -o "$ROOTFS_DIR/usr/local/bin/proot"
+    # Download static proot.
+    curl -Ls "https://github.com/ysdragon/proot-static/releases/download/v${PROOT_VERSION}/proot-${ARCH}-static" -o "$ROOTFS_DIR/usr/local/bin/proot"
     # Make PRoot executable.
     chmod 755 "$ROOTFS_DIR/usr/local/bin/proot"
 fi
