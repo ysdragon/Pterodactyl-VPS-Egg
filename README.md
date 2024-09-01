@@ -39,3 +39,6 @@ Feel free to customize the Egg settings and configurations to suit your requirem
 ## Contributing
 
 Contributions are welcome. If you have any suggestions, improvements, or bug fixes, feel free to submit a pull request.
+
+## License
+This project is open-source and available under the MIT License. See the [LICENSE](https://github.com/ysdragon/Pterodactyl-VPS-Egg/blob/master/LICENSE) file for more details.
