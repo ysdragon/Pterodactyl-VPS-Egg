@@ -16,7 +16,7 @@ ROOTFS_DIR=/home/container
 
 export PATH=$PATH:~/.local/usr/bin
 
-PROOT_VERSION="5.4.0" # Some releases do not have static builds attached.
+PROOT_VERSION="5.4.0"
 
 # Detect the machine architecture.
 ARCH=$(uname -m)
