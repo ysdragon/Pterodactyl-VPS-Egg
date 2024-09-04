@@ -211,7 +211,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
         ;;
         
         12)
-            install             "gentoo"        "Gentoo"
+            install_custom      "gentoo"        "Gentoo Linux"
         ;;
         
         13)
