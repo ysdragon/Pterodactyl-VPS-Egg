@@ -66,14 +66,22 @@ install() {
     selected_version=${image_names[$((version - 1))]}
     echo -e "${GREEN}Installing $pretty_name (${selected_version})...${NC}"
     
-    url="${BASE_URL}/${distro_name}/${selected_version}/${ARCH_ALT}/default/"
+    ARCH_URL="${BASE_URL}/${distro_name}/${selected_version}/"
+
+    # Check if the distro support $ARCH_ALT
+    if ! curl -s "$ARCH_URL" | grep -q "$ARCH_ALT"; then
+        echo -e "${RED}Error: This distro doesn't support $ARCH_ALT. Exiting.${NC}"
+        exit 1
+    fi
     
+    URL="${BASE_URL}/${distro_name}/${selected_version}/${ARCH_ALT}/default/"
+
     # Fetch the latest version of the root filesystem
-    LATEST_VERSION=$(curl -s "$url" | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
+    LATEST_VERSION=$(curl -s "$URL" | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
     
     # Download and extract the root filesystem
     mkdir -p "$ROOTFS_DIR"
-    curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o "$ROOTFS_DIR/rootfs.tar.xz"
+    curl -Ls "${URL}${LATEST_VERSION}/rootfs.tar.xz" -o "$ROOTFS_DIR/rootfs.tar.xz"
     tar -xf "$ROOTFS_DIR/rootfs.tar.xz" -C "$ROOTFS_DIR"
     mkdir -p "$ROOTFS_DIR/home/container/"
 }
@@ -107,14 +115,14 @@ install_custom() {
     selected_version=${image_names[$((version - 1))]}
     echo -e "${GREEN}Installing $pretty_name (${selected_version})...${NC}"
     
-    url="$BASE_URL/${distro_name}/current/$ARCH_ALT/$selected_version/"
+    URL="$BASE_URL/${distro_name}/current/$ARCH_ALT/$selected_version/"
     
     # Fetch the latest version of the root filesystem
-    LATEST_VERSION=$(curl -s "$url" | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
+    LATEST_VERSION=$(curl -s "$URL" | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
     
     # Download and extract the root filesystem
     mkdir -p "$ROOTFS_DIR"
-    curl -Ls "${url}${LATEST_VERSION}/rootfs.tar.xz" -o "$ROOTFS_DIR/rootfs.tar.xz"
+    curl -Ls "${URL}${LATEST_VERSION}/rootfs.tar.xz" -o "$ROOTFS_DIR/rootfs.tar.xz"
     tar -xf "$ROOTFS_DIR/rootfs.tar.xz" -C "$ROOTFS_DIR"
     mkdir -p "$ROOTFS_DIR/home/container/"
 }
