@@ -41,9 +41,17 @@ BASE_URL="https://images.linuxcontainers.org/images"
 install() {
     local distro_name="$1"
     local pretty_name="$2"
-    # Fetch the directory listing and extract the image names
-    image_names=$(curl -s "$BASE_URL/$distro_name/" | grep -oP '(?<=href=")[^/]+(?=/")' | grep -v '^\.\.$')
-    
+    local is_custom="$3"
+
+    # Determine if it's a custom install  (Has more than one flavor for each version)
+    # e.g musl, glibc for voidlinux
+    if [[ "$is_custom" == "true" ]]; then
+        # Fetch the directory listing and extract the image names
+        image_names=$(curl -s "$BASE_URL/$distro_name/current/$ARCH_ALT/" | grep -oP '(?<=href=")[^/]+(?=/")' | grep -v '^\.\.$')
+    else
+        # Fetch the directory listing and extract the image names
+        image_names=$(curl -s "$BASE_URL/$distro_name/" | grep -oP '(?<=href=")[^/]+(?=/")' | grep -v '^\.\.$')
+    fi
     # Convert the space-separated string into an array
     set -- $image_names
     image_names=("$@")
@@ -53,6 +61,7 @@ install() {
         echo "* [$((i + 1))] ${pretty_name} (${image_names[i]})"
     done
     
+    # Enter the the desired version
     echo -e "${YELLOW}Enter the desired version (1-${#image_names[@]}): ${NC}"
     read -p "" version
     
@@ -66,15 +75,20 @@ install() {
     selected_version=${image_names[$((version - 1))]}
     echo -e "${GREEN}Installing $pretty_name (${selected_version})...${NC}"
     
-    ARCH_URL="${BASE_URL}/${distro_name}/${selected_version}/"
+    # Determine if it's a custom install to check whether your architecture is supported and obtain the URL accordingly 
+    if [[ "$is_custom" == "true" ]]; then
+        ARCH_URL="${BASE_URL}/${distro_name}/current/"
+        URL="$BASE_URL/${distro_name}/current/$ARCH_ALT/$selected_version/"
+    else
+        ARCH_URL="${BASE_URL}/${distro_name}/${selected_version}/"
+        URL="${BASE_URL}/${distro_name}/${selected_version}/${ARCH_ALT}/default/"
+    fi
 
     # Check if the distro support $ARCH_ALT
     if ! curl -s "$ARCH_URL" | grep -q "$ARCH_ALT"; then
         echo -e "${RED}Error: This distro doesn't support $ARCH_ALT. Exiting.${NC}"
         exit 1
     fi
-    
-    URL="${BASE_URL}/${distro_name}/${selected_version}/${ARCH_ALT}/default/"
 
     # Fetch the latest version of the root filesystem
     LATEST_VERSION=$(curl -s "$URL" | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
@@ -86,45 +100,29 @@ install() {
     mkdir -p "$ROOTFS_DIR/home/container/"
 }
 
-# Function to install a specific distro (custom)
+# Function to install a specific distro (custom) from a specific URL
 install_custom() {
-    local distro_name="$1"
-    local pretty_name="$2"
-    # Fetch the directory listing and extract the image names
-    image_names=$(curl -s "$BASE_URL/$distro_name/current/$ARCH_ALT/" | grep -oP '(?<=href=")[^/]+(?=/")' | grep -v '^\.\.$')
-    
-    # Convert the space-separated string into an array
-    set -- $image_names
-    image_names=("$@")
-    
-    # Display the available versions
-    for i in "${!image_names[@]}"; do
-        echo "* [$((i + 1))] ${pretty_name} (${image_names[i]})"
-    done
-    
-    echo -e "${YELLOW}Enter the desired version (1-${#image_names[@]}): ${NC}"
-    read -p "" version
-    
-    # Validate the input
-    if [[ $version -lt 1 || $version -gt ${#image_names[@]} ]]; then
-        echo -e "${RED}Invalid selection. Exiting.${NC}"
-        exit 1
-    fi
-    
-    # Get the selected version
-    selected_version=${image_names[$((version - 1))]}
-    echo -e "${GREEN}Installing $pretty_name (${selected_version})...${NC}"
-    
-    URL="$BASE_URL/${distro_name}/current/$ARCH_ALT/$selected_version/"
-    
-    # Fetch the latest version of the root filesystem
-    LATEST_VERSION=$(curl -s "$URL" | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
-    
+    local pretty_name="$1" 
+    local URL="$2"   
+
     # Download and extract the root filesystem
     mkdir -p "$ROOTFS_DIR"
-    curl -Ls "${URL}${LATEST_VERSION}/rootfs.tar.xz" -o "$ROOTFS_DIR/rootfs.tar.xz"
-    tar -xf "$ROOTFS_DIR/rootfs.tar.xz" -C "$ROOTFS_DIR"
+
+    # Get rootfs file name from URL
+    FILE_NAME=$(basename "${URL}")
+    # Print to screen what's currently installing
+    echo -e "${GREEN}Installing $pretty_name ...${NC}"
+    # Download the rootfs image to $ROOTFS_DIR
+    curl -Ls "${URL}" -o "$ROOTFS_DIR/$FILE_NAME" || exit 1
+    # Extract rootfs image to ROOTFS_DIR
+    tar -xf "$ROOTFS_DIR/$FILE_NAME" -C "$ROOTFS_DIR"
+    # Create ROOTFS_DIR/home/container/ dir
     mkdir -p "$ROOTFS_DIR/home/container/"
+
+    # Check whether the OS is installed, then delete the rootfs image file
+    if [ ! -e "$ROOTFS_DIR/.installed" ]; then
+        rm $ROOTFS_DIR/$FILE_NAME
+    fi
 }
 
 # Download & decompress the Linux root file system if not already installed.
@@ -174,7 +172,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
         ;;
         
         3)
-            install_custom      "voidlinux"     "Void Linux"
+            install             "voidlinux"     "Void Linux"         "true"
         ;;
         
         4)
@@ -211,7 +209,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
         ;;
         
         12)
-            install_custom      "gentoo"        "Gentoo Linux"
+            install             "gentoo"        "Gentoo Linux"         "true"
         ;;
         
         13)
@@ -226,7 +224,12 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
         14)
             install             "devuan"        "Devuan Linux"
         ;;
-        
+
+        ## An example of the usage of the install_custom function
+        # 15)
+        #     install_custom      "Debian"        "https://github.com/JuliaCI/rootfs-images/releases/download/v7.10/debian_minimal.aarch64.tar.gz"
+        # ;;
+
         *)
             echo -e "${RED}Invalid selection. Exiting.${NC}"
             exit 1
