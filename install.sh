@@ -228,7 +228,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
         ;;
         
         *)
-            echo "${RED}Invalid selection. Exiting.${NC}"
+            echo -e "${RED}Invalid selection. Exiting.${NC}"
             exit 1
         ;;
     esac
