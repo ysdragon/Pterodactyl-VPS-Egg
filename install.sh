@@ -125,6 +125,19 @@ install_custom() {
     fi
 }
 
+# Function to get Chimera Linux
+get_chimera_linux() {
+    local base_url="https://repo.chimera-linux.org/live/latest/"
+
+    local latest_file=$(curl -s "$base_url" | grep -oP "chimera-linux-$ARCH-ROOTFS-\d{8}-bootstrap\.tar\.gz" | sort -V | tail -n 1)
+    if [ -n "$latest_file" ]; then
+        local date=$(echo "$latest_file" | grep -oP '\d{8}')
+        echo "${base_url}chimera-linux-$ARCH-ROOTFS-$date-bootstrap.tar.gz"
+    else
+        exit 1
+    fi
+}
+
 # Download & decompress the Linux root file system if not already installed.
 if [ ! -e "$ROOTFS_DIR/.installed" ]; then
     
@@ -156,6 +169,7 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
     echo "* [12] Gentoo Linux                                                                            "
     echo "* [13] Arch Linux                                                                              "
     echo "* [14] Devuan Linux                                                                            "
+    echo "* [15] Chimera Linux                                                                           "
     echo "                                                                                               "
     echo -e "${YELLOW}Enter OS (1-14):                                                                 ${NC}"
     
@@ -225,8 +239,12 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
             install             "devuan"        "Devuan Linux"
         ;;
 
+        15)
+            install_custom      "Chimera Linux"        $(get_chimera_linux)
+        ;;
+
         ## An example of the usage of the install_custom function
-        # 15)
+        # 16)
         #     install_custom      "Debian"        "https://github.com/JuliaCI/rootfs-images/releases/download/v7.10/debian_minimal.aarch64.tar.gz"
         # ;;
 
