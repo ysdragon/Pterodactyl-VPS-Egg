@@ -47,10 +47,10 @@ install() {
     # e.g musl, glibc for voidlinux
     if [[ "$is_custom" == "true" ]]; then
         # Fetch the directory listing and extract the image names
-        image_names=$(curl -s "$BASE_URL/$distro_name/current/$ARCH_ALT/" | grep -oP '(?<=href=")[^/]+(?=/")' | grep -v '^\.\.$')
+        image_names=$(curl -s "$BASE_URL/$distro_name/current/$ARCH_ALT/" | grep 'href="' | grep -o '"[^/"]*/"' | tr -d '"/' | grep -v '^\.\.$')
     else
         # Fetch the directory listing and extract the image names
-        image_names=$(curl -s "$BASE_URL/$distro_name/" | grep -oP '(?<=href=")[^/]+(?=/")' | grep -v '^\.\.$')
+        image_names=$(curl -s "$BASE_URL/$distro_name/" | grep 'href="' | grep -o '"[^/"]*/"' | tr -d '"/' | grep -v '^\.\.$')
     fi
     # Convert the space-separated string into an array
     set -- $image_names
@@ -91,7 +91,7 @@ install() {
     fi
 
     # Fetch the latest version of the root filesystem
-    LATEST_VERSION=$(curl -s "$URL" | grep -oP 'href="\K[^"]+/' | sort -r | head -n 1)
+    LATEST_VERSION=$(curl -s "$URL" | grep 'href="' | grep -o '"[^/"]*/"' | tr -d '"' | sort -r | head -n 1)
     
     # Download and extract the root filesystem
     mkdir -p "$ROOTFS_DIR"
@@ -129,9 +129,9 @@ install_custom() {
 get_chimera_linux() {
     local base_url="https://repo.chimera-linux.org/live/latest/"
 
-    local latest_file=$(curl -s "$base_url" | grep -oP "chimera-linux-$ARCH-ROOTFS-\d{8}-bootstrap\.tar\.gz" | sort -V | tail -n 1)
+    local latest_file=$(curl -s "$base_url" | grep -o "chimera-linux-$ARCH-ROOTFS-[0-9]\{8\}-bootstrap\.tar\.gz" | sort -V | tail -n 1)
     if [ -n "$latest_file" ]; then
-        local date=$(echo "$latest_file" | grep -oP '\d{8}')
+        local date=$(echo "$latest_file" | grep -o '[0-9]\{8\}')
         echo "${base_url}chimera-linux-$ARCH-ROOTFS-$date-bootstrap.tar.gz"
     else
         exit 1
