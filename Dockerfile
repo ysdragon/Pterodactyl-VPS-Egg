@@ -1,4 +1,5 @@
-FROM ubuntu:latest
+# Use ubuntu 24.04 (noble) as the base image
+FROM ubuntu:noble
 
 # Set noninteractive mode
 ENV DEBIAN_FRONTEND=noninteractive
