@@ -28,6 +28,7 @@ This Pterodactyl Egg allows you to set up and manage a Virtual Private Server wi
 - Gentoo Linux
 - Arch Linux
 - Devuan Linux
+- Chimera Linux
 
 ## Getting Started
 
