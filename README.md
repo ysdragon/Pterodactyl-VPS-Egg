@@ -33,6 +33,7 @@ A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Pane
 - Rocky Linux
 - AlmaLinux
 - CentOS
+- Oracle Linux
 
 ### Debian-based
 - Ubuntu
@@ -49,6 +50,10 @@ A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Pane
 - openSUSE
 - Fedora
 - Chimera Linux
+- Amazon Linux
+- Plamo Linux
+- Linux Mint
+- Alt Linux
 
 ## 🚀 Quick Start
 

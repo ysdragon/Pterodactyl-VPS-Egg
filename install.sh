@@ -170,6 +170,11 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
     echo "* [13] Arch Linux                                                                              "
     echo "* [14] Devuan Linux                                                                            "
     echo "* [15] Chimera Linux                                                                           "
+    echo "* [16] Oracle Linux                                                                            "
+    echo "* [17] Amazon Linux                                                                            "
+    echo "* [18] Plamo Linux                                                                             "
+    echo "* [19] Linux Mint                                                                              "
+    echo "* [20] Alt Linux                                                                               "
     echo "                                                                                               "
     echo -e "${YELLOW}Enter OS (1-14):                                                                 ${NC}"
     
@@ -243,8 +248,28 @@ if [ ! -e "$ROOTFS_DIR/.installed" ]; then
             install_custom      "Chimera Linux"        $(get_chimera_linux)
         ;;
 
+        16)
+            install             "oracle"        "Oracle Linux"
+        ;;
+
+        17)
+            install             "amazonlinux"        "Amazon Linux"
+        ;;
+
+        18)
+            install             "plamo"        "Plamo Linux"
+        ;;
+
+        19)
+            install             "mint"        "Linux Mint"
+        ;;
+
+        20)
+            install             "alt"        "Alt Linux"
+        ;;
+
         ## An example of the usage of the install_custom function
-        # 16)
+        # 21)
         #     install_custom      "Debian"        "https://github.com/JuliaCI/rootfs-images/releases/download/v7.10/debian_minimal.aarch64.tar.gz"
         # ;;
 
