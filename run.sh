@@ -49,6 +49,12 @@ print_banner() {
     printf "                                                                                               \n"
 }
 
+print_instructions() {
+    printf "${GREEN}=== Help Instructions ===${NC}\n"
+    printf "${GREEN}Type 'help' to view a list of available custom commands.${NC}\n"
+    printf "\n"
+}
+
 # Function to print prompt
 print_prompt() {
     user="$1"
@@ -156,6 +162,9 @@ trap cleanup INT TERM
 
 # Print initial banner
 print_banner
+
+# Print the initial instructions 
+print_instructions
 
 # Print initial command
 printf "${GREEN}root@${HOSTNAME}${NC}:${RED}$(get_formatted_dir)${NC}#\n"
