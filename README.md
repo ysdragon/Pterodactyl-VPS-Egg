@@ -30,30 +30,30 @@ A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Pane
 ## 💻 Supported Operating Systems
 
 ### Enterprise Linux
-- Rocky Linux
-- AlmaLinux
-- CentOS
-- Oracle Linux
+- <img width="16" height="16" src="https://rockylinux.org/favicon.png" /> Rocky Linux
+- <img width="16" height="16" src="https://almalinux.org/fav/favicon.ico" /> AlmaLinux
+- <img width="16" height="16" src="https://www.centos.org/assets/img/favicon.png" /> CentOS
+- <img width="16" height="16" src="https://www.oracle.com/asset/web/favicons/favicon-32.png" /> Oracle Linux
 
 ### Debian-based
-- Ubuntu
-- Debian
-- Kali Linux
-- Devuan Linux
+- <img width="16" height="16" src="https://netplan.readthedocs.io/en/latest/_static/favicon.png" /> Ubuntu
+- <img width="16" height="16" src="https://www.debian.org/favicon.ico" /> Debian
+- <img width="16" height="16" src="https://github.com/bin456789/reinstall/assets/7548515/f74b3d5b-085f-4df3-bcc9-8a9bd80bb16d" /> Kali Linux
+- <img width="16" height="16" src="https://www.devuan.org/ui/img/favicon.ico" /> Devuan Linux
 
 ### Other Distributions
-- Alpine Linux
-- Arch Linux
-- Gentoo Linux
-- Void Linux
-- Slackware Linux
-- openSUSE
-- Fedora
-- Chimera Linux
-- Amazon Linux
-- Plamo Linux
-- Linux Mint
-- Alt Linux
+- <img width="16" height="16" src="https://www.alpinelinux.org/alpine-logo.ico" /> Alpine Linux
+- <img width="16" height="16" src="https://archlinux.org/static/favicon.png" /> Arch Linux
+- <img width="16" height="16" src="https://www.gentoo.org/assets/img/logo/gentoo-g.png" /> Gentoo Linux
+- <img width="16" height="16" src="https://voidlinux.org/assets/img/favicon.png" /> Void Linux
+- <img width="16" height="16" src="http://www.slackware.com/favicon.ico" /> Slackware Linux
+- <img width="16" height="16" src="https://static.opensuse.org/favicon.ico" /> openSUSE
+- <img width="16" height="16" src="https://fedoraproject.org/favicon.ico" /> Fedora
+- <img width="16" height="16" src="https://chimera-linux.org/assets/icons/favicon48.png" /> Chimera Linux
+- <img width="16" height="16" src="https://djeqr6to3dedg.cloudfront.net/repo-logos/library/amazonlinux/live/logo-1720462149317.png" /> Amazon Linux
+- <img width="16" height="16" src="https://www.plamolinux.org/images/garland_logo.jpg" /> Plamo Linux
+- <img width="16" height="16" src="https://linuxmint.com/web/img/favicon.ico" /> Linux Mint
+- <img width="16" height="16" src="https://en.altlinux.org/favicon.svg" /> Alt Linux
 
 ## 🚀 Quick Start
 
