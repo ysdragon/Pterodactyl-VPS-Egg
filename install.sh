@@ -17,6 +17,34 @@ readonly BASE_URL="https://images.linuxcontainers.org/images"
 # Add to PATH
 export PATH=$PATH:~/.local/usr/bin
 
+# Define all available distributions
+declare distributions=(
+    [1]="Debian"
+    [2]="Ubuntu"
+    [3]="Void Linux:true"
+    [4]="Alpine Linux"
+    [5]="CentOS"
+    [6]="Rocky Linux"
+    [7]="Fedora"
+    [8]="AlmaLinux"
+    [9]="Slackware Linux"
+    [10]="Kali Linux"
+    [11]="openSUSE"
+    [12]="Gentoo Linux:true"
+    [13]="Arch Linux"
+    [14]="Devuan Linux"
+    [15]="Chimera Linux:custom"
+    [16]="Oracle Linux"
+    [17]="Amazon Linux"
+    [18]="Plamo Linux"
+    [19]="Linux Mint"
+    [20]="Alt Linux"
+    [21]="openEuler"
+)
+
+# Get the length of the distributions array
+num_distros=${#distributions[@]}
+
 # Error handling function
 error_exit() {
     printf "${colors[RED]}Error: $1${colors[NC]}\n" >&2
@@ -264,30 +292,6 @@ display_menu() {
     "${colors[GREEN]}╰────────────────────────────────────────────────────────────────────────────────╯${colors[NC]}\n\n" \
     "${colors[YELLOW]}Please choose your favorite distro:${colors[NC]}\n\n"
     
-    # Define all available distributions
-    declare distributions=(
-        [1]="Debian"
-        [2]="Ubuntu"
-        [3]="Void Linux:true"
-        [4]="Alpine Linux"
-        [5]="CentOS"
-        [6]="Rocky Linux"
-        [7]="Fedora"
-        [8]="AlmaLinux"
-        [9]="Slackware Linux"
-        [10]="Kali Linux"
-        [11]="openSUSE"
-        [12]="Gentoo Linux:true"
-        [13]="Arch Linux"
-        [14]="Devuan Linux"
-        [15]="Chimera Linux:custom"
-        [16]="Oracle Linux"
-        [17]="Amazon Linux"
-        [18]="Plamo Linux"
-        [19]="Linux Mint"
-        [20]="Alt Linux"
-        [21]="openEuler"
-    )
     
     # Display all distributions
     for i in "${!distributions[@]}"; do
@@ -295,7 +299,7 @@ display_menu() {
     done
     
     printf "                                                               \n"
-    printf "${colors[YELLOW]}Enter the desired distro (1-20): ${colors[NC]}\n"
+    printf "${colors[YELLOW]}Enter the desired distro (1-${num_distros}): ${colors[NC]}\n"
 }
 
 # Execute PRoot environment
@@ -396,7 +400,7 @@ case "$selection" in
         install "openeuler" "openEuler"
     ;;
     *)
-        error_exit "Invalid selection (1-20)"
+        error_exit "Invalid selection (1-${num_distros})"
     ;;
 esac
 
