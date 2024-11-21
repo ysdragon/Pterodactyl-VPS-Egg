@@ -406,10 +406,6 @@ esac
 
 # Post-installation tasks
 install_proot
-cleanup
-
-# Mark as installed
-touch "$ROOTFS_DIR/.installed"
 
 # Start PRoot environment
 exec_proot

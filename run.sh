@@ -7,6 +7,28 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m'
 
+# Check if not installed
+if [ ! -e "/.installed" ]; then
+    # Add DNS Resolver nameservers to resolv.conf
+    printf "nameserver 1.1.1.1\nnameserver 1.0.0.1" > "/etc/resolv.conf"
+    
+    # Check if rootfs.tar.xz or rootfs.tar.gz exists and remove them if they do
+    if [ -f "/rootfs.tar.xz" ]; then
+        rm -f "/rootfs.tar.xz"
+    fi
+
+    if [ -f "/rootfs.tar.gz" ]; then
+        rm -f "/rootfs.tar.gz"
+    fi
+
+    # Wipe the files we downloaded into /tmp previously
+    rm -rf /tmp/sbin
+
+    # Mark as installed.
+    touch "/.installed"
+fi
+
+
 printf "\033c"
 printf "${GREEN}Starting..${NC}\n"
 sleep 1
@@ -50,7 +72,6 @@ print_banner() {
 }
 
 print_instructions() {
-    printf "${GREEN}=== Help Instructions ===${NC}\n"
     printf "${YELLOW}Type 'help' to view a list of available custom commands.${NC}\n\n"
 }
 

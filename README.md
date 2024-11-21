@@ -28,7 +28,7 @@ A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Pane
 > [!IMPORTANT]
 > For `riscv64` architecture, you must provide or host your own rootfs images. Currently, only Chimera Linux offers native support for riscv64 in this egg.
 
-## 💻 Supported Operating Systems
+## <img width="20" height="20" src="https://www.kernel.org/theme/images/logos/favicon.png" /> Available Linux Distributions
 
 ### Enterprise Linux
 - <img width="16" height="16" src="https://rockylinux.org/favicon.png" /> Rocky Linux
