@@ -8,10 +8,7 @@ YELLOW='\033[0;33m'
 NC='\033[0m'
 
 # Check if not installed
-if [ ! -e "/.installed" ]; then
-    # Add DNS Resolver nameservers to resolv.conf
-    printf "nameserver 1.1.1.1\nnameserver 1.0.0.1" > "/etc/resolv.conf"
-    
+if [ ! -e "/.installed" ]; then    
     # Check if rootfs.tar.xz or rootfs.tar.gz exists and remove them if they do
     if [ -f "/rootfs.tar.xz" ]; then
         rm -f "/rootfs.tar.xz"
