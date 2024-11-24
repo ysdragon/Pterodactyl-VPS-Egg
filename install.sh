@@ -250,7 +250,7 @@ parse_ports() {
     local config_file="$ROOTFS_DIR/vps.config"
     local port_args=""
     
-    while read line; do
+    while read -r line; do
         case "$line" in
             internalip=*) ;;
             port[0-9]*=*)
