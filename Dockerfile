@@ -4,7 +4,10 @@ FROM ubuntu:noble
 # Set the environment variable to disable interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install necessary packages and clean up
+# Set the PRoot version
+ENV PROOT_VERSION=5.4.0
+
+# Install necessary packages and PRoot
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         bash \
@@ -22,6 +25,13 @@ RUN apt-get update && \
 RUN update-locale lang=en_US.UTF-8 && \
     dpkg-reconfigure --frontend noninteractive locales
 
+# Install PRoot
+RUN ARCH=$(uname -m) && \
+    mkdir -p /usr/local/bin && \
+    proot_url="https://github.com/ysdragon/proot-static/releases/download/v${PROOT_VERSION}/proot-${ARCH}-static" && \
+    curl -Ls "$proot_url" -o /usr/local/bin/proot && \
+    chmod 755 /usr/local/bin/proot
+
 # Create a non-root user
 RUN useradd -m -d /home/container -s /bin/bash container
 
@@ -36,10 +46,11 @@ WORKDIR /home/container
 # Copy scripts into the container
 COPY --chown=container:container ./entrypoint.sh /entrypoint.sh
 COPY --chown=container:container ./install.sh /install.sh
+COPY --chown=container:container ./helper.sh /helper.sh
 COPY --chown=container:container ./run.sh /run.sh
 
 # Make the copied scripts executable
-RUN chmod +x /entrypoint.sh /install.sh /run.sh
+RUN chmod +x /entrypoint.sh /install.sh /helper.sh /run.sh
 
 # Set the default command
 CMD ["/bin/bash", "/entrypoint.sh"]
