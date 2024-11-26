@@ -25,7 +25,6 @@ if [ ! -e "/.installed" ]; then
     touch "/.installed"
 fi
 
-
 printf "\033c"
 printf "${GREEN}Starting..${NC}\n"
 sleep 1
@@ -46,8 +45,8 @@ cleanup() {
 get_formatted_dir() {
     current_dir="$PWD"
     case "$current_dir" in
-        /root*)
-            printf "~${current_dir#/root}"
+        "$HOME"*)
+            printf "~${current_dir#$HOME}"
         ;;
         *)
             printf "$current_dir"

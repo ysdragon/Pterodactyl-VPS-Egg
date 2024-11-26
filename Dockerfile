@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Set the PRoot version
 ENV PROOT_VERSION=5.4.0
 
-# Install necessary packages and PRoot
+# Install necessary packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         bash \
