@@ -11,7 +11,6 @@ declare -A colors=(
 
 # Configuration variables
 readonly ROOTFS_DIR="/home/container"
-readonly PROOT_VERSION="5.4.0"
 readonly BASE_URL="https://images.linuxcontainers.org/images"
 
 # Add to PATH
@@ -97,21 +96,6 @@ cleanup() {
     log "INFO" "Cleaning up temporary files..." "YELLOW"
     rm -f "$ROOTFS_DIR/rootfs.tar.xz"
     rm -rf /tmp/sbin
-}
-
-# Install PRoot
-install_proot() {
-    local proot_path="$ROOTFS_DIR/usr/local/bin/proot"
-    log "INFO" "Installing PRoot version ${PROOT_VERSION}..." "GREEN"
-    
-    mkdir -p "$ROOTFS_DIR/usr/local/bin"
-    
-    local proot_url="https://github.com/ysdragon/proot-static/releases/download/v${PROOT_VERSION}/proot-${ARCH}-static"
-    if ! curl -Ls "$proot_url" -o "$proot_path"; then
-        error_exit "Failed to download PRoot"
-    fi
-    
-    chmod 755 "$proot_path" || error_exit "Failed to set PRoot permissions"
 }
 
 # Function to install a specific distro
@@ -245,26 +229,6 @@ download_and_extract_rootfs() {
     mkdir -p "$ROOTFS_DIR/home/container/"
 }
 
-# Parse port configuration
-parse_ports() {
-    local config_file="$ROOTFS_DIR/vps.config"
-    local port_args=""
-    
-    while read -r line; do
-        case "$line" in
-            internalip=*) ;;
-            port[0-9]*=*)
-                port=${line#*=}
-                if [ -n "$port" ]; then port_args=" -p $port:$port$port_args"; fi
-            ;;
-            port=*)
-                port=${line#*=}
-                if [ -n "$port" ]; then port_args=" -p $port:$port$port_args"; fi
-            ;;
-        esac
-    done <"$config_file"
-}
-
 # Function to handle post-install configuration for specific distros
 post_install_config() {
     local distro="$1"
@@ -301,27 +265,6 @@ display_menu() {
     printf "                                                               \n"
     printf "${colors[YELLOW]}Enter the desired distro (1-${num_distros}): ${colors[NC]}\n"
 }
-
-# Execute PRoot environment
-exec_proot() {
-    local port_args=$(parse_ports)
-    
-    "$ROOTFS_DIR/usr/local/bin/proot" \
-    --rootfs="${ROOTFS_DIR}" \
-    -0 -w "/root" \
-    -b /dev -b /sys -b /proc -b /etc/resolv.conf \
-    $port_args \
-    --kill-on-exit \
-    /bin/sh "/run.sh"
-}
-
-
-# Check if already installed
-if [ -e "$ROOTFS_DIR/.installed" ]; then
-    log "INFO" "System already installed, starting..." "GREEN"
-    exec_proot
-    exit 0
-fi
 
 # Initial setup
 ARCH_ALT=$(detect_architecture)
@@ -404,11 +347,9 @@ case "$selection" in
     ;;
 esac
 
-# Post-installation tasks
-install_proot
-
-# Start PRoot environment
-exec_proot
+# Copy run.sh script to ROOTFS_DIR and make it executable
+cp /run.sh "$ROOTFS_DIR/run.sh"
+chmod +x "$ROOTFS_DIR/run.sh"
 
 # Trap for cleanup on script exit
 trap cleanup EXIT
