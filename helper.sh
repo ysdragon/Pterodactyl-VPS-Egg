@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Parse port configuration
 parse_ports() {
     local config_file="$HOME/vps.config"
