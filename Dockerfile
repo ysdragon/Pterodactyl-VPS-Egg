@@ -1,5 +1,5 @@
-# Use Ubuntu 24.04 (noble) as the base image
-FROM ubuntu:noble
+# Use Ubuntu latest as the base image
+FROM ubuntu:latest
 
 # Set the environment variable to disable interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
