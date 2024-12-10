@@ -1,4 +1,4 @@
-# Use Ubuntu 24.04 (noble) as the base image
+# Use Ubuntu noble (24.04) as the base image
 FROM ubuntu:noble
 
 # Set the environment variable to disable interactive prompts during package installation
