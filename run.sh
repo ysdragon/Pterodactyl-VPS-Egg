@@ -173,28 +173,23 @@ install_ssh() {
         x86_64)
             arch="amd64"
         ;;
-        *)
-            arch="$arch"
-        ;;
     esac
     
     # URL to download the SSH binary
     url="https://github.com/ysdragon/ssh/releases/latest/download/ssh-$arch"
     
     # Download the SSH binary
-    wget -q -O /usr/local/bin/ssh "$url"
-    if [ $? -ne 0 ]; then
+    wget -q -O /usr/local/bin/ssh "$url" || {
         log "ERROR" "Failed to download SSH." "$RED"
         return 1
-    fi
+    }
     
     # Make the binary executable
-    chmod +x /usr/local/bin/ssh
-    if [ $? -ne 0 ]; then
+    chmod +x /usr/local/bin/ssh || {
         log "ERROR" "Failed to make ssh executable." "$RED"
         return 1
-    fi
-    
+    }    
+
     log "INFO" "SSH installed successfully." "$GREEN"
 }
 
