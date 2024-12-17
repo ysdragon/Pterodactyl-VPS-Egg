@@ -16,7 +16,7 @@ A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Pane
 - 🖥️ Wide range of operating systems
 - 🔌 Multiple port support (TCP/UDP)
    - Dynamic port mapping
-- 🚀 SSH
+- 🚀 Custom SSH server
 
 ## 🏗️ Supported Architectures
 
@@ -73,12 +73,12 @@ A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Pane
    - Configure resources
    - Start your instance
 
-# How to use SSH?
+## How to use SSH?
 
-**Install the Custom SSH Server**:
+#### Install the Custom SSH Server:
    - After installing the desired distro, use the `install-ssh` command to install our custom SSH server.
 
-### Configuration Options
+#### Configuration Options
 
 The configuration file is located at `/.ssh_config` and supports the following options:
 
@@ -87,6 +87,18 @@ The configuration file is located at `/.ssh_config` and supports the following o
 - `SSH_PASSWORD`: The password for SSH authentication.
 - `SSH_TIMEOUT`: The timeout duration in seconds for SSH connections. Leave it empty or set it to `0` to disable the timeout.
 - `SFTP_ENABLE`: Enable or disable SFTP. Set to `true` to enable SFTP.
+
+#### Example `/.ssh_config` Configuration
+
+Here is an example configuration file:
+
+```ini
+SSH_PORT=50000
+SSH_USER=user
+SSH_PASSWORD=123123
+SSH_TIMEOUT=0
+SFTP_ENABLE=true
+```
 
 ## Contributing
 
