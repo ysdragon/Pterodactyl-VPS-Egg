@@ -147,6 +147,11 @@ execute_command() {
             reinstall
             exit 2
         ;;
+        "sudo"*|"su"*)
+            printf "${RED}You are already running as root.${NC}\n"
+            print_prompt "$user"
+            return 0
+        ;;
         "help")
             print_help_message
             print_prompt "$user"
