@@ -51,7 +51,7 @@ log() {
         color=${NC}
     fi
     
-    printf "${color}[$level] $message${NC}\n"
+    printf "${color}[$level]${NC} $message\n"
 }
 
 # Function to handle cleanup on exit

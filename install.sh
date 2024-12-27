@@ -60,7 +60,7 @@ log() {
         color=${colors[NC]}
     fi
     
-    printf "${color}[$level] $message${colors[NC]}\n"
+    printf "${color}[$level]${colors[NC]} $message\n"
 }
 
 # Detect the machine architecture.
