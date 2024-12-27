@@ -190,7 +190,7 @@ install_ssh() {
         return 1
     }    
 
-    log "INFO" "SSH installed successfully." "$GREEN"
+    log "SUCCESS" "SSH installed successfully." "$GREEN"
 }
 
 # Function to print a beautiful help message
