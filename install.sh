@@ -251,7 +251,7 @@ display_menu() {
     "${colors[GREEN]}│                                                                                │${colors[NC]}\n" \
     "${colors[GREEN]}│                             Pterodactyl VPS EGG                                │${colors[NC]}\n" \
     "${colors[GREEN]}│                                                                                │${colors[NC]}\n" \
-    "${colors[GREEN]}│                           ${colors[RED]}© 2021 - 2024 ${colors[PURPLE]}ysdragon${colors[GREEN]}                               │${colors[NC]}\n" \
+    "${colors[GREEN]}│                           ${colors[RED]}© 2021 - $(date +%Y) ${colors[PURPLE]}@ysdragon${colors[GREEN]}                              │${colors[NC]}\n" \
     "${colors[GREEN]}│                                                                                │${colors[NC]}\n" \
     "${colors[GREEN]}╰────────────────────────────────────────────────────────────────────────────────╯${colors[NC]}\n\n" \
     "${colors[YELLOW]}Please choose your favorite distro:${colors[NC]}\n\n"

@@ -73,19 +73,6 @@ get_formatted_dir() {
     esac
 }
 
-# Function to print the banner
-print_banner() {
-    printf "\033c"
-    printf "${GREEN}╭────────────────────────────────────────────────────────────────────────────────╮${NC}\n"
-    printf "${GREEN}│                                                                                │${NC}\n"
-    printf "${GREEN}│                             Pterodactyl VPS EGG                                │${NC}\n"
-    printf "${GREEN}│                                                                                │${NC}\n"
-    printf "${GREEN}│                           ${RED}© 2021 - 2024 ${PURPLE}@ysdragon${GREEN}                              │${NC}\n"
-    printf "${GREEN}│                                                                                │${NC}\n"
-    printf "${GREEN}╰────────────────────────────────────────────────────────────────────────────────╯${NC}\n"
-    printf "                                                                                               \n"
-}
-
 print_instructions() {
     log "INFO" "Type 'help' to view a list of available custom commands." "$YELLOW"
 }
@@ -132,7 +119,7 @@ install_wget() {
         "void")
             xbps-install -Syu -q wget > /dev/null 2>&1
         ;;
-        "centos"|"fedora"|"rockylinux"|"almalinux"|"openEuler"|"amzn"|"ol")
+        "centos"|"fedora"|"rocky"|"almalinux"|"openEuler"|"amzn"|"ol")
             yum install -y -q wget > /dev/null 2>&1
         ;;
         "opensuse"|"opensuse-tumbleweed"|"opensuse-leap")
@@ -159,6 +146,12 @@ install_wget() {
 
 # Function to install SSH from the repository
 install_ssh() {
+    # Check if SSH is already installed
+    if [ -f "/usr/local/bin/ssh" ]; then
+        log "ERROR" "SSH is already installed." "$RED"
+        return 1
+    fi
+
     # Install wget if not found
     if ! command -v wget &> /dev/null; then
         log "INFO" "Installing wget." "$YELLOW"
@@ -191,6 +184,18 @@ install_ssh() {
     }    
 
     log "SUCCESS" "SSH installed successfully." "$GREEN"
+}
+
+# Function to print initial banner
+print_banner() {
+    printf "\033c"
+    printf "${GREEN}╭────────────────────────────────────────────────────────────────────────────────╮${NC}\n"
+    printf "${GREEN}│                                                                                │${NC}\n"
+    printf "${GREEN}│                             Pterodactyl VPS EGG                                │${NC}\n"
+    printf "${GREEN}│                                                                                │${NC}\n"
+    printf "${GREEN}│                           ${RED}© 2021 - $(date +%Y) ${PURPLE}@ysdragon${GREEN}                              │${NC}\n"
+    printf "${GREEN}│                                                                                │${NC}\n"
+    printf "${GREEN}╰────────────────────────────────────────────────────────────────────────────────╯${NC}\n"
 }
 
 # Function to print a beautiful help message
@@ -277,7 +282,7 @@ touch "$HISTORY_FILE"
 # Set up trap for clean exit
 trap cleanup INT TERM
 
-# Print initial banner
+# Print the initial banner
 print_banner
 
 # Print the initial instructions

@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Sleep for 2 seconds to ensure container is ready
 sleep 2
 
