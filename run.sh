@@ -43,9 +43,9 @@ printf "\033c"
 
 # Logger function
 log() {
-    local level=$1
-    local message=$2
-    local color=$3
+    level=$1
+    message=$2
+    color=$3
     
     if [ -z "$color" ]; then
         color=${NC}
