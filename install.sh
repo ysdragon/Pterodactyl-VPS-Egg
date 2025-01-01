@@ -246,24 +246,21 @@ post_install_config() {
 # Main menu display
 display_menu() {
     printf "\033c"
-    printf "%b" \
-    "${colors[GREEN]}╭────────────────────────────────────────────────────────────────────────────────╮${colors[NC]}\n" \
-    "${colors[GREEN]}│                                                                                │${colors[NC]}\n" \
-    "${colors[GREEN]}│                             Pterodactyl VPS EGG                                │${colors[NC]}\n" \
-    "${colors[GREEN]}│                                                                                │${colors[NC]}\n" \
-    "${colors[GREEN]}│                           ${colors[RED]}© 2021 - $(date +%Y) ${colors[PURPLE]}@ysdragon${colors[GREEN]}                              │${colors[NC]}\n" \
-    "${colors[GREEN]}│                                                                                │${colors[NC]}\n" \
-    "${colors[GREEN]}╰────────────────────────────────────────────────────────────────────────────────╯${colors[NC]}\n\n" \
-    "${colors[YELLOW]}Please choose your favorite distro:${colors[NC]}\n\n"
-    
+    printf "${colors[GREEN]}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓${colors[NC]}\n"
+    printf "${colors[GREEN]}┃                                                                             ┃${colors[NC]}\n"
+    printf "${colors[GREEN]}┃                           ${colors[PURPLE]} Pterodactyl VPS EGG ${colors[GREEN]}                             ┃${colors[NC]}\n"
+    printf "${colors[GREEN]}┃                                                                             ┃${colors[NC]}\n"
+    printf "${colors[GREEN]}┃                          ${colors[RED]}© 2021 - $(date +%Y) ${colors[PURPLE]}@ysdragon${colors[GREEN]}                            ┃${colors[NC]}\n"
+    printf "${colors[GREEN]}┃                                                                             ┃${colors[NC]}\n"
+    printf "${colors[GREEN]}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${colors[NC]}\n"
+    printf "\n${colors[YELLOW]}Please choose your favorite distro:${colors[NC]}\n\n"
     
     # Display all distributions
     for i in "${!distributions[@]}"; do
         printf "* [%d] %s\n" "$i" "${distributions[$i]%%:*}"
     done
     
-    printf "                                                               \n"
-    printf "${colors[YELLOW]}Enter the desired distro (1-${num_distros}): ${colors[NC]}\n"
+    printf "\n${colors[YELLOW]}Enter the desired distro (1-${num_distros}): ${colors[NC]}\n"
 }
 
 # Initial setup
