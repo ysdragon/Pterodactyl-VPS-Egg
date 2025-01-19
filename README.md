@@ -56,7 +56,6 @@ A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Pane
 - <img width="16" height="16" src="https://www.plamolinux.org/images/garland_logo.jpg" /> Plamo Linux
 - <img width="16" height="16" src="https://linuxmint.com/web/img/favicon.ico" /> Linux Mint
 - <img width="16" height="16" src="https://en.altlinux.org/favicon.svg" /> Alt Linux
-- <img width="16" height="16" src="https://www.openeuler.org/favicon.ico" /> openEuler
 
 ## 🚀 Quick Start
 

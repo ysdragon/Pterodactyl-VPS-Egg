@@ -38,7 +38,6 @@ declare distributions=(
     [18]="Plamo Linux"
     [19]="Linux Mint"
     [20]="Alt Linux"
-    [21]="openEuler"
 )
 
 # Get the length of the distributions array
@@ -335,9 +334,6 @@ case "$selection" in
     ;;
     20)
         install "alt" "Alt Linux"
-    ;;
-    21)
-        install "openeuler" "openEuler"
     ;;
     *)
         error_exit "Invalid selection (1-${num_distros})"
