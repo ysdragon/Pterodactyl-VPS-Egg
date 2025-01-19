@@ -30,20 +30,14 @@ A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Pane
 > For `riscv64` architecture, you must provide or host your own rootfs images. Currently, only Chimera Linux offers native support for riscv64 in this egg.
 
 ## <img width="20" height="20" src="https://www.kernel.org/theme/images/logos/favicon.png" /> Available Linux Distributions
-
-### Enterprise Linux
 - <img width="16" height="16" src="https://rockylinux.org/favicon.png" /> Rocky Linux
 - <img width="16" height="16" src="https://almalinux.org/fav/favicon.ico" /> AlmaLinux
 - <img width="16" height="16" src="https://www.centos.org/assets/img/favicon.png" /> CentOS
 - <img width="16" height="16" src="https://www.oracle.com/asset/web/favicons/favicon-32.png" /> Oracle Linux
-
-### Debian-based
 - <img width="16" height="16" src="https://netplan.readthedocs.io/en/latest/_static/favicon.png" /> Ubuntu
 - <img width="16" height="16" src="https://www.debian.org/favicon.ico" /> Debian
 - <img width="16" height="16" src="https://github.com/bin456789/reinstall/assets/7548515/f74b3d5b-085f-4df3-bcc9-8a9bd80bb16d" /> Kali Linux
 - <img width="16" height="16" src="https://www.devuan.org/ui/img/favicon.ico" /> Devuan Linux
-
-### Other Distributions
 - <img width="16" height="16" src="https://www.alpinelinux.org/alpine-logo.ico" /> Alpine Linux
 - <img width="16" height="16" src="https://archlinux.org/static/favicon.png" /> Arch Linux
 - <img width="16" height="16" src="https://www.gentoo.org/assets/img/logo/gentoo-g.png" /> Gentoo Linux
