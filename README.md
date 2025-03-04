@@ -46,7 +46,7 @@ A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Pane
 - <img width="16" height="16" src="https://static.opensuse.org/favicon.ico" /> openSUSE
 - <img width="16" height="16" src="https://fedoraproject.org/favicon.ico" /> Fedora
 - <img width="16" height="16" src="https://chimera-linux.org/assets/icons/favicon48.png" /> Chimera Linux
-- <img width="16" height="16" src="https://djeqr6to3dedg.cloudfront.net/repo-logos/library/amazonlinux/live/logo-1720462149317.png" /> Amazon Linux
+- <img width="16" height="16" src="https://aws.amazon.com/favicon.ico" /> Amazon Linux
 - <img width="16" height="16" src="https://www.plamolinux.org/images/garland_logo.jpg" /> Plamo Linux
 - <img width="16" height="16" src="https://linuxmint.com/web/img/favicon.ico" /> Linux Mint
 - <img width="16" height="16" src="https://en.altlinux.org/favicon.svg" /> Alt Linux
