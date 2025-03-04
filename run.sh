@@ -60,6 +60,28 @@ cleanup() {
     exit 0
 }
 
+# Function to detect the machine architecture
+detect_architecture() {
+    # Detect the machine architecture.
+    ARCH=$(uname -m)
+
+    # Detect architecture and return the corresponding value
+    case "$ARCH" in
+        x86_64)
+            echo "amd64"
+        ;;
+        aarch64)
+            echo "arm64"
+        ;;
+        riscv64)
+            echo "riscv64"
+        ;;
+        *)
+            log "ERROR" "Unsupported CPU architecture: $ARCH" "$RED"
+        ;;
+    esac
+}
+
 # Function to get formatted directory
 get_formatted_dir() {
     current_dir="$PWD"
@@ -161,12 +183,7 @@ install_ssh() {
     log "INFO" "Installing SSH." "$YELLOW"
     
     # Determine the architecture
-    arch=$(uname -m)
-    case "$arch" in
-        x86_64)
-            arch="amd64"
-        ;;
-    esac
+    arch=$(detect_architecture)
     
     # URL to download the SSH binary
     url="https://github.com/ysdragon/ssh/releases/latest/download/ssh-$arch"
