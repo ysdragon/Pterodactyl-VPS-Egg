@@ -68,29 +68,44 @@ A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Pane
 
 ## How to use SSH?
 
-#### Install the Custom SSH Server:
+### Install the Custom SSH Server:
    - After installing the desired distro, use the `install-ssh` command to install our custom SSH server.
 
-#### Configuration Options
+### Configuration Options
 
-The configuration file is located at `/.ssh_config` and supports the following options:
+The configuration file is located at `/ssh_config.yml` and supports the following options:
 
-- `SSH_PORT`: The port on which the SSH server will listen. The default is `2222`.
-- `SSH_USER`: The username for SSH authentication.
-- `SSH_PASSWORD`: The password for SSH authentication.
-- `SSH_TIMEOUT`: The timeout duration in seconds for SSH connections. Leave it empty or set it to `0` to disable the timeout.
-- `SFTP_ENABLE`: Enable or disable SFTP. Set to `true` to enable SFTP.
+### SSH Options
 
-#### Example `/.ssh_config` Configuration
+| Option | Description | Default |
+|--------|-------------|---------|
+| `port` | Port number for SSH server | `2222` |
+| `user` | Username for SSH authentication | `root` |
+| `password` | Password for SSH authentication (supports plain text or bcrypt hash) | `password` |
+| `timeout` | Connection timeout in seconds (comment out or set to 0 to disable) | `300` |
+
+### SFTP Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `enable` | Enable or disable SFTP support | `true` |
+
+> [!NOTE] 
+> The `timeout` setting is optional and can be omitted from the configuration.
+
+### Example `/ssh_config.yml` Configuration
 
 Here is an example configuration file:
 
-```ini
-SSH_PORT=50000
-SSH_USER=user
-SSH_PASSWORD=123123
-SSH_TIMEOUT=0
-SFTP_ENABLE=true
+```yml
+ssh:
+  port: "2222"
+  user: "root"
+  password: "password"
+  # timeout: 30
+
+sftp:
+  enable: true
 ```
 
 ## Contributing
