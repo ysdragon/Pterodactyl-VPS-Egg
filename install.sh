@@ -123,13 +123,16 @@ install() {
     for i in "${!versions[@]}"; do
         printf "* [%d] %s (%s)\n" $((i + 1)) "$pretty_name" "${versions[i]}"
     done
+    printf "* [0] Go Back\n"
     
     # Version selection with validation
     local version
     while true; do
-        printf "${colors[YELLOW]}Enter the desired version (1-${#versions[@]}): ${colors[NC]}\n"
+        printf "${colors[YELLOW]}Enter the desired version (0-${#versions[@]}): ${colors[NC]}\n"
         read -r version
-        if [[ "$version" =~ ^[0-9]+$ ]] && ((version >= 1 && version <= ${#versions[@]})); then
+        if [[ "$version" == "0" ]]; then
+            exec "$0"
+        elif [[ "$version" =~ ^[0-9]+$ ]] && ((version >= 1 && version <= ${#versions[@]})); then
             break
         fi
         log "ERROR" "Invalid selection. Please try again." "RED"
