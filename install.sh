@@ -188,6 +188,55 @@ get_chimera_linux() {
     fi
 }
 
+# Function to install openSUSE Linux based on version
+install_opensuse_linux() {
+    declare -A opensuse_versions=(
+        [1]="openSUSE Leap"
+        [2]="openSUSE Tumbleweed"
+    )
+
+    printf "Select openSUSE version:\n"
+    for ((key=1; key<=${#opensuse_versions[@]}; key++)); do
+        printf "* [%s] %s\n" "$key" "${opensuse_versions[$key]}"
+    done
+    printf "* [0] Go Back\n"
+    
+    local opensuse_version
+    while true; do
+        printf "${colors[YELLOW]}Enter your choice (0-2): ${colors[NC]}\n"
+        read -r opensuse_version
+        case "$opensuse_version" in
+            0)
+            exec "$0"
+            ;;
+            1)
+            log "INFO" "Selected version: openSUSE Leap" "GREEN"
+            local url=""
+            case "$ARCH" in
+                aarch64|x86_64)
+                url="https://download.opensuse.org/distribution/openSUSE-current/appliances/opensuse-leap-dnf-image.${ARCH}-lxc-dnf.tar.xz"
+                install_custom "openSUSE Leap" "$url"
+                ;;
+                *)
+                error_exit "openSUSE Leap is not available for ${ARCH} architecture"
+                ;;
+            esac
+            break
+            ;;
+            2)
+            log "INFO" "Selected version: openSUSE Tumbleweed" "GREEN"
+            if [[ "$ARCH" == "x86_64" ]]; then
+                install_custom "openSUSE Tumbleweed" "https://download.opensuse.org/tumbleweed/appliances/opensuse-tumbleweed-dnf-image.x86_64-lxc-dnf.tar.xz"
+            else
+                error_exit "openSUSE Tumbleweed is not available for ${ARCH} architecture"
+            fi
+            break
+            ;;
+        esac
+        log "ERROR" "Invalid selection. Please try again." "RED"
+    done
+}
+
 # Function to download and extract rootfs
 download_and_extract_rootfs() {
     local distro_name="$1"
@@ -307,7 +356,7 @@ case "$selection" in
         install "kali" "Kali Linux"
     ;;
     11)
-        install "opensuse" "openSUSE"
+        install_opensuse_linux
     ;;
     12)
         install "gentoo" "Gentoo Linux" "true"
