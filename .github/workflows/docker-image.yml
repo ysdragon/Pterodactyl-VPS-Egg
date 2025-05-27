@@ -55,6 +55,12 @@ jobs:
             quay.io/ydrag0n/pterodactyl-vps-egg
             ghcr.io/${{ github.repository }}
             ysdragon/pterodactyl-vps-egg
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=latest,enable={{is_default_branch}}
           
       - name: Build and push
         id: build-and-push
