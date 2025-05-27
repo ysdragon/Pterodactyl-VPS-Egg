@@ -122,7 +122,15 @@ save_to_history() {
 reinstall() {
     # Source the /etc/os-release file to get OS information
     . /etc/os-release
+
+    printf "${YELLOW}Are you sure you want to reinstall the OS? This will wipe all data. (yes/no): ${NC}"
+    read -r confirmation
+    if [ "$confirmation" != "yes" ]; then
+        log "INFO" "Reinstallation cancelled." "$YELLOW"
+        return
+    fi
     
+    log "INFO" "Proceeding with reinstallation..." "$GREEN"
     if [ "$ID" = "alpine" ] || [ "$ID" = "chimera" ]; then
         rm -rf / > /dev/null 2>&1
     else
