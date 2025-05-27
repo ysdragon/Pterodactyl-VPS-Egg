@@ -92,6 +92,8 @@ The configuration file is located at `/ssh_config.yml` and supports the followin
 
 > [!NOTE] 
 > The `timeout` setting is optional and can be omitted from the configuration.
+> [!WARNING]
+> The default password "password" is insecure and **MUST** be changed immediately after installation for security reasons.
 
 ### Example `/ssh_config.yml` Configuration
 
