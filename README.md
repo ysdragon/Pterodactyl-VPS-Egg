@@ -66,6 +66,28 @@ A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Pane
    - Configure resources
    - Start your instance
 
+## 🔧 Available Custom Commands
+
+The VPS egg includes several built-in commands to help you manage your server:
+
+| Command | Description | Usage |
+|---------|-------------|-------|
+| `help` | Display available commands | `help` |
+| `clear` / `cls` | Clear the screen | `clear` or `cls` |
+| `exit` | Shutdown the server | `exit` |
+| `history` | Show command history | `history` |
+| `reinstall` | Reinstall the operating system | `reinstall` |
+| `install-ssh` | Install the custom SSH server | `install-ssh` |
+| `status` | Show system status information | `status` |
+| `backup` | Create a system backup | `backup` |
+| `restore` | Restore a system backup | `restore <backup_file>` |
+
+> [!NOTE]
+> All commands are available immediately after the server starts. Use `help` to view this list anytime.
+
+> [!WARNING]
+> The `reinstall` command will completely wipe all data on the server. Use with caution.
+
 ## How to use SSH?
 
 ### Install the Custom SSH Server:
