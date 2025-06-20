@@ -9,7 +9,7 @@
 
 **A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Panel**
 
-*Supporting multiple architectures and 20 Linux distributions*
+*Supporting multiple architectures and 20+ Linux distributions*
 
 [📋 Quick Start](#-quick-start) • [🔧 Commands](#-available-custom-commands) • [🔐 SSH Setup](#-ssh-configuration) • [🤝 Contributing](#-contributing)
 
@@ -22,7 +22,7 @@
 - 🚀 **Easy Deployment** - One-click installation and setup
 - 🔧 **Customizable** - Flexible configurations for various use cases  
 - 🏗️ **Multi-Architecture** - Support for AMD64, ARM64, and RISCV64
-- 🐧 **20 Linux Distros** - Wide range of operating systems supported
+- 🐧 **20+ Linux Distros** - Wide range of operating systems supported
 - 🔌 **Port Management** - TCP/UDP support with dynamic port mapping
 
 ## 🏗️ Supported Architectures
@@ -57,13 +57,16 @@
 - <img width="16" height="16" src="https://www.plamolinux.org/images/garland_logo.jpg" /> Plamo Linux
 - <img width="16" height="16" src="https://linuxmint.com/web/img/favicon.ico" /> Linux Mint
 - <img width="16" height="16" src="https://en.altlinux.org/favicon.svg" /> Alt Linux
+- <img width="16" height="16" src="https://www.funtoo.org/images/8/88/Latest-funtoo.png" /> Funtoo Linux
+- <img width="16" height="16" src="https://www.openeuler.org/favicon.ico" /> openEuler
+- <img width="16" height="16" src="https://springdale.math.ias.edu/chrome/site/puias-springdale.png" /> Springdale Linux
 
 ## 🚀 Quick Start
 
 ### 📥 Installation
 
 1. **Download the Egg**
-   - Download the `egg-vps.json` configuration [file](egg-vps.json) from this repository.
+   - Download the [`egg-vps.json`](egg-vps.json) configuration file from this repository.
 
 2. **Import to Pterodactyl**
    - Navigate to your Pterodactyl Admin Panel
