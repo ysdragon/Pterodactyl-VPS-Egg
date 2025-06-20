@@ -222,6 +222,12 @@ show_system_status() {
 
 # Function to create a backup
 create_backup() {
+    # Check if tar is installed
+    if ! command -v tar > /dev/null 2>&1; then
+        log "ERROR" "tar is not installed. Please install tar first." "$RED"
+        return 1
+    fi
+    
     backup_file="/backup_$(date +%Y%m%d%H%M%S).tar.gz"
     log "INFO" "Starting backup process..." "$YELLOW"
     tar -czf "$backup_file" / --exclude="$backup_file" --exclude="/proc" --exclude="/tmp" --exclude="/dev" --exclude="/sys" --exclude="/run" --exclude="/vps.config" > /dev/null 2>&1
@@ -231,6 +237,12 @@ create_backup() {
 # Function to restore a backup
 restore_backup() {
     backup_file="$1"
+    
+    # Check if tar is installed
+    if ! command -v tar > /dev/null 2>&1; then
+        log "ERROR" "tar is not installed. Please install tar first." "$RED"
+        return 1
+    fi
     
     if [ -z "$backup_file" ]; then
         log "INFO" "Usage: restore <backup_file>" "$YELLOW"
