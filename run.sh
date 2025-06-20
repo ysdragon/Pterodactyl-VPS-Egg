@@ -211,6 +211,42 @@ install_ssh() {
     log "SUCCESS" "SSH installed successfully." "$GREEN"
 }
 
+# Function to show system status
+show_system_status() {
+    log "INFO" "System Status:" "$GREEN"
+    uptime
+    free -h
+    df -h
+    ps aux --sort=-%mem | head -n 10
+}
+
+# Function to create a backup
+create_backup() {
+    backup_file="/backup_$(date +%Y%m%d%H%M%S).tar.gz"
+    log "INFO" "Starting backup process..." "$YELLOW"
+    tar -czf "$backup_file" / --exclude="$backup_file" --exclude="/proc" --exclude="/tmp" --exclude="/dev" --exclude="/sys" --exclude="/run" --exclude="/vps.config" > /dev/null 2>&1
+    log "SUCCESS" "Backup created at $backup_file" "$GREEN"
+}
+
+# Function to restore a backup
+restore_backup() {
+    backup_file="$1"
+    
+    if [ -z "$backup_file" ]; then
+        log "INFO" "Usage: restore <backup_file>" "$YELLOW"
+        log "INFO" "Example: restore backup_20250620024221.tar.gz" "$YELLOW"
+        return 1
+    fi
+
+    if [ -f "/$backup_file" ]; then
+        log "INFO" "Starting restore process..." "$YELLOW"
+        tar -xzf "/$backup_file" -C / --exclude="/$backup_file" --exclude="/proc" --exclude="/tmp" --exclude="/dev" --exclude="/sys" --exclude="/run" --exclude="/vps.config" > /dev/null 2>&1
+        log "SUCCESS" "Backup restored from $backup_file" "$GREEN"
+    else
+        log "ERROR" "Backup file not found: $backup_file" "$RED"
+    fi
+}
+
 # Function to print initial banner
 print_banner() {
     printf "\033c"
@@ -234,6 +270,9 @@ print_help_message() {
     printf "${PURPLE}┃     ${YELLOW}history${GREEN}            ❯  Show command history                              ${PURPLE}┃${NC}\n"
     printf "${PURPLE}┃     ${YELLOW}reinstall${GREEN}          ❯  Reinstall the server                              ${PURPLE}┃${NC}\n"
     printf "${PURPLE}┃     ${YELLOW}install-ssh${GREEN}        ❯  Install our custom SSH server                     ${PURPLE}┃${NC}\n"
+    printf "${PURPLE}┃     ${YELLOW}status${GREEN}             ❯  Show system status                                ${PURPLE}┃${NC}\n"
+    printf "${PURPLE}┃     ${YELLOW}backup${GREEN}             ❯  Create a system backup                            ${PURPLE}┃${NC}\n"
+    printf "${PURPLE}┃     ${YELLOW}restore${GREEN}            ❯  Restore a system backup                           ${PURPLE}┃${NC}\n"
     printf "${PURPLE}┃     ${YELLOW}help${GREEN}               ❯  Display this help message                         ${PURPLE}┃${NC}\n"
     printf "${PURPLE}┃                                                                             ┃${NC}\n"
     printf "${PURPLE}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${NC}\n"
@@ -276,6 +315,22 @@ execute_command() {
         ;;
         "install-ssh")
             install_ssh
+            print_prompt "$user"
+            return 0
+        ;;
+        "status")
+            show_system_status
+            print_prompt "$user"
+            return 0
+        ;;
+        "backup")
+            create_backup
+            print_prompt "$user"
+            return 0
+        ;;
+        "restore "*)
+            backup_file=$(echo "$cmd" | cut -d' ' -f2-)
+            restore_backup "$backup_file"
             print_prompt "$user"
             return 0
         ;;
