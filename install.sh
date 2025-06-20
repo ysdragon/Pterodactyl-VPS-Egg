@@ -38,6 +38,9 @@ declare distributions=(
     [18]="Plamo Linux"
     [19]="Linux Mint"
     [20]="Alt Linux"
+    [21]="Funtoo Linux"
+    [22]="openEuler"
+    [23]="Springdale Linux"
 )
 
 # Get the length of the distributions array
@@ -386,6 +389,15 @@ case "$selection" in
     ;;
     20)
         install "alt" "Alt Linux"
+    ;;
+    21)
+        install "funtoo" "Funtoo Linux"
+    ;;
+    22)
+        install "openeuler" "openEuler"
+    ;;
+    23)
+        install "springdalelinux" "Springdale Linux"
     ;;
     *)
         error_exit "Invalid selection (1-${num_distros})"
