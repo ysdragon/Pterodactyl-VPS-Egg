@@ -2,21 +2,28 @@
 
 # Pterodactyl VPS Egg
 
-[![License](https://img.shields.io/github/license/ysdragon/Pterodactyl-VPS-Egg)](https://github.com/ysdragon/Pterodactyl-VPS-Egg/blob/main/LICENSE)
-[![CodeFactor](https://www.codefactor.io/repository/github/ysdragon/pterodactyl-vps-egg/badge)](https://www.codefactor.io/repository/github/ysdragon/pterodactyl-vps-egg)
+[![License](https://img.shields.io/github/license/ysdragon/Pterodactyl-VPS-Egg?style=for-the-badge)](https://github.com/ysdragon/Pterodactyl-VPS-Egg/blob/main/LICENSE)
+[![CodeFactor](https://img.shields.io/codefactor/grade/github/ysdragon/pterodactyl-vps-egg?style=for-the-badge)](https://www.codefactor.io/repository/github/ysdragon/pterodactyl-vps-egg)
+[![GitHub Stars](https://img.shields.io/github/stars/ysdragon/Pterodactyl-VPS-Egg?style=for-the-badge)](https://github.com/ysdragon/Pterodactyl-VPS-Egg/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/ysdragon/Pterodactyl-VPS-Egg?style=for-the-badge)](https://github.com/ysdragon/Pterodactyl-VPS-Egg/issues)
 
-A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Panel, supporting multiple architectures and operating systems.
+**A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Panel**
+
+*Supporting multiple architectures and 20 Linux distributions*
+
+[📋 Quick Start](#-quick-start) • [🔧 Commands](#-available-custom-commands) • [🔐 SSH Setup](#-ssh-configuration) • [🤝 Contributing](#-contributing)
+
 </div>
+
+---
 
 ## ✨ Features
 
-- 🚀 Easy deployment and management
-- 🔧 Customizable configurations
-- 🔄 Multiple architecture support
-- 🖥️ Wide range of operating systems
-- 🔌 Multiple port support (TCP/UDP)
-   - Dynamic port mapping
-- 🚀 Custom SSH server
+- 🚀 **Easy Deployment** - One-click installation and setup
+- 🔧 **Customizable** - Flexible configurations for various use cases  
+- 🏗️ **Multi-Architecture** - Support for AMD64, ARM64, and RISCV64
+- 🐧 **20 Linux Distros** - Wide range of operating systems supported
+- 🔌 **Port Management** - TCP/UDP support with dynamic port mapping
 
 ## 🏗️ Supported Architectures
 
@@ -53,18 +60,29 @@ A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Pane
 
 ## 🚀 Quick Start
 
+### 📥 Installation
+
 1. **Download the Egg**
-   - Download the `egg-vps.json` configuration file to your local machine.
+   - Download the `egg-vps.json` configuration [file](egg-vps.json) from the 
+
 2. **Import to Pterodactyl**
-   - Navigate to the Admin Panel
-   - Go to Nests > Import Egg
+   - Navigate to your Pterodactyl Admin Panel
+   - Go to **Nests** > **Import Egg**
    - Upload the `egg-vps.json` file
-   - Configure as needed
+   - Configure the egg settings as needed
 
 3. **Deploy Your VPS**
    - Create a new server using the VPS egg
-   - Configure resources
+   - Configure system resources (RAM, CPU, Disk, etc.)
    - Start your instance
+
+### 🖥️ First Steps
+
+Once your VPS is running:
+
+1. **Access the Console** - Use the Pterodactyl web console to interact with your VPS
+2. **Run `help`** - View all available custom commands
+3. **Customize Settings** - Configure your environment as needed
 
 ## 🔧 Available Custom Commands
 
@@ -88,7 +106,7 @@ The VPS egg includes several built-in commands to help you manage your server:
 > [!WARNING]
 > The `reinstall` command will completely wipe all data on the server. Use with caution.
 
-## How to use SSH?
+## 🔐 SSH Configuration
 
 ### Install the Custom SSH Server:
    - After installing the desired distro, use the `install-ssh` command to install our custom SSH server.
@@ -133,9 +151,16 @@ sftp:
   enable: true
 ```
 
-## Contributing
+## 🤝 Contributing
 
-Contributions are welcome. If you have any suggestions, improvements, or bug fixes, feel free to submit a pull request.
+Contributions are welcome! If you have any suggestions, improvements, or bug fixes, feel free to submit a pull request or open an issue.
 
-## License
-This project is open-source and available under the MIT License. See the [LICENSE](https://github.com/ysdragon/Pterodactyl-VPS-Egg/blob/main/LICENSE) file for more details.
+### How to Contribute
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+This project is open-source and available under the MIT License. See the [LICENSE](LICENSE) file for more details.
