@@ -63,7 +63,7 @@
 ### 📥 Installation
 
 1. **Download the Egg**
-   - Download the `egg-vps.json` configuration [file](egg-vps.json) from the 
+   - Download the `egg-vps.json` configuration [file](egg-vps.json) from this repository.
 
 2. **Import to Pterodactyl**
    - Navigate to your Pterodactyl Admin Panel
