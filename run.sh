@@ -217,23 +217,42 @@ create_backup() {
         log "ERROR" "tar is not installed. Please install tar first." "$RED"
         return 1
     fi
-    
+
     backup_file="/backup_$(date +%Y%m%d%H%M%S).tar.gz"
+    exclude_file="/tmp/exclude-list.txt"
+
+    # Create a file with a list of patterns to exclude. This is more
+    # compatible with different versions of tar, including busybox tar.
+    # We use relative paths for exclusion as we'll be running tar from /.
+    cat > "$exclude_file" <<EOF
+./${backup_file#/}
+./proc
+./tmp
+./dev
+./sys
+./run
+./vps.config
+${exclude_file#/}
+EOF
+
     log "INFO" "Starting backup process..." "$YELLOW"
-    tar -czf "$backup_file" / --exclude="$backup_file" --exclude="/proc" --exclude="/tmp" --exclude="/dev" --exclude="/sys" --exclude="/run" --exclude="/vps.config" > /dev/null 2>&1
+    (cd / && tar --numeric-owner -czf "$backup_file" -X "$exclude_file" .) > /dev/null 2>&1
     log "SUCCESS" "Backup created at $backup_file" "$GREEN"
+
+    # Clean up the exclude file
+    rm -f "$exclude_file"
 }
 
 # Function to restore a backup
 restore_backup() {
     backup_file="$1"
-    
+
     # Check if tar is installed
     if ! command -v tar > /dev/null 2>&1; then
         log "ERROR" "tar is not installed. Please install tar first." "$RED"
         return 1
     fi
-    
+
     if [ -z "$backup_file" ]; then
         log "INFO" "Usage: restore <backup_file>" "$YELLOW"
         log "INFO" "Example: restore backup_20250620024221.tar.gz" "$YELLOW"
@@ -242,7 +261,7 @@ restore_backup() {
 
     if [ -f "/$backup_file" ]; then
         log "INFO" "Starting restore process..." "$YELLOW"
-        tar -xzf "/$backup_file" -C / --exclude="/$backup_file" --exclude="/proc" --exclude="/tmp" --exclude="/dev" --exclude="/sys" --exclude="/run" --exclude="/vps.config" > /dev/null 2>&1
+        tar --numeric-owner -xzf "/$backup_file" -C / --exclude="$backup_file" > /dev/null 2>&1
         log "SUCCESS" "Backup restored from $backup_file" "$GREEN"
     else
         log "ERROR" "Backup file not found: $backup_file" "$RED"
