@@ -27,7 +27,7 @@ if [ ! -e "/.installed" ]; then
     rm -rf /tmp/sbin
 
     # Add DNS Resolver nameservers to resolv.conf
-    echo -e "nameserver 1.1.1.1\nnameserver 1.0.0.1" > /etc/resolv.conf
+    printf "nameserver 1.1.1.1\nnameserver 1.0.0.1\n" > /etc/resolv.conf
     
     # Mark as installed.
     touch "/.installed"
