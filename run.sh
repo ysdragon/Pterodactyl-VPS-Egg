@@ -348,6 +348,11 @@ execute_command() {
             print_prompt "$user"
             return 0
         ;;
+        "restore")
+            log "ERROR" "No backup file specified. Usage: restore <backup_file>" "$RED"
+            print_prompt "$user"
+            return 0
+        ;;
         "restore "*)
             backup_file=$(echo "$cmd" | cut -d' ' -f2-)
             restore_backup "$backup_file"
