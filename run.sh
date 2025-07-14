@@ -123,11 +123,7 @@ reinstall() {
     # Source the /etc/os-release file to get OS information
     . /etc/os-release
     
-    if [ "$ID" = "alpine" ] || [ "$ID" = "chimera" ]; then
-        rm -rf / > /dev/null 2>&1
-    else
-        rm -rf --no-preserve-root / > /dev/null 2>&1
-    fi
+    find / -mindepth 1 -xdev -delete > /dev/null 2>&1
 }
 
 # Function to install wget
