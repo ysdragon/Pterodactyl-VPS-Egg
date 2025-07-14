@@ -148,7 +148,7 @@ install_wget() {
             zypper install -y -q wget > /dev/null 2>&1
         ;;
         "alpine"|"chimera")
-            apk add --no-scripts -q wget > /dev/null 2>&1
+            apk add -q --no-interactive --no-scripts wget > /dev/null 2>&1
         ;;
         "gentoo")
             emerge --sync -q && emerge -q wget > /dev/null 2>&1
