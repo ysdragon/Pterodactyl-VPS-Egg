@@ -13,7 +13,7 @@ if [ ! -e "$HOME/.installed" ]; then
     /usr/local/bin/proot \
     --rootfs="/" \
     -0 -w "/root" \
-    -b /dev -b /sys -b /proc -b /etc/resolv.conf \
+    -b /dev -b /sys -b /proc \
     --kill-on-exit \
     /bin/bash "/install.sh" || exit 1
 fi

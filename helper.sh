@@ -43,7 +43,7 @@ exec_proot() {
     /usr/local/bin/proot \
     --rootfs="${HOME}" \
     -0 -w "${HOME}" \
-    -b /dev -b /sys -b /proc -b /etc/resolv.conf \
+    -b /dev -b /sys -b /proc \
     $port_args \
     --kill-on-exit \
     /bin/sh "/run.sh"
