@@ -280,6 +280,9 @@ download_and_extract_rootfs() {
         error_exit "Failed to extract rootfs"
     fi
     
+    # Removing existing /etc/resolv.conf to allow modification
+    rm -f "$ROOTFS_DIR/etc/resolv.conf"
+    
     mkdir -p "$ROOTFS_DIR/home/container/"
 }
 
