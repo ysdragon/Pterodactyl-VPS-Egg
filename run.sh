@@ -139,7 +139,7 @@ install_wget() {
             apt-get update -qq && apt-get install -y -qq wget > /dev/null 2>&1
         ;;
         "void")
-            xbps-install -Syu -q wget > /dev/null 2>&1
+            xbps-install -Syu wget > /dev/null 2>&1
         ;;
         "centos"|"fedora"|"rocky"|"almalinux"|"openEuler"|"amzn"|"ol")
             yum install -y -q wget > /dev/null 2>&1
