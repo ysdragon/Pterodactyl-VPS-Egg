@@ -122,9 +122,8 @@ save_to_history() {
 }
 
 # Function reinstall the OS
-reinstall() {
-    # Source the /etc/os-release file to get OS information
-    . /etc/os-release
+reinstall() {    
+    log "INFO" "Reinstalling the OS..." "$YELLOW"
     
     find / -mindepth 1 -xdev -delete > /dev/null 2>&1
 }
@@ -307,7 +306,6 @@ execute_command() {
             return 0
         ;;
         "reinstall")
-            log "INFO" "Reinstalling...." "$GREEN"
             reinstall
             exit 2
         ;;
