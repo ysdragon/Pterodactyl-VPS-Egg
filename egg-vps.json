@@ -4,13 +4,15 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-10-03T09:26:01+00:00",
+    "exported_at": "2025-08-09T20:09:25+00:00",
     "name": "VPS - Egg",
     "author": "mrnitro2017@gmail.com",
-    "description": "Read: https:\/\/github.com\/ysdragon\/Pterodactyl-VPS-Egg",
+    "description": "A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Panel.\r\nSee: https:\/\/github.com\/ysdragon\/Pterodactyl-VPS-Egg",
     "features": null,
     "docker_images": {
-        "quay.io\/ydrag0n\/pterodactyl-vps-egg": "quay.io\/ydrag0n\/pterodactyl-vps-egg"
+        "Quay.io": "quay.io\/ydrag0n\/pterodactyl-vps-egg:latest",
+        "Docker Hub": "ysdragon\/pterodactyl-vps-egg:latest",
+        "GitHub Container Registry": "ghcr.io\/ysdragon\/pterodactyl-vps-egg:latest"
     },
     "file_denylist": [],
     "startup": ".\/run.sh",
