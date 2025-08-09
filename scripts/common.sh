@@ -5,6 +5,11 @@ PURPLE='\033[0;35m'
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+WHITE='\033[1;37m'
+BOLD='\033[1m'
+DIM='\033[2m'
 NC='\033[0m'
 
 # Common logger function
@@ -43,30 +48,45 @@ detect_architecture() {
 # Function to print the main banner
 print_main_banner() {
     printf "\033c"
-    printf "${GREEN}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓${NC}\n"
-    printf "${GREEN}┃                                                                             ┃${NC}\n"
-    printf "${GREEN}┃                           ${PURPLE} Pterodactyl VPS EGG ${GREEN}                             ┃${NC}\n"
-    printf "${GREEN}┃                                                                             ┃${NC}\n"
-    printf "${GREEN}┃                          ${RED}© 2021 - $(date +%Y) ${PURPLE}@ysdragon${GREEN}                            ┃${NC}\n"
-    printf "${GREEN}┃                                                                             ┃${NC}\n"
-    printf "${GREEN}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${NC}\n"
+    printf "${CYAN}╔═══════════════════════════════════════════════════════════════════════════════╗${NC}\n"
+    printf "${CYAN}║                                                                               ║${NC}\n"
+    printf "${CYAN}║            ${PURPLE}${BOLD}██╗   ██╗██████╗ ███████╗    ███████╗ ██████╗  ██████╗${CYAN}             ║${NC}\n"
+    printf "${CYAN}║            ${PURPLE}${BOLD}██║   ██║██╔══██╗██╔════╝    ██╔════╝██╔════╝ ██╔════╝${CYAN}             ║${NC}\n"
+    printf "${CYAN}║            ${PURPLE}${BOLD}██║   ██║██████╔╝███████╗    █████╗  ██║  ███╗██║  ███╗${CYAN}            ║${NC}\n"
+    printf "${CYAN}║            ${PURPLE}${BOLD}╚██╗ ██╔╝██╔═══╝ ╚════██║    ██╔══╝  ██║   ██║██║   ██║${CYAN}            ║${NC}\n"
+    printf "${CYAN}║             ${PURPLE}${BOLD}╚████╔╝ ██║     ███████║    ███████╗╚██████╔╝╚██████╔╝${CYAN}            ║${NC}\n"
+    printf "${CYAN}║              ${PURPLE}${BOLD}╚═══╝  ╚═╝     ╚══════╝    ╚══════╝ ╚═════╝  ╚═════╝${CYAN}             ║${NC}\n"
+    printf "${CYAN}║                                                                               ║${NC}\n"
+    printf "${CYAN}║                      ${GREEN}✨  Lightweight • Fast • Reliable ✨${CYAN}                       ║${NC}\n"
+    printf "${CYAN}║                                                                               ║${NC}\n"
+    printf "${CYAN}║                           ${DIM}© 2021 - $(date +%Y) ${PURPLE}@ysdragon${CYAN}                             ║${NC}\n"
+    printf "${CYAN}║                                                                               ║${NC}\n"
+    printf "${CYAN}╚═══════════════════════════════════════════════════════════════════════════════╝${NC}\n"
+    printf "\n"
 }
 
 # Function to print the help banner
 print_help_banner() {
-    printf "${PURPLE}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓${NC}\n"
-    printf "${PURPLE}┃                                                                             ┃${NC}\n"
-    printf "${PURPLE}┃                          ${GREEN}✦ Available Commands ✦${PURPLE}                             ┃${NC}\n"
-    printf "${PURPLE}┃                                                                             ┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}clear, cls${GREEN}         ❯  Clear the screen                                  ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}exit${GREEN}               ❯  Shutdown the server                               ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}history${GREEN}            ❯  Show command history                              ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}reinstall${GREEN}          ❯  Reinstall the server                              ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}install-ssh${GREEN}        ❯  Install our custom SSH server                     ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}status${GREEN}             ❯  Show system status                                ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}backup${GREEN}             ❯  Create a system backup                            ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}restore${GREEN}            ❯  Restore a system backup                           ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}help${GREEN}               ❯  Display this help message                         ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃                                                                             ┃${NC}\n"
-    printf "${PURPLE}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${NC}\n"
+    printf "${BLUE}╔═══════════════════════════════════════════════════════════════════════════════╗${NC}\n"
+    printf "${BLUE}║                                                                               ║${NC}\n"
+    printf "${BLUE}║                           ${WHITE}${BOLD}📋  AVAILABLE COMMANDS 📋${BLUE}                             ║${NC}\n"
+    printf "${BLUE}║                                                                               ║${NC}\n"
+    printf "${BLUE}╠═══════════════════════════════════════════════════════════════════════════════╣${NC}\n"
+    printf "${BLUE}║                                                                               ║${NC}\n"
+    printf "${BLUE}║  ${CYAN}🧹  ${YELLOW}${BOLD}clear, cls${NC}        ${GREEN}▶  ${WHITE}Clear the terminal screen${BLUE}                            ║${NC}\n"
+    printf "${BLUE}║  ${RED}🔌  ${YELLOW}${BOLD}exit${NC}              ${GREEN}▶  ${WHITE}Shutdown the container server${BLUE}                        ║${NC}\n"
+    printf "${BLUE}║  ${PURPLE}📜  ${YELLOW}${BOLD}history${NC}           ${GREEN}▶  ${WHITE}Display command history${BLUE}                              ║${NC}\n"
+    printf "${BLUE}║  ${CYAN}🔄  ${YELLOW}${BOLD}reinstall${NC}         ${GREEN}▶  ${WHITE}Reinstall the operating system${BLUE}                       ║${NC}\n"
+    printf "${BLUE}║  ${GREEN}🔐  ${YELLOW}${BOLD}install-ssh${NC}       ${GREEN}▶  ${WHITE}Install custom SSH server${BLUE}                            ║${NC}\n"
+    printf "${BLUE}║  ${BLUE}📊  ${YELLOW}${BOLD}status${NC}            ${GREEN}▶  ${WHITE}Show detailed system status${BLUE}                          ║${NC}\n"
+    printf "${BLUE}║  ${YELLOW}💾  ${YELLOW}${BOLD}backup${NC}            ${GREEN}▶  ${WHITE}Create a complete system backup${BLUE}                      ║${NC}\n"
+    printf "${BLUE}║  ${PURPLE}📥  ${YELLOW}${BOLD}restore${NC}           ${GREEN}▶  ${WHITE}Restore from a system backup${BLUE}                         ║${NC}\n"
+    printf "${BLUE}║  ${WHITE}❓  ${YELLOW}${BOLD}help${NC}              ${GREEN}▶  ${WHITE}Display this help information${BLUE}                        ║${NC}\n"
+    printf "${BLUE}║                                                                               ║${NC}\n"
+    printf "${BLUE}╠═══════════════════════════════════════════════════════════════════════════════╣${NC}\n"
+    printf "${BLUE}║                                                                               ║${NC}\n"
+    printf "${BLUE}║                     ${DIM}💡 Tip: Type any command to get started!${BLUE}                   ║${NC}\n"
+    printf "${BLUE}║                                                                               ║${NC}\n"
+    printf "${BLUE}╚═══════════════════════════════════════════════════════════════════════════════╝${NC}\n"
+    printf "\n"
 }
