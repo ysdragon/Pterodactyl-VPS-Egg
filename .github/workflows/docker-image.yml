@@ -3,82 +3,84 @@ name: Docker Image CI
 on:
   push:
     branches: [ "main" ]
-    paths-ignore:
-      - '**.md'
-    
+    paths:
+    - '**.sh'
+    - '**/Dockerfile'
+    - '.github/workflows/docker-image.yml'
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
 
-      - name: Install cosign
-        if: github.event_name != 'pull_request'
-        uses: sigstore/cosign-installer@v3.9.1
-        with:
-          cosign-release: 'v2.5.2'
+    - name: Install cosign
+      if: github.event_name != 'pull_request'
+      uses: sigstore/cosign-installer@v3.9.1
+      with:
+        cosign-release: 'v2.5.2'
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3.6.0
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3.6.0
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
-      - name: Login to Quay.io
-        uses: docker/login-action@v3
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_ROBOT_TOKEN }}
+    - name: Login to Quay.io
+      uses: docker/login-action@v3
+      with:
+        registry: quay.io
+        username: ${{ secrets.QUAY_USERNAME }}
+        password: ${{ secrets.QUAY_ROBOT_TOKEN }}
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3.4.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3.4.0
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3.4.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3.4.0
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v5.7.0
-        with:
-          images: |
-            quay.io/ydrag0n/pterodactyl-vps-egg
-            ghcr.io/${{ github.repository }}
-            ysdragon/pterodactyl-vps-egg
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=raw,value=latest,enable={{is_default_branch}}
-          
-      - name: Build and push
-        id: build-and-push
-        uses: docker/build-push-action@v6.18.0
-        with:
-          context: .
-          file: Dockerfile
-          platforms: linux/amd64,linux/arm64,linux/riscv64
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          outputs: type=image,name=target
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+    - name: Extract Docker metadata
+      id: meta
+      uses: docker/metadata-action@v5.7.0
+      with:
+        images: |
+          quay.io/ydrag0n/pterodactyl-vps-egg
+          ghcr.io/${{ github.repository }}
+          ysdragon/pterodactyl-vps-egg
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=semver,pattern={{version}}
+          type=semver,pattern={{major}}.{{minor}}
+          type=raw,value=latest,enable={{is_default_branch}}
 
-      - name: Sign the published Docker image
-        if: ${{ github.event_name != 'pull_request' }}
-        env:
-          COSIGN_KEY: ${{secrets.COSIGN_KEY}}
-          COSIGN_PASSWORD: ${{secrets.COSIGN_PASSWORD}}
-          TAGS: ${{ steps.meta.outputs.tags }}
-          DIGEST: ${{ steps.build-and-push.outputs.digest }}
-        run: echo "${TAGS}" | xargs -I {} cosign sign --key env://COSIGN_KEY --yes {}@${DIGEST}
+    - name: Build and push
+      id: build-and-push
+      uses: docker/build-push-action@v6.18.0
+      with:
+        context: .
+        file: Dockerfile
+        platforms: linux/amd64,linux/arm64,linux/riscv64
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        outputs: type=image,name=target
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Sign the published Docker image
+      if: ${{ github.event_name != 'pull_request' }}
+      env:
+        COSIGN_KEY: ${{secrets.COSIGN_KEY}}
+        COSIGN_PASSWORD: ${{secrets.COSIGN_PASSWORD}}
+        TAGS: ${{ steps.meta.outputs.tags }}
+        DIGEST: ${{ steps.build-and-push.outputs.digest }}
+      run: echo "${TAGS}" | xargs -I {} cosign sign --key env://COSIGN_KEY --yes {}@${DIGEST}
