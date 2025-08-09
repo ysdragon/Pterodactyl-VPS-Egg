@@ -1,11 +1,7 @@
 #!/bin/sh
 
-# Color definitions
-PURPLE='\033[0;35m'
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-NC='\033[0m'
+# Source common functions and variables
+. /common.sh
 
 # Configuration
 HOSTNAME="MyVPS"
@@ -44,45 +40,10 @@ printf "${GREEN}Starting..${NC}\n"
 sleep 1
 printf "\033c"
 
-# Logger function
-log() {
-    level=$1
-    message=$2
-    color=$3
-    
-    if [ -z "$color" ]; then
-        color=${NC}
-    fi
-    
-    printf "${color}[$level]${NC} $message\n"
-}
-
 # Function to handle cleanup on exit
 cleanup() {
     log "INFO" "Session ended. Goodbye!" "$GREEN"
     exit 0
-}
-
-# Function to detect the machine architecture
-detect_architecture() {
-    # Detect the machine architecture.
-    ARCH=$(uname -m)
-
-    # Detect architecture and return the corresponding value
-    case "$ARCH" in
-        x86_64)
-            echo "amd64"
-        ;;
-        aarch64)
-            echo "arm64"
-        ;;
-        riscv64)
-            echo "riscv64"
-        ;;
-        *)
-            log "ERROR" "Unsupported CPU architecture: $ARCH" "$RED"
-        ;;
-    esac
 }
 
 # Function to get formatted directory
@@ -270,33 +231,12 @@ restore_backup() {
 
 # Function to print initial banner
 print_banner() {
-    printf "\033c"
-    printf "${GREEN}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓${NC}\n"
-    printf "${GREEN}┃                                                                             ┃${NC}\n"
-    printf "${GREEN}┃                           ${PURPLE} Pterodactyl VPS EGG ${GREEN}                             ┃${NC}\n"
-    printf "${GREEN}┃                                                                             ┃${NC}\n"
-    printf "${GREEN}┃                          ${RED}© 2021 - $(date +%Y) ${PURPLE}@ysdragon${GREEN}                            ┃${NC}\n"
-    printf "${GREEN}┃                                                                             ┃${NC}\n"
-    printf "${GREEN}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${NC}\n"
+    print_main_banner
 }
 
 # Function to print a beautiful help message
 print_help_message() {
-    printf "${PURPLE}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓${NC}\n"
-    printf "${PURPLE}┃                                                                             ┃${NC}\n"
-    printf "${PURPLE}┃                          ${GREEN}✦ Available Commands ✦${PURPLE}                             ┃${NC}\n"
-    printf "${PURPLE}┃                                                                             ┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}clear, cls${GREEN}         ❯  Clear the screen                                  ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}exit${GREEN}               ❯  Shutdown the server                               ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}history${GREEN}            ❯  Show command history                              ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}reinstall${GREEN}          ❯  Reinstall the server                              ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}install-ssh${GREEN}        ❯  Install our custom SSH server                     ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}status${GREEN}             ❯  Show system status                                ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}backup${GREEN}             ❯  Create a system backup                            ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}restore${GREEN}            ❯  Restore a system backup                           ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃     ${YELLOW}help${GREEN}               ❯  Display this help message                         ${PURPLE}┃${NC}\n"
-    printf "${PURPLE}┃                                                                             ┃${NC}\n"
-    printf "${PURPLE}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${NC}\n"
+    print_help_banner
 }
 
 # Function to handle command execution

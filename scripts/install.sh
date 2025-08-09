@@ -1,11 +1,7 @@
 #!/bin/sh
 
-# Define color codes
-PURPLE='\033[0;35m'
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-NC='\033[0m'
+# Source common functions and variables
+. /common.sh
 
 # Configuration variables
 ROOTFS_DIR="/home/container"
@@ -47,43 +43,12 @@ num_distros=$(echo "$distributions" | wc -l)
 
 # Error handling function
 error_exit() {
-    printf "${RED}Error: $1${NC}\n" >&2
+    log "ERROR" "$1" "$RED"
     exit 1
-}
-
-# Logger function
-log() {
-    level=$1
-    message=$2
-    color=$3
-    
-    if [ -z "$color" ]; then
-        color="$NC"
-    fi
-    
-    printf "${color}[$level]${NC} $message\n"
 }
 
 # Detect the machine architecture.
 ARCH=$(uname -m)
-
-# Detect architecture
-detect_architecture() {
-    case "$ARCH" in
-        x86_64)
-            echo "amd64"
-        ;;
-        aarch64)
-            echo "arm64"
-        ;;
-        riscv64)
-            echo "riscv64"
-        ;;
-        *)
-            error_exit "Unsupported CPU architecture: $ARCH"
-        ;;
-    esac
-}
 
 # Verify network connectivity
 check_network() {
@@ -310,14 +275,7 @@ post_install_config() {
 
 # Main menu display
 display_menu() {
-    printf "\033c"
-    printf "${GREEN}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓${NC}\n"
-    printf "${GREEN}┃                                                                             ┃${NC}\n"
-    printf "${GREEN}┃                           ${PURPLE} Pterodactyl VPS EGG ${GREEN}                             ┃${NC}\n"
-    printf "${GREEN}┃                                                                             ┃${NC}\n"
-    printf "${GREEN}┃                          ${RED}© 2021 - $(date +%Y) ${PURPLE}@ysdragon${GREEN}                            ┃${NC}\n"
-    printf "${GREEN}┃                                                                             ┃${NC}\n"
-    printf "${GREEN}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${NC}\n"
+    print_main_banner
     printf "\n${YELLOW}Please choose your favorite distro:${NC}\n\n"
     
     # Display all distributions
