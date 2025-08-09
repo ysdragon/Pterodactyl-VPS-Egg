@@ -13,7 +13,7 @@
         "quay.io\/ydrag0n\/pterodactyl-vps-egg": "quay.io\/ydrag0n\/pterodactyl-vps-egg"
     },
     "file_denylist": [],
-    "startup": "bash \/run.sh",
+    "startup": "bash \/scripts\/run.sh",
     "config": {
         "files": "{\r\n    \"vps.config\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"internalip\": \"{{server.build.default.ip}}\",\r\n            \"port\": \"{{server.build.default.port}}\",\r\n            \"port2\": \"{{server.build.env.port2}}\",\r\n            \"port3\": \"{{server.build.env.PORT3}}\",\r\n            \"port4\": \"{{server.build.env.port3}}\",\r\n            \"port5\": \"{{server.build.env.port5}}\",\r\n            \"port6\": \"{{server.build.env.port6}}\",\r\n            \"port7\": \"{{server.build.env.port7}}\",\r\n            \"port8\": \"{{server.build.env.port8}}\",\r\n            \"port9\": \"{{server.build.env.port9}}\",\r\n            \"port10\": \"{{server.build.env.port10}}\",\r\n            \"port11\": \"{{server.build.env.port11}}\",\r\n            \"port12\": \"{{server.build.env.port12}}\",\r\n            \"port13\": \"{{server.build.env.port13}}\",\r\n            \"port14\": \"{{server.build.env.port14}}\",\r\n            \"port15\": \"{{server.build.env.port15}}\",\r\n            \"port16\": \"{{server.build.env.port16}}\",\r\n            \"port17\": \"{{server.build.env.port17}}\",\r\n            \"port18\": \"{{server.build.env.port18}}\",\r\n            \"port19\": \"{{server.build.env.port19}}\",\r\n            \"port20\": \"{{server.build.env.port20}}\"\r\n        }\r\n    }\r\n}",
         "startup": "{\r\n    \"done\": \"Starting\"\r\n}",

@@ -15,10 +15,7 @@ RUN apt-get update && \
         ca-certificates \
         iproute2 \
         xz-utils \
-        bzip2 \
-        sudo \
-        locales \
-        adduser && \
+        locales && \
     rm -rf /var/lib/apt/lists/*
 
 # Configure locale
@@ -44,10 +41,10 @@ ENV HOME=/home/container
 WORKDIR /home/container
 
 # Copy scripts into the container
-COPY --chown=container:container ./entrypoint.sh /entrypoint.sh
-COPY --chown=container:container ./install.sh /install.sh
-COPY --chown=container:container ./helper.sh /helper.sh
-COPY --chown=container:container ./run.sh /run.sh
+COPY --chown=container:container ./scripts/entrypoint.sh /entrypoint.sh
+COPY --chown=container:container ./scripts/install.sh /install.sh
+COPY --chown=container:container ./scripts/helper.sh /helper.sh
+COPY --chown=container:container ./scripts/run.sh /run.sh
 
 # Make the copied scripts executable
 RUN chmod +x /entrypoint.sh /install.sh /helper.sh /run.sh
