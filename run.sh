@@ -310,7 +310,7 @@ execute_command() {
     # Handle special commands
     case "$cmd" in
         "clear"|"cls")
-            print_banner
+            printf "\033c"
             print_prompt "$user"
             return 0
         ;;
