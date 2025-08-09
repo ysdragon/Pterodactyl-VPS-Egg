@@ -8,7 +8,7 @@ ROOTFS_DIR="/home/container"
 BASE_URL="https://images.linuxcontainers.org/images"
 
 # Add to PATH
-export PATH="$PATH:$(echo ~)/.local/usr/bin"
+export PATH="$PATH:~/.local/usr/bin"
 
 # Define all available distributions
 # Format: "number:name[:flag]"
@@ -99,12 +99,12 @@ install() {
     while IFS= read -r line; do
         if [ -n "$line" ]; then
             printf "* [%d] %s (%s)\n" "$counter" "$pretty_name" "$line"
-            counter=$(expr $counter + 1)
+            counter=$((counter + 1))
         fi
     done < "$temp_file"
     
     # Adjust counter to represent the actual number of versions
-    version_count=$(expr $counter - 1)
+    version_count=$((counter - 1))
     
     printf "* [0] Go Back\n"
     
@@ -285,7 +285,7 @@ display_menu() {
             # Extract the name part (before any colon flag)
             name=$(echo "$line" | cut -d: -f2 | cut -d: -f1)
             printf "* [%d] %s\n" "$counter" "$name"
-            counter=$(expr $counter + 1)
+            counter=$((counter + 1))
         fi
     done
     
