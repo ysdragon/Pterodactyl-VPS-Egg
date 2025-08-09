@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Sleep for 2 seconds to ensure container is ready
 sleep 2
 
@@ -15,8 +15,8 @@ if [ ! -e "$HOME/.installed" ]; then
     -0 -w "/root" \
     -b /dev -b /sys -b /proc \
     --kill-on-exit \
-    /bin/bash "/install.sh" || exit 1
+    /bin/sh "/install.sh" || exit 1
 fi
 
 # Run the startup helper script
-bash /helper.sh
+sh /helper.sh

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 ensure_run_script_exists() {
     # Check if run.sh exists in the container, if not copy it again
@@ -10,8 +10,8 @@ ensure_run_script_exists() {
 
 # Parse port configuration
 parse_ports() {
-    local config_file="$HOME/vps.config"
-    local port_args=""
+    config_file="$HOME/vps.config"
+    port_args=""
     
     # Check if config file exists
     if [ ! -f "$config_file" ]; then
@@ -19,18 +19,36 @@ parse_ports() {
     fi
     
     while IFS='=' read -r key value; do
-        [[ -z "$key" || "$key" =~ ^[[:space:]]*# ]] && continue
+        case "$key" in
+            ""|"#"*)
+                continue
+                ;;
+        esac
         
         key=$(echo "$key" | tr -d '[:space:]')
         value=$(echo "$value" | tr -d '[:space:]')
         
         [ "$key" = "internalip" ] && continue
         
-        if [[ "$key" =~ ^port[0-9]*$ ]] && [ -n "$value" ]; then
-            if [[ "$value" =~ ^[0-9]+$ ]] && [ "$value" -ge 1 ] && [ "$value" -le 65535 ]; then
-                port_args="$port_args -p $value:$value"
-            fi
-        fi
+        # Check if key matches port pattern and value is not empty
+        case "$key" in
+            port[0-9]*)
+                if [ -n "$value" ]; then
+                    # Check if value is a number between 1 and 65535
+                    case "$value" in
+                        *[!0-9]*)
+                            # Not a number, skip
+                            ;;
+                        *)
+                            # It's a number, check range
+                            if [ "$value" -ge 1 ] && [ "$value" -le 65535 ]; then
+                                port_args="$port_args -p $value:$value"
+                            fi
+                            ;;
+                    esac
+                fi
+                ;;
+        esac
     done < "$config_file"
     
     echo "$port_args"
@@ -38,7 +56,7 @@ parse_ports() {
 
 # Execute PRoot environment
 exec_proot() {
-    local port_args=$(parse_ports)
+    port_args=$(parse_ports)
     
     /usr/local/bin/proot \
     --rootfs="${HOME}" \
