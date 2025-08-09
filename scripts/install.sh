@@ -343,9 +343,9 @@ else
     fi
 fi
 
-# Copy run.sh script to ROOTFS_DIR and make it executable
-cp /run.sh "$ROOTFS_DIR/run.sh"
-chmod +x "$ROOTFS_DIR/run.sh"
+# Copy run.sh and common.sh to ROOTFS_DIR and make them executable
+cp /common.sh /run.sh "$ROOTFS_DIR"
+chmod +x "$ROOTFS_DIR/common.sh" "$ROOTFS_DIR/run.sh"
 
 # Trap for cleanup on script exit
 trap cleanup EXIT
