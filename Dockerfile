@@ -10,7 +10,6 @@ ENV PROOT_VERSION=5.4.0
 # Install necessary packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        bash \
         curl \
         ca-certificates \
         iproute2 \
@@ -30,7 +29,7 @@ RUN ARCH=$(uname -m) && \
     chmod 755 /usr/local/bin/proot
 
 # Create a non-root user
-RUN useradd -m -d /home/container -s /bin/bash container
+RUN useradd -m -d /home/container -s /bin/sh container
 
 # Switch to the new user
 USER container
@@ -50,4 +49,4 @@ COPY --chown=container:container ./scripts/run.sh /run.sh
 RUN chmod +x /entrypoint.sh /install.sh /helper.sh /run.sh
 
 # Set the default command
-CMD ["/bin/bash", "/entrypoint.sh"]
+CMD ["/bin/sh", "/entrypoint.sh"]
