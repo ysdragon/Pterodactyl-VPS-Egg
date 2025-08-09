@@ -11,31 +11,31 @@ BASE_URL="https://images.linuxcontainers.org/images"
 export PATH="$PATH:~/.local/usr/bin"
 
 # Define all available distributions
-# Format: "number:name[:flag]"
+# Format: "number:display_name:distro_id:flag:post_config:custom_handler"
 distributions="
-1:Debian
-2:Ubuntu
-3:Void Linux:true
-4:Alpine Linux
-5:CentOS
-6:Rocky Linux
-7:Fedora
-8:AlmaLinux
-9:Slackware Linux
-10:Kali Linux
-11:openSUSE
-12:Gentoo Linux:true
-13:Arch Linux
-14:Devuan Linux
-15:Chimera Linux:custom
-16:Oracle Linux
-17:Amazon Linux
-18:Plamo Linux
-19:Linux Mint
-20:Alt Linux
-21:Funtoo Linux
-22:openEuler
-23:Springdale Linux
+1:Debian:debian:false::
+2:Ubuntu:ubuntu:false::
+3:Void Linux:voidlinux:true::
+4:Alpine Linux:alpine:false::
+5:CentOS:centos:false::
+6:Rocky Linux:rockylinux:false::
+7:Fedora:fedora:false::
+8:AlmaLinux:almalinux:false::
+9:Slackware Linux:slackware:false::
+10:Kali Linux:kali:false::
+11:openSUSE:opensuse:special::opensuse_handler
+12:Gentoo Linux:gentoo:true::
+13:Arch Linux:archlinux:false:archlinux:
+14:Devuan Linux:devuan:false::
+15:Chimera Linux:chimera:custom::chimera_handler
+16:Oracle Linux:oracle:false::
+17:Amazon Linux:amazonlinux:false::
+18:Plamo Linux:plamo:false::
+19:Linux Mint:mint:false::
+20:Alt Linux:alt:false::
+21:Funtoo Linux:funtoo:false::
+22:openEuler:openeuler:false::
+23:Springdale Linux:springdalelinux:false::
 "
 
 # Count the number of distributions
@@ -157,23 +157,8 @@ install_custom() {
     rm -f "$ROOTFS_DIR/$file_name"
 }
 
-# Function to get Chimera Linux URL
-get_chimera_linux() {
-    base_url="https://repo.chimera-linux.org/live/latest/"
-    
-    latest_file=$(curl -s "$base_url" | grep -o "chimera-linux-$ARCH-ROOTFS-[0-9]\{8\}-bootstrap\.tar\.gz" | sort -V | tail -n 1) ||
-    error_exit "Failed to fetch Chimera Linux version"
-    
-    if [ -n "$latest_file" ]; then
-        date=$(echo "$latest_file" | grep -o '[0-9]\{8\}')
-        echo "${base_url}chimera-linux-$ARCH-ROOTFS-$date-bootstrap.tar.gz"
-    else
-        error_exit "No suitable Chimera Linux version found"
-    fi
-}
-
-# Function to install openSUSE Linux based on version
-install_opensuse_linux() {
+# Custom handlers for special distributions
+opensuse_handler() {
     printf "Select openSUSE version:\n"
     printf "* [1] openSUSE Leap\n"
     printf "* [2] openSUSE Tumbleweed\n"
@@ -214,6 +199,21 @@ install_opensuse_linux() {
             ;;
         esac
     done
+}
+
+chimera_handler() {
+    base_url="https://repo.chimera-linux.org/live/latest/"
+    
+    latest_file=$(curl -s "$base_url" | grep -o "chimera-linux-$ARCH-ROOTFS-[0-9]\{8\}-bootstrap\.tar\.gz" | sort -V | tail -n 1) ||
+    error_exit "Failed to fetch Chimera Linux version"
+    
+    if [ -n "$latest_file" ]; then
+        date=$(echo "$latest_file" | grep -o '[0-9]\{8\}')
+        chimera_url="${base_url}chimera-linux-$ARCH-ROOTFS-$date-bootstrap.tar.gz"
+        install_custom "Chimera Linux" "$chimera_url"
+    else
+        error_exit "No suitable Chimera Linux version found"
+    fi
 }
 
 # Function to download and extract rootfs
@@ -259,6 +259,20 @@ download_and_extract_rootfs() {
     mkdir -p "$ROOTFS_DIR/home/container/"
 }
 
+# Function to parse distribution data by number
+get_distro_data() {
+    selection="$1"
+    echo "$distributions" | while IFS= read -r line; do
+        if [ -n "$line" ]; then
+            number=$(echo "$line" | cut -d: -f1)
+            if [ "$number" = "$selection" ]; then
+                echo "$line"
+                break
+            fi
+        fi
+    done
+}
+
 # Function to handle post-install configuration for specific distros
 post_install_config() {
     distro="$1"
@@ -279,13 +293,11 @@ display_menu() {
     printf "\n${YELLOW}Please choose your favorite distro:${NC}\n\n"
     
     # Display all distributions
-    counter=1
     echo "$distributions" | while IFS= read -r line; do
         if [ -n "$line" ]; then
-            # Extract the name part (before any colon flag)
-            name=$(echo "$line" | cut -d: -f2 | cut -d: -f1)
-            printf "* [%d] %s\n" "$counter" "$name"
-            counter=$((counter + 1))
+            number=$(echo "$line" | cut -d: -f1)
+            display_name=$(echo "$line" | cut -d: -f2)
+            printf "* [%s] %s\n" "$number" "$display_name"
         fi
     done
     
@@ -302,82 +314,34 @@ display_menu
 # Handle user selection and installation
 read -r selection
 
-case "$selection" in
-    1)
-        install "debian" "Debian" "false"
-    ;;
-    2)
-        install "ubuntu" "Ubuntu" "false"
-    ;;
-    3)
-        install "voidlinux" "Void Linux" "true"
-    ;;
-    4)
-        install "alpine" "Alpine Linux" "false"
-    ;;
-    5)
-        install "centos" "CentOS" "false"
-    ;;
-    6)
-        install "rockylinux" "Rocky Linux" "false"
-    ;;
-    7)
-        install "fedora" "Fedora" "false"
-    ;;
-    8)
-        install "almalinux" "Alma Linux" "false"
-    ;;
-    9)
-        install "slackware" "Slackware" "false"
-    ;;
-    10)
-        install "kali" "Kali Linux" "false"
-    ;;
-    11)
-        install_opensuse_linux
-    ;;
-    12)
-        install "gentoo" "Gentoo Linux" "true"
-    ;;
-    13)
-        install "archlinux" "Arch Linux" "false"
-        post_install_config "archlinux"
-    ;;
-    14)
-        install "devuan" "Devuan Linux" "false"
-    ;;
-    15)
-        chimera_url=$(get_chimera_linux)
-        install_custom "Chimera Linux" "$chimera_url"
-    ;;
-    16)
-        install "oracle" "Oracle Linux" "false"
-    ;;
-    17)
-        install "amazonlinux" "Amazon Linux" "false"
-    ;;
-    18)
-        install "plamo" "Plamo Linux" "false"
-    ;;
-    19)
-        install "mint" "Linux Mint" "false"
-    ;;
-    20)
-        install "alt" "Alt Linux" "false"
-    ;;
-    21)
-        install "funtoo" "Funtoo Linux" "false"
-    ;;
-    22)
-        install "openeuler" "openEuler" "false"
-    ;;
-    23)
-        install "springdalelinux" "Springdale Linux" "false"
-    ;;
-    *)
-        error_exit "Invalid selection (1-${num_distros})"
-    ;;
-esac
+# Get distribution data for the selection
+distro_data=$(get_distro_data "$selection")
+
+if [ -z "$distro_data" ]; then
+    error_exit "Invalid selection (1-${num_distros})"
+fi
+
+# Parse distribution data
+number=$(echo "$distro_data" | cut -d: -f1)
+display_name=$(echo "$distro_data" | cut -d: -f2)
+distro_id=$(echo "$distro_data" | cut -d: -f3)
+flag=$(echo "$distro_data" | cut -d: -f4)
+post_config=$(echo "$distro_data" | cut -d: -f5)
+custom_handler=$(echo "$distro_data" | cut -d: -f6)
+
+# Handle installation based on the distribution data
+if [ -n "$custom_handler" ]; then
+    # Use custom handler for special distributions
+    $custom_handler
+else
+    # Standard installation
+    install "$distro_id" "$display_name" "$flag"
+    
+    # Run post-install configuration if specified
+    if [ -n "$post_config" ]; then
+        post_install_config "$post_config"
+    fi
+fi
 
 # Copy run.sh script to ROOTFS_DIR and make it executable
 cp /run.sh "$ROOTFS_DIR/run.sh"
