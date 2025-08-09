@@ -217,7 +217,7 @@ install_opensuse_linux() {
             local url=""
             case "$ARCH" in
                 aarch64|x86_64)
-                url="https://download.opensuse.org/distribution/openSUSE-current/appliances/opensuse-leap-dnf-image.${ARCH}-lxc-dnf.tar.xz"
+                url="https://download.opensuse.org/distribution/openSUSE-current/appliances/opensuse-leap-image.${ARCH}-lxc.tar.xz"
                 install_custom "openSUSE Leap" "$url"
                 ;;
                 *)
@@ -229,7 +229,7 @@ install_opensuse_linux() {
             2)
             log "INFO" "Selected version: openSUSE Tumbleweed" "GREEN"
             if [[ "$ARCH" == "x86_64" ]]; then
-                install_custom "openSUSE Tumbleweed" "https://download.opensuse.org/tumbleweed/appliances/opensuse-tumbleweed-dnf-image.x86_64-lxc-dnf.tar.xz"
+                install_custom "openSUSE Tumbleweed" "https://download.opensuse.org/tumbleweed/appliances/opensuse-tumbleweed-image.x86_64-lxc.tar.xz"
             else
                 error_exit "openSUSE Tumbleweed is not available for ${ARCH} architecture"
             fi
