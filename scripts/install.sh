@@ -39,7 +39,7 @@ distributions="
 "
 
 # Count the number of distributions
-num_distros=$(echo "$distributions" | wc -l)
+num_distros=$(echo "$distributions" | grep -c "^[0-9]")
 
 # Error handling function
 error_exit() {
