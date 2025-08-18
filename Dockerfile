@@ -10,6 +10,7 @@ ENV LANG=en_US.UTF-8
 # Install necessary packages
 RUN apk update && \
     apk add --no-cache \
+        bash \
         curl \
         ca-certificates \
         iproute2 \
