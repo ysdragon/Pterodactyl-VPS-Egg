@@ -95,32 +95,38 @@ install() {
     temp_file="/tmp/install_versions.$$"
     echo "$image_names" > "$temp_file"
     
-    # Display versions
-    while IFS= read -r line; do
-        if [ -n "$line" ]; then
-            printf "* [%d] %s (%s)\n" "$counter" "$pretty_name" "$line"
-            counter=$((counter + 1))
-        fi
-    done < "$temp_file"
+    # Count the number of available versions
+    version_count=$(grep -c . "$temp_file")
     
-    # Adjust counter to represent the actual number of versions
-    version_count=$((counter - 1))
-    
-    printf "* [0] Go Back\n"
-    
-    # Version selection with validation
-    version=""
-    while true; do
-        printf "${YELLOW}Enter the desired version (0-${version_count}): ${NC}\n"
-        read -r version
-        if [ "$version" = "0" ]; then
-            rm -f "$temp_file"
-            exec "$0"
-        elif echo "$version" | grep -q '^[0-9]*$' && [ "$version" -ge 1 ] && [ "$version" -le "${version_count}" ]; then
-            break
-        fi
-        log "ERROR" "Invalid selection. Please try again." "$RED"
-    done
+    # If there is only one version, select it automatically.
+    if [ "$version_count" -eq 1 ]; then
+        version=1
+    else
+        # Display versions
+        counter=1
+        while IFS= read -r line; do
+            if [ -n "$line" ]; then
+                printf "* [%d] %s (%s)\n" "$counter" "$pretty_name" "$line"
+                counter=$((counter + 1))
+            fi
+        done < "$temp_file"
+        
+        printf "* [0] Go Back\n"
+        
+        # Version selection with validation
+        version=""
+        while true; do
+            printf "${YELLOW}Enter the desired version (0-${version_count}): ${NC}\n"
+            read -r version
+            if [ "$version" = "0" ]; then
+                rm -f "$temp_file"
+                exec "$0"
+            elif echo "$version" | grep -q '^[0-9]*$' && [ "$version" -ge 1 ] && [ "$version" -le "${version_count}" ]; then
+                break
+            fi
+            log "ERROR" "Invalid selection. Please try again." "$RED"
+        done
+    fi
     
     # Extract the selected version from the list
     selected_version=$(sed -n "${version}p" "$temp_file")
@@ -308,14 +314,22 @@ display_menu() {
 ARCH_ALT=$(detect_architecture)
 check_network
 
-# Display menu and get selection
-display_menu
+# Check if there is only one distribution
+if [ "$num_distros" -eq 1 ]; then
+    # Automatically select the only distribution
+    selection=1
+    distro_data=$(get_distro_data "$selection")
+    display_name=$(echo "$distro_data" | cut -d: -f2)
+else
+    # Display menu and get selection
+    display_menu
 
-# Handle user selection and installation
-read -r selection
+    # Handle user selection and installation
+    read -r selection
 
-# Get distribution data for the selection
-distro_data=$(get_distro_data "$selection")
+    # Get distribution data for the selection
+    distro_data=$(get_distro_data "$selection")
+fi
 
 if [ -z "$distro_data" ]; then
     error_exit "Invalid selection (1-${num_distros})"
