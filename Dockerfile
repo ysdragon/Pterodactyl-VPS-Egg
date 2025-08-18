@@ -1,25 +1,20 @@
-# Use Ubuntu noble (24.04) as the base image
-FROM ubuntu:noble
-
-# Set the environment variable to disable interactive prompts during package installation
-ENV DEBIAN_FRONTEND=noninteractive
+# Use Alpine as the base image
+FROM alpine:3.22
 
 # Set the PRoot version
 ENV PROOT_VERSION=5.4.0
 
+# Set locale
+ENV LANG=en_US.UTF-8
+
 # Install necessary packages
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+RUN apk update && \
+    apk add --no-cache \
         curl \
         ca-certificates \
         iproute2 \
-        xz-utils \
-        locales && \
-    rm -rf /var/lib/apt/lists/*
-
-# Configure locale
-RUN update-locale lang=en_US.UTF-8 && \
-    dpkg-reconfigure --frontend noninteractive locales
+        xz \
+        shadow
 
 # Install PRoot
 RUN ARCH=$(uname -m) && \
@@ -29,7 +24,7 @@ RUN ARCH=$(uname -m) && \
     chmod 755 /usr/local/bin/proot
 
 # Create a non-root user
-RUN useradd -m -d /home/container -s /bin/sh container
+RUN adduser -D -h /home/container -s /bin/sh container
 
 # Switch to the new user
 USER container
