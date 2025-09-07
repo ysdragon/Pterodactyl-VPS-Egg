@@ -247,7 +247,7 @@ download_and_extract_rootfs() {
     latest_version=$(curl -s "$url" | grep 'href="' | grep -o '[0-9]\{8\}_[0-9]\{2\}:[0-9]\{2\}/' | sort -r | head -n 1) ||
     error_exit "Failed to determine latest version"
 
-    log "INFO" "Downloading rootfs from ${url}${latest_version}..." "$GREEN"
+    log "INFO" "Downloading rootfs..." "$GREEN"
     mkdir -p "$ROOTFS_DIR"
 
     if ! curl -Ls "${url}${latest_version}rootfs.tar.xz" -o "$ROOTFS_DIR/rootfs.tar.xz"; then
