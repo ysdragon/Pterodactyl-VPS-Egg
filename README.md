@@ -31,10 +31,10 @@
 |-------------|--------|-------|
 | amd64 | ✅ Full Support | Recommended for most users |
 | arm64 | ✅ Full Support | Ideal for ARM-based servers |
-| riscv64 | ⚠️ Limited Support | Requires custom rootfs images |
+| riscv64 | ✅ Full Support | Ideal for RISCV-based servers |
 
-> [!IMPORTANT]
-> For `riscv64` architecture, you must provide or host your own rootfs images. Currently, only Chimera Linux offers native support for riscv64 in this egg.
+> [!NOTE]
+> This egg supports most rootfs images for the `riscv64` architecture, including native support for Chimera Linux.
 
 ## <img width="20" height="20" src="https://www.kernel.org/theme/images/logos/favicon.png" /> Available Linux Distributions
 - <img width="16" height="16" src="https://rockylinux.org/favicon.png" /> Rocky Linux
