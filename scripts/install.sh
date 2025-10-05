@@ -6,6 +6,7 @@
 # Configuration variables
 ROOTFS_DIR="/home/container"
 BASE_URL="https://images.linuxcontainers.org/images"
+DISTRO_MAP_URL="https://distromap.istan.to"
 
 # Add to PATH
 export PATH="$PATH:~/.local/usr/bin"
@@ -64,6 +65,19 @@ cleanup() {
     rm -rf /tmp/sbin
 }
 
+# Function to get version label from distromap
+get_label() {
+    local distro="$1"
+    local version="$2"
+    local response
+    response=$(curl -s "$DISTRO_MAP_URL/distro/$distro/$version")
+    if echo "$response" | jq -e '.error' >/dev/null 2>&1; then
+        echo "$version"
+    else
+        echo "$response" | jq -r '.label'
+    fi
+}
+
 # Function to install a specific distro
 install() {
     distro_name="$1"
@@ -106,7 +120,8 @@ install() {
         counter=1
         while IFS= read -r line; do
             if [ -n "$line" ]; then
-                printf "* [%d] %s (%s)\n" "$counter" "$pretty_name" "$line"
+                label=$(get_label "$distro_name" "$line")
+                printf "* [%d] %s %s\n" "$counter" "$pretty_name" "$label"
                 counter=$((counter + 1))
             fi
         done < "$temp_file"
@@ -131,8 +146,9 @@ install() {
     # Extract the selected version from the list
     selected_version=$(sed -n "${version}p" "$temp_file")
     rm -f "$temp_file"
-    
-    log "INFO" "Selected version: $selected_version" "$GREEN"
+
+    selected_label=$(get_label "$distro_name" "$selected_version")
+    log "INFO" "Selected version: $selected_label" "$GREEN"
     
     # Download and extract rootfs
     download_and_extract_rootfs "$distro_name" "$selected_version" "$is_custom"
