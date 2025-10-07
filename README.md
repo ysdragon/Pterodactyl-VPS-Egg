@@ -124,7 +124,7 @@ The configuration file is located at `/ssh_config.yml` and supports the followin
 |--------|-------------|---------|
 | `port` | Port number for SSH server | `2222` |
 | `user` | Username for SSH authentication | `root` |
-| `password` | Password for SSH authentication (supports plain text or bcrypt hash) | `password` |
+| `password` | Password for SSH authentication (supports plain text, bcrypt hash, or argon2 hash) | `password` |
 | `timeout` | Connection timeout in seconds (comment out or set to 0 to disable) | `300` |
 
 ### SFTP Options
