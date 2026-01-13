@@ -1,5 +1,5 @@
 # Use Alpine as the base image
-FROM alpine:3.22
+FROM alpine:3.23
 
 # Set the PRoot version
 ENV PROOT_VERSION=5.4.0
