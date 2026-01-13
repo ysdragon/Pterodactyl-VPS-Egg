@@ -11,7 +11,7 @@
 
 *Supporting multiple architectures and 20+ Linux distributions*
 
-[📋 Quick Start](#-quick-start) • [🔧 Commands](#-available-custom-commands) • [🔐 SSH Setup](#-ssh-configuration) • [🤝 Contributing](#-contributing)
+[📋 Quick Start](#-quick-start) • [🔧 Commands](#-available-custom-commands) • [🔐 SSH Setup](#-ssh-configuration) • [🖥️ GUI/VNC Setup](#%EF%B8%8F-guiremote-desktop-configuration) • [🤝 Contributing](#-contributing)
 
 </div>
 
@@ -20,10 +20,11 @@
 ## ✨ Features
 
 - 🚀 **Easy Deployment** - One-click installation and setup
-- 🔧 **Customizable** - Flexible configurations for various use cases  
+- 🔧 **Customizable** - Flexible configurations for various use cases
 - 🏗️ **Multi-Architecture** - Support for AMD64, ARM64, and RISCV64
 - 🐧 **20+ Linux Distros** - Wide range of operating systems supported
 - 🔌 **Port Management** - TCP/UDP support with dynamic port mapping
+- 🖥️ **GUI/Remote Desktop** - VNC server with browser access via noVNC
 
 ## 🏗️ Supported Architectures
 
@@ -102,6 +103,14 @@ The VPS egg includes several built-in commands to help you manage your server:
 | `status` | Show system status information | `status` |
 | `backup` | Create a system backup | `backup` |
 | `restore` | Restore a system backup | `restore <backup_file>` |
+| `install-gui` | Install desktop environment + VNC server | `install-gui` |
+| `start-vnc` | Start the VNC server | `start-vnc` |
+| `stop-vnc` | Stop the VNC server | `stop-vnc` |
+| `start-novnc` | Start noVNC for browser access | `start-novnc` |
+| `stop-novnc` | Stop noVNC | `stop-novnc` |
+| `start-tunnel` | Start Cloudflare tunnel (public URL) | `start-tunnel` |
+| `stop-tunnel` | Stop Cloudflare tunnel | `stop-tunnel` |
+| `gui-status` | Show GUI server status | `gui-status` |
 
 > [!NOTE]
 > All commands are available immediately after the server starts. Use `help` to view this list anytime.
@@ -153,6 +162,93 @@ ssh:
 sftp:
   enable: true
 ```
+
+## 🖥️ GUI/Remote Desktop Configuration
+
+The VPS egg supports full GUI/remote desktop functionality with VNC server and browser-based access via noVNC.
+
+### Install the Desktop Environment:
+   - After installing the desired distro, use the `install-gui` command to install a desktop environment and VNC server.
+
+### Available Desktop Environments
+
+| Desktop Environment | Description | Approximate Size |
+|---------------------|-------------|------------------|
+| XFCE4 | Lightweight and full-featured | ~200MB |
+| LXDE | Very lightweight | ~100MB |
+| LXQt | Modern lightweight Qt-based | ~150MB |
+| MATE | Traditional desktop experience | ~300MB |
+
+### Supported Distributions for GUI
+
+| Distribution | Status |
+|-------------|--------|
+| Debian/Ubuntu/Kali/Devuan/Linux Mint | ✅ Full Support |
+| Alpine/Chimera | ✅ Full Support |
+| Arch Linux | ✅ Full Support |
+| Fedora | ✅ Full Support |
+| Void Linux | ✅ Full Support |
+| CentOS/Rocky/AlmaLinux/Oracle Linux | ❌ Not Supported |
+| openSUSE | ❌ Not Supported |
+
+### Configuration Options
+
+The configuration file is located at `/gui_config.yml` and is automatically created during installation:
+
+### Desktop Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `environment` | Selected desktop environment | User selected |
+| `startup_command` | Command to start the DE | Auto-detected |
+
+### VNC Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `port` | Port number for VNC server | `5901` |
+| `password` | Password for VNC authentication | User defined |
+| `resolution` | Screen resolution | `1280x720` |
+| `depth` | Color depth | `24` |
+
+### noVNC Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `enable` | Enable noVNC web access | `true` |
+| `port` | Port number for noVNC web interface | `6080` |
+
+> [!NOTE]
+> Remember to configure the VNC and noVNC ports in your Pterodactyl panel allocations!
+
+> [!WARNING]
+> The default VNC password should be changed immediately after installation for security reasons.
+
+### Example `/gui_config.yml` Configuration
+
+Here is an example configuration file:
+
+```yml
+desktop:
+  environment: "xfce4"
+  startup_command: "startxfce4"
+
+vnc:
+  port: "5901"
+  password: "your_secure_password"
+  resolution: "1280x720"
+  depth: "24"
+
+novnc:
+  enable: true
+  port: "6080"
+```
+
+### Accessing Your Desktop
+
+1. **Via VNC Client**: Connect to `<server-ip>:<vnc_port>` using any VNC client
+2. **Via Browser (noVNC)**: Navigate to `http://<server-ip>:<novnc_port>` in your web browser
+3. **Via Cloudflare Tunnel**: Use `start-tunnel` for a public URL (useful when behind NAT)
 
 ## 🤝 Contributing
 

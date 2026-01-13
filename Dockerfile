@@ -42,9 +42,10 @@ COPY --chown=container:container ./scripts/install.sh /install.sh
 COPY --chown=container:container ./scripts/helper.sh /helper.sh
 COPY --chown=container:container ./scripts/run.sh /run.sh
 COPY --chown=container:container ./scripts/common.sh /common.sh
+COPY --chown=container:container ./scripts/vnc/install.sh /vnc_install.sh
 
 # Make the copied scripts executable
-RUN chmod +x /entrypoint.sh /install.sh /helper.sh /run.sh /common.sh
+RUN chmod +x /entrypoint.sh /install.sh /helper.sh /run.sh /common.sh /vnc_install.sh
 
 # Set the default command
 CMD ["/bin/sh", "/entrypoint.sh"]
