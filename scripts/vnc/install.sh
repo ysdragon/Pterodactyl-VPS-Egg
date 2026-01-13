@@ -365,8 +365,7 @@ main() {
 
     log "INFO" "Starting installation..." "$GREEN"
 
-    de_startup=$(install_desktop_environment "$distro" "$de")
-    if [ $? -ne 0 ] || [ -z "$de_startup" ]; then
+    if ! de_startup=$(install_desktop_environment "$distro" "$de") || [ -z "$de_startup" ]; then
         log "ERROR" "Failed to install desktop environment" "$RED"
         return 1
     fi
