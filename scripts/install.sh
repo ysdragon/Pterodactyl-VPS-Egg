@@ -24,7 +24,7 @@ distributions="
 8:AlmaLinux:almalinux:false::
 9:Slackware Linux:slackware:false::
 10:Kali Linux:kali:false::
-11:openSUSE:opensuse:special::opensuse_handler
+11:openSUSE:opensuse:false::
 12:Gentoo Linux:gentoo:true::
 13:Arch Linux:archlinux:false:archlinux:
 14:Devuan Linux:devuan:false::
@@ -177,50 +177,6 @@ install_custom() {
     
     # Cleanup downloaded archive
     rm -f "$ROOTFS_DIR/$file_name"
-}
-
-# Custom handlers for special distributions
-opensuse_handler() {
-    printf "Select openSUSE version:\n"
-    printf "* [1] openSUSE Leap\n"
-    printf "* [2] openSUSE Tumbleweed\n"
-    printf "* [0] Go Back\n"
-    
-    opensuse_version=""
-    while true; do
-        printf "${YELLOW}Enter your choice (0-2): ${NC}\n"
-        read -r opensuse_version
-        case "$opensuse_version" in
-            0)
-            exec "$0"
-            ;;
-            1)
-            log "INFO" "Selected version: openSUSE Leap" "$GREEN"
-            case "$ARCH" in
-                aarch64|x86_64)
-                url="https://download.opensuse.org/distribution/openSUSE-current/appliances/opensuse-leap-image.${ARCH}-lxc.tar.xz"
-                install_custom "openSUSE Leap" "$url"
-                ;;
-                *)
-                error_exit "openSUSE Leap is not available for ${ARCH} architecture"
-                ;;
-            esac
-            break
-            ;;
-            2)
-            log "INFO" "Selected version: openSUSE Tumbleweed" "$GREEN"
-            if [ "$ARCH" = "x86_64" ]; then
-                install_custom "openSUSE Tumbleweed" "https://download.opensuse.org/tumbleweed/appliances/opensuse-tumbleweed-image.x86_64-lxc.tar.xz"
-            else
-                error_exit "openSUSE Tumbleweed is not available for ${ARCH} architecture"
-            fi
-            break
-            ;;
-            *)
-            log "ERROR" "Invalid selection. Please try again." "$RED"
-            ;;
-        esac
-    done
 }
 
 chimera_handler() {
