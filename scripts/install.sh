@@ -6,7 +6,7 @@
 # Configuration variables
 ROOTFS_DIR="/home/container"
 BASE_URL="https://images.linuxcontainers.org/images"
-DISTRO_MAP_URL="https://distromap.istan.to"
+DISTRO_MAP_URL="https://distromap.ysdragon.tech"
 
 # Add to PATH
 export PATH="$PATH:~/.local/usr/bin"
