@@ -69,19 +69,19 @@ install_de_debian() {
     de="$1"
     case "$de" in
         "xfce4")
-            DEBIAN_FRONTEND=noninteractive apt-get install -y -qq xfce4 xfce4-terminal dbus-x11 x11-xserver-utils xfonts-base >&2
+            DEBIAN_FRONTEND=noninteractive apt-get install -y -qq xfce4 xfce4-terminal dbus-x11 x11-xserver-utils xfonts-base tint2 >&2
             echo "startxfce4"
             ;;
         "lxde")
-            DEBIAN_FRONTEND=noninteractive apt-get install -y -qq lxde-core lxterminal dbus-x11 x11-xserver-utils xfonts-base >&2
+            DEBIAN_FRONTEND=noninteractive apt-get install -y -qq lxde-core lxterminal dbus-x11 x11-xserver-utils xfonts-base tint2 >&2
             echo "startlxde"
             ;;
         "lxqt")
-            DEBIAN_FRONTEND=noninteractive apt-get install -y -qq lxqt openbox dbus-x11 x11-xserver-utils xfonts-base >&2
+            DEBIAN_FRONTEND=noninteractive apt-get install -y -qq lxqt openbox dbus-x11 x11-xserver-utils xfonts-base tint2 >&2
             echo "startlxqt"
             ;;
         "mate")
-            DEBIAN_FRONTEND=noninteractive apt-get install -y -qq mate-desktop-environment-core dbus-x11 x11-xserver-utils xfonts-base >&2
+            DEBIAN_FRONTEND=noninteractive apt-get install -y -qq mate-desktop-environment-core dbus-x11 x11-xserver-utils xfonts-base tint2 >&2
             echo "mate-session"
             ;;
     esac
@@ -94,7 +94,7 @@ install_de_alpine() {
     sed -i 's|^#\(.*\/community\)$|\1|' /etc/apk/repositories 2>/dev/null
     apk update > /dev/null 2>&1
 
-    apk add --no-cache dbus dbus-x11 xvfb xorg-server mesa-dri-gallium ttf-dejavu xterm 2>&1 | grep -v "^fetch\|^OK:" >&2
+    apk add --no-cache dbus dbus-x11 xvfb xorg-server mesa-dri-gallium ttf-dejavu xterm tint2 2>&1 | grep -v "^fetch\|^OK:" >&2
 
     case "$de" in
         "xfce4")
@@ -120,19 +120,19 @@ install_de_arch() {
     de="$1"
     case "$de" in
         "xfce4")
-            pacman -S --noconfirm --needed xfce4 xfce4-goodies xorg-server xorg-xinit dbus ttf-dejavu >&2
+            pacman -S --noconfirm --needed xfce4 xfce4-goodies xorg-server xorg-xinit dbus tint2 ttf-dejavu >&2
             echo "startxfce4"
             ;;
         "lxde")
-            pacman -S --noconfirm --needed lxde xorg-server xorg-xinit dbus ttf-dejavu >&2
+            pacman -S --noconfirm --needed lxde xorg-server xorg-xinit dbus tint2 ttf-dejavu >&2
             echo "startlxde"
             ;;
         "lxqt")
-            pacman -S --noconfirm --needed lxqt openbox xorg-server xorg-xinit dbus ttf-dejavu >&2
+            pacman -S --noconfirm --needed lxqt openbox xorg-server xorg-xinit dbus tint2 ttf-dejavu >&2
             echo "startlxqt"
             ;;
         "mate")
-            pacman -S --noconfirm --needed mate mate-extra xorg-server xorg-xinit dbus ttf-dejavu >&2
+            pacman -S --noconfirm --needed mate mate-extra xorg-server xorg-xinit dbus tint2 ttf-dejavu >&2
             echo "mate-session"
             ;;
     esac
@@ -141,7 +141,7 @@ install_de_arch() {
 install_de_fedora() {
     de="$1"
     log "INFO" "Installing X11 base packages..." "$YELLOW" >&2
-    dnf install -y xorg-x11-xauth dejavu-sans-fonts dbus dbus-x11 xterm >&2
+    dnf install -y xorg-x11-xauth dejavu-sans-fonts dbus dbus-x11 xterm tint2 >&2
 
     case "$de" in
         "xfce4")
@@ -171,19 +171,19 @@ install_de_void() {
     de="$1"
     case "$de" in
         "xfce4")
-            xbps-install -y xfce4 xorg dbus dejavu-fonts-ttf >&2
+            xbps-install -y xfce4 xorg dbus tint2 dejavu-fonts-ttf >&2
             echo "startxfce4"
             ;;
         "lxde")
-            xbps-install -y lxde xorg dbus dejavu-fonts-ttf >&2
+            xbps-install -y lxde xorg dbus tint2 dejavu-fonts-ttf >&2
             echo "startlxde"
             ;;
         "lxqt")
-            xbps-install -y lxqt openbox xorg dbus dejavu-fonts-ttf >&2
+            xbps-install -y lxqt openbox xorg dbus tint2 dejavu-fonts-ttf >&2
             echo "startlxqt"
             ;;
         "mate")
-            xbps-install -y mate xorg dbus dejavu-fonts-ttf >&2
+            xbps-install -y mate xorg dbus tint2 dejavu-fonts-ttf >&2
             echo "mate-session"
             ;;
     esac
