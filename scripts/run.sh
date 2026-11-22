@@ -202,6 +202,7 @@ start_vnc() {
     
     pkill -f "Xtigervnc.*:$VNC_DISPLAY_NUM" > /dev/null 2>&1 || true
     pkill -f "Xvnc.*:$VNC_DISPLAY_NUM" > /dev/null 2>&1 || true
+    pkill -f "tint2" > /dev/null 2>&1 || true
     sleep 1
     
     start_desktop_env() {
@@ -210,41 +211,62 @@ start_vnc() {
         export XDG_RUNTIME_DIR="/tmp/runtime-$(id -u)"
         mkdir -p "$XDG_RUNTIME_DIR" 2>/dev/null || true
         chmod 700 "$XDG_RUNTIME_DIR" 2>/dev/null || true
-        
+
+        # Start D-Bus session if available
+        if command -v dbus-launch > /dev/null 2>&1; then
+            eval "$(dbus-launch --sh-syntax)" 2>/dev/null || true
+        fi
+
+        # Helper: use tint2 as panel fallback if primary panel fails
+        start_panel_with_fallback() {
+            primary_panel="$1"
+            if command -v "$primary_panel" > /dev/null 2>&1; then
+                "$primary_panel" 2>/dev/null &
+                sleep 2
+                # Check if it's still running
+                if ! pgrep -x "$primary_panel" > /dev/null 2>&1; then
+                    log "WARNING" "$primary_panel crashed (likely D-Bus), falling back to tint2" "$YELLOW"
+                    tint2 2>/dev/null &
+                fi
+            else
+                tint2 2>/dev/null &
+            fi
+        }
+
         case "$GUI_DE" in
             xfce4)
                 xfwm4 --compositor=off 2>/dev/null &
                 sleep 1
-                xfce4-panel 2>/dev/null &
-                xfdesktop 2>/dev/null &
+                start_panel_with_fallback xfce4-panel
+                # Skip xfdesktop — requires D-Bus, causes black screen in containers
                 ;;
             lxde)
                 openbox 2>/dev/null &
                 sleep 1
-                lxpanel 2>/dev/null &
-                pcmanfm --desktop 2>/dev/null &
+                start_panel_with_fallback lxpanel
+                # Skip pcmanfm --desktop — requires D-Bus
                 ;;
             lxqt)
                 openbox 2>/dev/null &
                 sleep 1
-                lxqt-panel 2>/dev/null &
-                pcmanfm-qt --desktop 2>/dev/null &
+                start_panel_with_fallback lxqt-panel
+                # Skip pcmanfm-qt --desktop — requires D-Bus
                 ;;
             mate)
-                marco &
+                marco 2>/dev/null &
                 sleep 1
-                mate-panel 2>/dev/null &
-                caja --no-desktop 2>/dev/null &
+                start_panel_with_fallback mate-panel
                 ;;
             *)
                 if command -v openbox > /dev/null 2>&1; then
-                    openbox &
+                    openbox 2>/dev/null &
                 elif command -v xfwm4 > /dev/null 2>&1; then
-                    xfwm4 &
+                    xfwm4 --compositor=off 2>/dev/null &
                 fi
+                tint2 2>/dev/null &
                 ;;
         esac
-        
+
         log "INFO" "Desktop started: $GUI_DE" "$YELLOW"
         sleep 2
     }
@@ -312,6 +334,7 @@ stop_vnc() {
     pkill -f "Xtigervnc" > /dev/null 2>&1
     pkill -f "x11vnc" > /dev/null 2>&1
     pkill -f "Xvfb" > /dev/null 2>&1
+    pkill -f "tint2" > /dev/null 2>&1 || true
     
     log "SUCCESS" "VNC server stopped." "$GREEN"
 }
